@@ -1,1 +1,1 @@
-web: gunicorn revamp.wsgi --log-file -
+web: gunicorn --timeout 60 revamp.wsgi --log-file -
