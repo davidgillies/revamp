@@ -18,6 +18,7 @@ from django.urls import path, include
 from revamp_tool import urls as rt_urls
 
 urlpatterns = [
+    path('accounts/', include('registration.backends.default.urls')),
     path('admin/', admin.site.urls),
     path('', include(rt_urls)),
 ]

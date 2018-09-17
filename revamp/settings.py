@@ -14,8 +14,13 @@ import os
 import dj_database_url
 from decouple import config
 
+
+SITE_ID = 1
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
@@ -36,6 +41,8 @@ ALLOWED_HOSTS = ['.herokuapp.com','localhost']
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.sites',
+    'registration',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -60,7 +67,7 @@ ROOT_URLCONF = 'revamp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(PROJECT_ROOT, 'templates'),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -139,3 +146,28 @@ STATICFILES_DIRS = (
     )
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+ACCOUNT_ACTIVATION_DAYS = 7
+REGISTRATION_OPEN = True
+REGISTRATION_AUTO_LOGIN = True
+# REGISTRATION_FORM
+REGISTRATION_EMAIL_HTML = False
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+sendgrid_username = os.getenv('SENDGRID_USERNAME')
+sendgrid_password = os.getenv('SENDGRID_PASSWORD')
+
+if sendgrid_username and sendgrid_password:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = 'smtp.sendgrid.net'
+    EMAIL_HOST_USER = sendgrid_username
+    EMAIL_HOST_PASSWORD = sendgrid_password
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+
+DEFAULT_FROM_EMAIL = 'info@revamp.org'
+
+LOGIN_REDIRECT_URL = '/'
+
+
