@@ -29,13 +29,13 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = 'r^u8v*^=ruzfx8zykxqqt04h&^-1=!mu+%#t(ntq70ocb61bxy'
+# SECRET_KEY = 'r^u8v*^=ruzfx8zykxqqt04h&^-1=!mu+%#t(ntq70ocb61bxy'
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['.herokuapp.com','localhost']
+ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', ]
 
 
 # Application definition
@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'revamp_tool',
 ]
 
 MIDDLEWARE = [
@@ -67,7 +68,7 @@ ROOT_URLCONF = 'revamp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(PROJECT_ROOT, 'templates'),],
+        'DIRS': [os.path.join(PROJECT_ROOT, 'templates'), ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -169,5 +170,3 @@ if sendgrid_username and sendgrid_password:
 DEFAULT_FROM_EMAIL = 'info@revamp.org'
 
 LOGIN_REDIRECT_URL = '/'
-
-
