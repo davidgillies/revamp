@@ -24,6 +24,9 @@ TREATMENT_PROCESS_UNITS = (
 
 # Create your models here.
 class WasteStreams(models.Model):
+    name = models.CharField(max_length=30)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     faecal_sludge = models.FloatField(blank=True, null=True)
     faecal_sludge_units = models.PositiveSmallIntegerField(
         choices=WASTE_STREAMS_UNITS,
@@ -59,6 +62,9 @@ class WasteStreams(models.Model):
 
 
 class Prices(models.Model):
+    name = models.CharField(max_length=30)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     biogas_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True, default=0.33)
     biogas_units = models.PositiveSmallIntegerField(
         choices=PRICE_UNITS,
@@ -89,6 +95,9 @@ class Prices(models.Model):
 
 
 class TreatmentProcesses(models.Model):
+    name = models.CharField(max_length=30)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     volatile_solids_degradation_rate = models.FloatField(blank=True, null=True, default=100.0)
     volatile_solids_degradation_rate_units = models.PositiveSmallIntegerField(
         choices=TREATMENT_PROCESS_UNITS,
@@ -174,6 +183,9 @@ class TreatmentProcesses(models.Model):
 
 
 class WasteQuality(models.Model):
+    name = models.CharField(max_length=30)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     # total solids percentage
     total_solids_pc = models.FloatField(blank=True, null=True, default=3.00)
     total_solids_pc_reference = models.TextField(blank=True, null=True)
@@ -216,6 +228,9 @@ class WasteQuality(models.Model):
 
 
 class RevampProject(models.Model):
+    name = models.CharField(max_length=30)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     waste_streams = models.ForeignKey(WasteStreams, on_delete=models.PROTECT)
     prices = models.ForeignKey(Prices, on_delete=models.PROTECT)
