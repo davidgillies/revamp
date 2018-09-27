@@ -5,12 +5,12 @@ from django.contrib.auth.models import User
 WASTE_STREAMS_UNITS = (
     (1, 'cubic meters/day'),
     (2, 'tonnes/day'),
-    )
+)
 
 PRICE_UNITS = (
     (1, 'US dollars/normal cubic meter'),
     (2, 'US dollars/ton'),
-    )
+)
 
 TREATMENT_PROCESS_UNITS = (
     (1, '%'),
@@ -19,7 +19,7 @@ TREATMENT_PROCESS_UNITS = (
     (4, '% of initial TP'),
     (5, '% of initial TK'),
     (6, '% of initial mass'),
-    )
+)
 
 
 # Create your models here.
@@ -60,6 +60,12 @@ class WasteStreams(models.Model):
     sw_black_soldier_fly_process = models.FloatField(blank=True, null=True)
     sw_compost = models.FloatField(blank=True, null=True)
 
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Waste Streams Options"
+
 
 class Prices(models.Model):
     name = models.CharField(max_length=30)
@@ -93,9 +99,16 @@ class Prices(models.Model):
     )
     soil_conditioner_reference = models.TextField(blank=True, null=True)
 
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Prices"
+
 
 class TreatmentProcesses(models.Model):
     name = models.CharField(max_length=30)
+    approved = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     volatile_solids_degradation_rate = models.FloatField(blank=True, null=True, default=100.0)
@@ -121,7 +134,6 @@ class TreatmentProcesses(models.Model):
     )
     bcr_black_soldier_fly_reference = models.TextField(blank=True, null=True)
 
-    # 
     dmr_rate_bsf_residue = models.FloatField(blank=True, null=True, default=51.85)
     dmr_rate_bsf_residue_units = models.PositiveSmallIntegerField(
         choices=TREATMENT_PROCESS_UNITS,
@@ -181,15 +193,22 @@ class TreatmentProcesses(models.Model):
     )
     tpotr_composting_reduction_reference = models.TextField(blank=True, null=True)
 
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Treatment Processes"
+
 
 class WasteQuality(models.Model):
     name = models.CharField(max_length=30)
+    approved = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     # total solids percentage
     total_solids_pc = models.FloatField(blank=True, null=True, default=3.00)
     total_solids_pc_reference = models.TextField(blank=True, null=True)
-    # 
+    #
     total_solids = models.FloatField(blank=True, null=True, default=30000.00)
     total_solids_reference = models.TextField(blank=True, null=True)
 
@@ -226,6 +245,12 @@ class WasteQuality(models.Model):
     biomethane_potential = models.FloatField(blank=True, null=True, default=304.00)
     biomethane_potential_reference = models.TextField(blank=True, null=True)
 
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Waste Quality Options"
+
 
 class RevampProject(models.Model):
     name = models.CharField(max_length=30)
@@ -236,3 +261,9 @@ class RevampProject(models.Model):
     prices = models.ForeignKey(Prices, on_delete=models.PROTECT)
     treatment_processes = models.ForeignKey(TreatmentProcesses, on_delete=models.PROTECT)
     waste_quality = models.ForeignKey(WasteQuality, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Revamp Projects"

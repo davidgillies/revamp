@@ -5,4 +5,4 @@ from revamp_tool.views import HomePage
 
 urlpatterns = [
     path('', HomePage.as_view(), name='home'),
-    ]
+]

@@ -3,24 +3,45 @@ from revamp_tool.models import *
 
 
 # Register your models here.
+
+# IDEAS:
+# 1. Add search for references?
+# 2. filter on references?
+# 3. arrange in fieldsets?
+
+
 class RevampProjectAdmin(admin.ModelAdmin):
-	pass
+    save_as = True
+    list_display = ('name', 'created_at', 'updated_at')
+    list_filter = ('created_at', 'updated_at')
 
 
 class WasteStreamsAdmin(admin.ModelAdmin):
-	pass
+    save_as = True
+    save_on_top = True
+    list_display = ('name', 'created_at', 'updated_at')
+    list_filter = ('created_at', 'updated_at')
 
 
 class PricesAdmin(admin.ModelAdmin):
-	pass
+    save_as = True
+    save_on_top = True
+    list_display = ('name', 'created_at', 'updated_at')
+    list_filter = ('created_at', 'updated_at')
 
 
 class TreatmentProcessesAdmin(admin.ModelAdmin):
-	pass
+    save_as = True
+    save_on_top = True
+    list_display = ('name', 'created_at', 'updated_at', 'approved')
+    list_filter = ('created_at', 'updated_at', 'approved')
 
 
 class WasteQualityAdmin(admin.ModelAdmin):
-	pass
+    save_as = True
+    save_on_top = True
+    list_display = ('name', 'created_at', 'updated_at', 'approved')
+    list_filter = ('created_at', 'updated_at', 'approved')
 
 
 admin.site.register(RevampProject, RevampProjectAdmin)
