@@ -41,6 +41,11 @@ ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', ]
 # Application definition
 
 INSTALLED_APPS = [
+    'fluent_dashboard',
+    'admin_tools',
+    'admin_tools.theming',
+    'admin_tools.menu',
+    'admin_tools.dashboard',
     'django.contrib.sites',
     'registration',
     'django.contrib.admin',
@@ -65,11 +70,14 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'revamp.urls'
 
+ADMIN_TOOLS_INDEX_DASHBOARD = 'fluent_dashboard.dashboard.FluentIndexDashboard'
+ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'fluent_dashboard.dashboard.FluentAppIndexDashboard'
+ADMIN_TOOLS_MENU = 'fluent_dashboard.menu.FluentMenu'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(PROJECT_ROOT, 'templates'), ],
-        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -77,6 +85,11 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'loaders': [
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader',
+                'admin_tools.template_loaders.Loader',
+            ]
         },
     },
 ]

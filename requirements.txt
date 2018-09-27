@@ -1,6 +1,9 @@
 dj-database-url==0.5.0
 Django==2.1.1
+django-admin-tools==0.8.1
+django-fluent-dashboard==1.0
 django-registration-redux==2.4
+future==0.16.0
 gunicorn==19.9.0
 psycopg2==2.7.5
 psycopg2-binary==2.7.5

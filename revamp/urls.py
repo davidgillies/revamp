@@ -19,6 +19,7 @@ from revamp_tool import urls as rt_urls
 
 urlpatterns = [
     path('accounts/', include('registration.backends.default.urls')),
+    path('admintools/', include('admin_tools.urls')),
     path('admin/', admin.site.urls),
     path('', include(rt_urls)),
 ]
