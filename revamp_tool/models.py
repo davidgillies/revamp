@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 WASTE_STREAMS_UNITS = (
@@ -212,3 +213,11 @@ class WasteQuality(models.Model):
 
     biomethane_potential = models.FloatField(blank=True, null=True, default=304.00)
     biomethane_potential_reference = models.TextField(blank=True, null=True)
+
+
+class RevampProject(models.Model):
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    waste_streams = models.ForeignKey(WasteStreams, on_delete=models.PROTECT)
+    prices = models.ForeignKey(Prices, on_delete=models.PROTECT)
+    treatment_processes = models.ForeignKey(TreatmentProcesses, on_delete=models.PROTECT)
+    waste_quality = models.ForeignKey(WasteQuality, on_delete=models.PROTECT)
