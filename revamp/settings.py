@@ -182,4 +182,4 @@ if sendgrid_username and sendgrid_password:
 
 DEFAULT_FROM_EMAIL = 'info@revamp.org'
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/revamp_tool'

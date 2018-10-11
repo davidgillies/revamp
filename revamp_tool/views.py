@@ -10,3 +10,7 @@ def home_page(request):
 
 class HomePage(TemplateView):
     template_name = 'revamp_tool/home.html'
+
+
+class RevampTool(TemplateView):
+	template_name = 'revamp_tool/revamp_tool.html'
