@@ -19,8 +19,11 @@ from revamp_tool import urls as rt_urls
 from django.views.i18n import JavaScriptCatalog
 from django.conf.urls.i18n import i18n_patterns
 
+from graphene_django.views import GraphQLView
+
 urlpatterns = [
     path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
+    path('graphql', GraphQLView.as_view(graphiql=True)),
 ]
 
 urlpatterns += i18n_patterns(

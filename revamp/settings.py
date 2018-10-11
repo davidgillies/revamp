@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'revamp_tool',
+    'graphene_django',
 ]
 
 MIDDLEWARE = [
@@ -137,6 +138,10 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+GRAPHENE = {
+    'SCHEMA': 'revamp.schema.schema',
+}
 
 
 # Internationalization
