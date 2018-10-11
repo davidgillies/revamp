@@ -20,3 +20,6 @@ class RevampTool(TemplateView):
         context['treatmentprocesses'] = TreatmentProcesses.objects.get(name='default')
         context['prices'] = Prices.objects.get(name='default')
         return context
+
+    def prices(self):
+        return Prices.objects.get(name='default')
