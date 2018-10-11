@@ -260,6 +260,7 @@ class Location(models.Model):
     date_prepared = models.DateField()
     prepared_by = models.ForeignKey(User, on_delete=models.PROTECT)
 
+
 class RevampProject(models.Model):
     name = models.CharField(max_length=30)
     created_at = models.DateTimeField(auto_now_add=True)

@@ -1,4 +1,6 @@
 {% extends "revamp_tool/base.html" %}
+{% load i18n %}
 
-{% block title %} Hello{% endblock %}
-{% block content %} <div><p>there</p></div> {% endblock %}
+
+{% block title %} {% trans "Hello" %}{% endblock %}
+{% block content %} <div><p>{% blocktrans %} a string {% endblocktrans %}</p></div> {% endblock %}

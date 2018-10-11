@@ -915,7 +915,9 @@
         {% endblock %}
     </div>
     <!-- /#wrapper -->
-
+    <script type="text/javascript">
+        var biogas_price = {{ prices.biogas_price }}
+    </script>
     <!-- jQuery -->
     <script src="/static/vendor/jquery/jquery.min.js"></script>
 
@@ -931,6 +933,7 @@
     <script src="/static/data/morris-data.js"></script>
 
     <!-- Custom Theme JavaScript -->
+    <script type="text/javascript" src={% url 'javascript-catalog' %}></script>
     <script src="/static/js/sb-admin-2.min.js"></script>
 
 </body>
