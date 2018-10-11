@@ -252,6 +252,14 @@ class WasteQuality(models.Model):
         verbose_name_plural = "Waste Quality Options"
 
 
+class Location(models.Model):
+    city = models.CharField(max_length=30)
+    country = models.CharField(max_length=30)
+    population = models.IntegerField(blank=True, null=True)
+    state = models.CharField(max_length=30)
+    date_prepared = models.DateField()
+    prepared_by = models.ForeignKey(User, on_delete=models.PROTECT)
+
 class RevampProject(models.Model):
     name = models.CharField(max_length=30)
     created_at = models.DateTimeField(auto_now_add=True)
