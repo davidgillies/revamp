@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-11 10:14+0000\n"
+"POT-Creation-Date: 2018-10-16 09:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,10 +18,42 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: revamp_tool/templates/revamp_tool/home.html:5
-msgid "Hello"
-msgstr "Ola"
+#: revamp/settings.py:151
+msgid "English"
+msgstr ""
 
-#: revamp_tool/templates/revamp_tool/home.html:6
-msgid " a string "
-msgstr "a stringio"
+#: revamp/settings.py:152
+msgid "Spanish"
+msgstr ""
+
+#: revamp_tool/templates/revamp_tool/home.html:5
+msgid "Home"
+msgstr ""
+
+#: revamp_tool/templates/revamp_tool/home.html:8
+msgid "Welcome to Revamp"
+msgstr ""
+
+#: revamp_tool/templates/revamp_tool/home.html:12
+msgid "Introduction"
+msgstr "Introducción"
+
+#: revamp_tool/templates/revamp_tool/home.html:13
+msgid ""
+" REVAMP helps city planners to estimate the total resources and reuse "
+"potential available in a city’s wastewater and other organic waste streams, "
+"as well as their financial values."
+msgstr ""
+" REVAMP ayuda a los urbanistas a estimar los recursos totales y reutilizarlos "
+"potencial disponible en las aguas residuales de una ciudad y otros flujos de desechos orgánicos, "
+"así como sus valores financieros."
+
+#: revamp_tool/templates/revamp_tool/revamp_tool.html:5
+msgid "Revamp Tool"
+msgstr ""
+
+#~ msgid "Hello"
+#~ msgstr "Ola"
+
+#~ msgid " a string "
+#~ msgstr "a stringio"
