@@ -2,7 +2,325 @@
 {% load i18n %}
 
 
-{% block title %} {% trans "Hello" %}{% endblock %}
-{% block content %} <div><p>{% blocktrans %} a string {% endblocktrans %}</p>
-{{ prices.biogas_price }}
-</div> {% endblock %}
+{% block title %} {% trans "Revamp Tool" %}{% endblock %}
+{% block content %}
+
+ <div><p>{# blocktrans %} a string {% endblocktrans #}</p>
+{# prices.biogas_price #}
+{# view.prices.biogas_price #}
+</div> 
+<div class="row">
+    <div class="col-lg-12">
+
+        <ul class="nav nav-tabs nav-justified">
+            <li class="active"><a data-toggle="tab" href="#wastestreams">1. Waste Streams</a></li>
+            <li><a data-toggle="tab" href="#results">2. Results</a></li>
+            <li><a id="charts-trigger" data-toggle="tab" title="charts" href="#charts">3. Charts</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="wastestreams" class="tab-pane fade in active">
+                <div id="wastestreams" class="panel panel-default">
+                    <div class="panel-heading">Waste Streams</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <form role="form" >
+                                    <div class="form-group">
+                                        <label>Faecal Sludge </label>
+                                        <input id="fs_amount" class="form-control" type="number" name="fs_amount" />
+                                        <p class="help-block">Amount available per day</p>
+                                    </div>
+                                </form>
+                            </div>                    
+                            <div class="col-lg-6">
+                                <form role="form">
+                                    <p class="form-control-static">Select what % of waste to what option</p>
+                                    <div class="form-group">
+                                        <label>Anaerobic Digestion </label>
+                                        <input id="fs_ad_pc" class="form-control" type="number" name="fs_ad_pc" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Solid Fuel </label>
+                                        <input id="fs_sf_pc" class="form-control" type="number" name="fs_sf_pc" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Black Soldier Fly Process</label>
+                                        <input id="fs_bsfp_pc" class="form-control" type="number" name="fs_bsfp_pc" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Compost </label>
+                                        <input id="fs_c_pc" class="form-control" type="number" name="fs_c_pc" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Total </label>
+                                        <input id="fs_t_pc" readonly class="form-control" type="number" name="fs_t_pc" />
+                                        <div id="total_warning"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button id="calculate" class="btn btn-primary" type="button">Calculate</button>
+                                    </div>
+                                </form>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="results" class="tab-pane fade">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Anaerobic Digestion - Biogas</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="dataTables-wrapper dt-bootstrap">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <table class="table table-striped table-bordered table-hover dataTable dtr-inline" role="grid" style="width: 100%;" width="100%">
+                                            <tbody>
+                                                <tr class="row">
+                                                    <th >Amount of Biogas in Nm<sup>3</sup></th>
+                                                    <td id="amount_of_gas"></td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Energy Content (MJ)</th>
+                                                    <td id="energy_content_mj"></td>
+                                                </tr>
+                                                 <tr class="row">
+                                                    <th>Energy Content (KWh)</th>
+                                                    <td id="energy_content_kwh"></td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Potential biogas revenue (US$)</th>
+                                                    <td id="potential_biogas_revenue"></td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Amount of AD Residue (tonnes, dry mass)</th>
+                                                    <td id="amount_of_ad_residue"></td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Potential AD residue revenue (US$)</th>
+                                                    <td id="potential_ad_residue_revenue"></td>
+                                                </tr>
+                                                <tr class="row info">
+                                                    <th>N% of AD residue</th>
+                                                    <td id="n_pc_ad_residue"></td>
+                                                </tr>
+                                                <tr class="row info">
+                                                    <th>N by mass (tonnes)</th>
+                                                    <td id="n_by_mass"></td>
+                                                </tr>
+                                                <tr class="row info">
+                                                    <th>P% of AD residue</th>
+                                                    <td id="p_pc_ad_residue" ></td>
+                                                </tr>
+                                                <tr class="row info">
+                                                    <th>P by mass (tonnes)</th>
+                                                    <td id="p_by_mass"></td>
+                                                </tr>
+                                                <tr class="row info">
+                                                    <th>K% of AD residue</th>
+                                                    <td id="k_pc_ad_residue"></td>
+                                                </tr>
+                                                <tr class="row info">
+                                                    <th>K by mass (tonnes)</th>
+                                                    <td id="k_by_mass"></td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Total potential AD revenue (US$)</th>
+                                                    <td id="total_potential_ad_revenue"></td>
+                                                </tr>                                    
+                                            </tbody>
+                                        </table>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                                
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">Solid Fuel</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="dataTables-wrapper dt-bootstrap">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <table class="table table-striped table-bordered table-hover dataTable dtr-inline" role="grid" style="width: 100%;" width="100%">
+                                            <tbody>
+                                                <tr class="row">
+                                                    <th >Amount of solid fuel (tonnes, dry mass)</th>
+                                                    <td id="amount_of_solid_fuel"></td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Energy Content (MJ)</th>
+                                                    <td id="energy_content_mj_sf"></td>
+                                                </tr>
+                                                 <tr class="row">
+                                                    <th>Energy Content (KWh)</th>
+                                                    <td id="energy_content_kwh_sf"></td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Total Potential solid fuel revenue (US$)</th>
+                                                    <td id="total_potential_sf_revenue"></td>
+                                                </tr>
+                                                                                   
+                                            </tbody>
+                                        </table>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                                
+                            <div class="panel panel-default">
+                    <div class="panel-heading">Black Soldier Fly - Larvae</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="dataTables-wrapper dt-bootstrap">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <table class="table table-striped table-bordered table-hover dataTable dtr-inline" role="grid" style="width: 100%;" width="100%">
+                                            <tbody>
+                                                <tr class="row">
+                                                    <th >Amount of BSF Larvae (tonnes, dry mass)</th>
+                                                    <td id="amount_of_bsf_larvae"></td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Protein content (tonnes)</th>
+                                                    <td id="protein_content"></td>
+                                                </tr>
+                                                 <tr class="row">
+                                                    <th>Fat content (tonnes)</th>
+                                                    <td id="fat_content"></td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Potential larvae revenue (US$)</th>
+                                                    <td id="potential_larvae_revenue"></td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Amount of BSF Residue (tonnes, dry mass)</th>
+                                                    <td id="amount_of_bsf_residue"></td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Potential BSF residue revenue (US$)</th>
+                                                    <td id="potential_bsf_residue_revenue"></td>
+                                                </tr>
+                                                <tr class="row info">
+                                                    <th>N% of BSF residue</th>
+                                                    <td id="n_pc_bsf_residue"></td>
+                                                </tr>
+                                                <tr class="row info">
+                                                    <th>N by mass (tonnes)</th>
+                                                    <td id="n_by_mass_bsf"></td>
+                                                </tr>
+                                                <tr class="row info">
+                                                    <th>P% of BSF residue</th>
+                                                    <td id="p_pc_bsf_residue"></td>
+                                                </tr>
+                                                <tr class="row info">
+                                                    <th>P by mass (tonnes)</th>
+                                                    <td id="p_by_mass_bsf"></td>
+                                                </tr>
+                                                <tr class="row info">
+                                                    <th>K% of BSF residue</th>
+                                                    <td id="k_pc_bsf_residue"></td>
+                                                </tr>
+                                                <tr class="row info">
+                                                    <th>K by mass (tonnes)</th>
+                                                    <td id="k_by_mass_bsf"></td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Total potential BSF revenue (US$)</th>
+                                                    <td id="total_potential_bsf_revenue"></td>
+                                                </tr>                                    
+                                            </tbody>
+                                        </table>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                                
+                            
+                        </div>
+                    </div>
+                </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">Compost</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="dataTables-wrapper dt-bootstrap">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <table class="table table-striped table-bordered table-hover dataTable dtr-inline" role="grid" style="width: 100%;" width="100%">
+                                            <tbody>
+                                                <tr class="row">
+                                                    <th >Amount of compost (tonnes, dry mass)</th>
+                                                    <td id="amount_of_compost"></td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Total potential compost value (US$)</th>
+                                                    <td id="total_potential_compost_revenue"></td>
+                                                </tr>
+                                                <tr class="row info">
+                                                    <th>N% of compost</th>
+                                                    <td id="n_pc_compost"></td>
+                                                </tr>
+                                                <tr class="row info">
+                                                    <th>N by mass (tonnes)</th>
+                                                    <td id="n_by_mass_compost"></td>
+                                                </tr>
+                                                <tr class="row info">
+                                                    <th>P% of compost</th>
+                                                    <td id="p_pc_compost"></td>
+                                                </tr>
+                                                <tr class="row info">
+                                                    <th>P by mass (tonnes)</th>
+                                                    <td id="p_by_mass_compost"></td>
+                                                </tr>
+                                                <tr class="row info">
+                                                    <th>K% of compost</th>
+                                                    <td id="k_pc_compost"></td>
+                                                </tr>
+                                                <tr class="row info">
+                                                    <th>K by mass (tonnes)</th>
+                                                    <td id="k_by_mass_compost"></td>
+                                                </tr>                                   
+                                            </tbody>
+                                        </table>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                                
+                            
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="charts" class="tab-pane fade">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Anaerobic Digestion - Biogas</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div id="columnchart_material" style="width: 600px; height: 350px;"></div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+{% endblock %}
+

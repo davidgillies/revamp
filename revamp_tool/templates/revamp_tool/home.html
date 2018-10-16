@@ -2,5 +2,21 @@
 {% load i18n %}
 
 
-{% block title %} {% trans "Hello" %}{% endblock %}
-{% block content %} <div><p>{% blocktrans %} a string {% endblocktrans %}</p></div> {% endblock %}
+{% block title %} {% trans "Home" %}{% endblock %}
+{% block content %} 
+<div class="row">
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">{% trans "Welcome to Revamp" %}</div>
+			<div class="panel-body">
+				
+					<h2>Resource Value Mapping (Revamp)</h2>
+					<h3>{% trans "Introduction" %}</h3>
+					<p>{% blocktrans %} REVAMP helps city planners to estimate the total resources and reuse potential available in a city’s wastewater and other organic waste streams, as well as their financial values.{% endblocktrans %}</p>
+					<p>
+
+				
+			</div>
+		</div>
+
+{% endblock %}
