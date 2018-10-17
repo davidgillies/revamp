@@ -4,7 +4,31 @@ var results = [
           ['Solid Fuel', 0, 0, 0],
           ['BSF Processing', 0, 0, 0],
           ['Composting', 0, 0, 0]
-        ];
+];
+
+var results2 = [
+          ['Resource Recovery Options', 'Nitrogen', 'Phosphorus', 'Potassium'],
+          ['Anaerobic Digestion', 0, 0, 0],
+          ['Solid Fuel', 0, 0, 0],
+          ['BSF Processing', 0, 0, 0],
+          ['Composting', 0, 0, 0]
+];
+
+var results3 = [
+          ['Resource Recovery Options', 'Nitrogen', 'Phosphorus', 'Potassium'],
+          ['Anaerobic Digestion', 0, 0, 0],
+          ['Solid Fuel', 0, 0, 0],
+          ['BSF Processing',0, 0, 0],
+          ['Composting', 0, 0, 0]
+];
+
+var results4 = [
+          ['Resource Recovery Options', 'Nitrogen', 'Phosphorus', 'Potassium'],
+          ['Anaerobic Digestion', 0, 0, 0],
+          ['Solid Fuel', 0, 0, 0],
+          ['BSF Processing', 0, 0, 0],
+          ['Composting', 0, 0, 0]
+];
 
 
 function check_total() {
@@ -39,6 +63,7 @@ function calculate_ad(project, amount, pc) {
 	var energy_content_mj = amount_of_gas * 21.6;
 	console.log(energy_content_mj);
 	$('#energy_content_mj').html(energy_content_mj.toFixed(2));
+	results3[1][1] = energy_content_mj;
 
 	var energy_content_kwh = amount_of_gas * 6;
 	console.log(energy_content_kwh);
@@ -47,6 +72,7 @@ function calculate_ad(project, amount, pc) {
 	var potential_biogas_revenue = amount_of_gas * project['prices']['biogasPrice'];
 	console.log(potential_biogas_revenue);
 	$('#potential_biogas_revenue').html(potential_biogas_revenue.toFixed(2));
+	results2[1][1] = potential_biogas_revenue;
 
 	var amount_of_ad_residue = (amount*(pc/100)*1000)*(project['wasteQuality']['totalSolids']/(10**9))*(1-(project['treatmentProcesses']['dmrRateAnaerobicDigestion']/100))*(1-(project['treatmentProcesses']['dmrCompost']/100));
 	console.log(amount_of_ad_residue);
@@ -55,6 +81,7 @@ function calculate_ad(project, amount, pc) {
 	var potential_ad_residue_revenue = amount_of_ad_residue * project['prices']['soilConditionerPrice'];
 	console.log(potential_ad_residue_revenue);
 	$('#potential_ad_residue_revenue').html(potential_ad_residue_revenue.toFixed(2));
+
 
 	var n_by_mass = (amount*(pc/100)*1000)*(project['wasteQuality']['totalNitrogen']/(10**9))*(1-(project['treatmentProcesses']['tnrCompostingReduction']/100));
 	console.log(n_by_mass);
@@ -97,6 +124,7 @@ function calculate_sf(project, amount, pc) {
 	var energy_content_mj = (amount*(pc/100)*1000)*(project['wasteQuality']['totalSolids']/(10**9))*1000*project['wasteQuality']['calorificValue'];
 	console.log(energy_content_mj);
 	$('#energy_content_mj_sf').html(energy_content_mj.toFixed(2));
+	results3[2][1] = energy_content_mj;
 
 	var energy_content_kwh = (amount*(pc/100)*1000)*(project['wasteQuality']['totalSolids']/(10**9))*1000*project['wasteQuality']['calorificValue']*0.277778;
 	console.log(energy_content_kwh);
@@ -105,6 +133,7 @@ function calculate_sf(project, amount, pc) {
 	var total_potential_sf_revenue = amount_of_solid_fuel * project['prices']['solidCombustionPrice']
 	console.log(total_potential_sf_revenue);
 	$('#total_potential_sf_revenue').html(total_potential_sf_revenue.toFixed(2));
+	results2[2][1] = total_potential_sf_revenue;
 	
 }
 
@@ -124,6 +153,7 @@ function calculate_bsf(project, amount, pc) {
 	var potential_larvae_revenue = amount_of_bsf_larvae * project['prices']['prepupaePrice'];
 	console.log(potential_larvae_revenue);
 	$('#potential_larvae_revenue').html(potential_larvae_revenue.toFixed(2));
+	results2[3][1] = potential_larvae_revenue;
 
 	var amount_of_bsf_residue = (amount*(pc/100)*1000)*(project['wasteQuality']['totalSolids']/(10**9))*(1-(project['treatmentProcesses']['dmrRateBsfResidue']/100))*(1-(project['treatmentProcesses']['dmrCompost']/100));
 	console.log(amount_of_bsf_residue);
@@ -173,6 +203,7 @@ function calculate_compost(project, amount, pc) {
 	var total_potential_compost_revenue = amount_of_compost * project['prices']['soilConditionerPrice'];
 	console.log(total_potential_compost_revenue);
 	$('#total_potential_compost_revenue').html(total_potential_compost_revenue.toFixed(2));
+	results2[4][1] = total_potential_compost_revenue;
 
 	var n_by_mass = (amount*(pc/100)*1000)*(project['wasteQuality']['totalNitrogen']/(10**9))*(1-(project['treatmentProcesses']['tnrCompostingReduction']/100));
 	console.log(n_by_mass);
@@ -254,7 +285,7 @@ function drawFirstChart() {
 
         var options = {
           chart: {
-            title: 'Nutrient Content from Sewage Sludge',
+            title: 'Nutrient Content from Faecal Sludge',
             //subtitle: 'Bla',
             width: '600px',
             height: '350px'
@@ -270,6 +301,69 @@ function drawFirstChart() {
         chart.draw(data, google.charts.Bar.convertOptions(options));
 }
 
+function drawSecondChart() {
+		var data = google.visualization.arrayToDataTable(results2);
+
+        var options = {
+          chart: {
+            title: 'Potential Revenuse From Faecal Sludge',
+            //subtitle: 'Bla',
+            width: '600px',
+            height: '350px'
+          },
+          vAxis: {title: 'Revenue (US$)', direction:-1, slantedText:true, slantedTextAngle:90}
+        };
+
+        $(".nav-tabs a[title='charts']").click()
+        //$(".tabs a[title='content_1']").click()
+
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material2'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+}
+
+function drawThirdChart() {
+		var data = google.visualization.arrayToDataTable(results3);
+
+        var options = {
+          chart: {
+            title: 'Energy Content from Faecal Sludge',
+            //subtitle: 'Bla',
+            width: '600px',
+            height: '350px'
+          },
+          vAxis: {title: 'Thousand MJ', direction:-1, slantedText:true, slantedTextAngle:90}
+        };
+
+        $(".nav-tabs a[title='charts']").click()
+        //$(".tabs a[title='content_1']").click()
+
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material3'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+}
+
+function drawFourthChart() {
+		var data = google.visualization.arrayToDataTable(results4);
+
+        var options = {
+          chart: {
+            title: 'Nutrient Content from Faecal Sludge',
+            //subtitle: 'Bla',
+            width: '600px',
+            height: '350px'
+          },
+          vAxis: {title: 'Mass (tonnes)', direction:-1, slantedText:true, slantedTextAngle:90}
+        };
+
+        $(".nav-tabs a[title='charts']").click()
+        //$(".tabs a[title='content_1']").click()
+
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material4'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+}
+
 
 $(document).ready(function () {
 	console.log('hello revamp');
@@ -281,6 +375,9 @@ $(document).ready(function () {
 		  	
 
 		    drawFirstChart();
+		    drawSecondChart();
+		    drawThirdChart();
+		    drawFourthChart();
 		  }
 	});
 
