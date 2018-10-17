@@ -30,7 +30,7 @@ class Query(object):
     all_prices = graphene.List(PricesType)
     all_wastequality = graphene.List(WasteQualityType)
     all_projects = graphene.List(RevampProjectType)
-    project = graphene.Field(RevampProjectType, 
+    project = graphene.Field(RevampProjectType,
                              id=graphene.Int())
 
     def resolve_all_prices(self, info, **kwargs):

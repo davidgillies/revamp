@@ -273,8 +273,6 @@ function gql(query) {
         project().then(function(project) {
 
         	calculate_results(project['project']);
-
-            
             console.log('done');
         })
 
