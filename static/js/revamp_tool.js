@@ -265,7 +265,7 @@ function calculate_results(project) {
 }
 
 function gql(query) {
-        var graph = graphql("http://localhost:8000/graphql", {
+        var graph = graphql("/graphql", {
             method: "POST",
 
         });
