@@ -1,6 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from wagtail.core.fields import RichTextField, StreamField
+from wagtail.core.models import Page
+from wagtail.search import index
+from wagtail.admin.edit_handlers import FieldPanel
+
+from revamp_tool.i18n import *
 
 WASTE_STREAMS_UNITS = (
     (1, 'cubic meters/day'),
@@ -23,6 +29,33 @@ TREATMENT_PROCESS_UNITS = (
 
 
 # Create your models here.
+class RevampPage(Page):
+    title_es = models.CharField(max_length=255)
+
+    body_en = RichTextField()
+    body_es = RichTextField(null=True, blank=True)
+    
+    search_fields = Page.search_fields + [
+        index.SearchField('body_en', 'body_es'),
+    ]
+    
+
+    content_panels = Page.content_panels + [
+        FieldPanel('title_es', classname="full"),
+        FieldPanel('body_en', classname="full"),
+        FieldPanel('body_es', classname="full"),
+
+    ]
+    
+    translated_title = TranslatedField(
+        'title',
+        'title_es',
+    )
+    body = TranslatedField(
+        'body_en',
+        'body_es',
+    )
+    
 class WasteStreams(models.Model):
     name = models.CharField(max_length=30)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -256,7 +289,7 @@ class Location(models.Model):
     city = models.CharField(max_length=30)
     country = models.CharField(max_length=30)
     population = models.IntegerField(blank=True, null=True)
-    state = models.CharField(max_length=30)
+    state = models.CharField(max_length=30, blank=True, null=True)
     date_prepared = models.DateField()
     prepared_by = models.ForeignKey(User, on_delete=models.PROTECT)
 
@@ -266,10 +299,17 @@ class RevampProject(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
+    deleted = models.BooleanField(default=False)
+    active = models.BooleanField(default=False)
+    location = models.ForeignKey(Location, blank=True, null=True, on_delete=models.PROTECT)
     waste_streams = models.ForeignKey(WasteStreams, on_delete=models.PROTECT)
     prices = models.ForeignKey(Prices, on_delete=models.PROTECT)
-    treatment_processes = models.ForeignKey(TreatmentProcesses, on_delete=models.PROTECT)
-    waste_quality = models.ForeignKey(WasteQuality, on_delete=models.PROTECT)
+    fs_treatment_processes = models.ForeignKey(TreatmentProcesses, on_delete=models.PROTECT, related_name="fs_tp")
+    ss_treatment_processes = models.ForeignKey(TreatmentProcesses, on_delete=models.PROTECT, related_name="ss_tp")
+    sw_treatment_processes = models.ForeignKey(TreatmentProcesses, on_delete=models.PROTECT, related_name="sw_tp")
+    fs_waste_quality = models.ForeignKey(WasteQuality, on_delete=models.PROTECT, related_name='fs_wq')
+    ss_waste_quality = models.ForeignKey(WasteQuality, on_delete=models.PROTECT, related_name="ss_wq")
+    sw_waste_quality = models.ForeignKey(WasteQuality, on_delete=models.PROTECT, related_name="sw_wq")
 
     def __str__(self):
         return self.name

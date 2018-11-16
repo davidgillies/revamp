@@ -44,8 +44,15 @@ class WasteQualityAdmin(admin.ModelAdmin):
     list_filter = ('created_at', 'updated_at', 'approved')
 
 
+class LocationAdmin(admin.ModelAdmin):
+    save_as = True
+    save_on_top = True
+    list_display = ('city', 'date_prepared', 'prepared_by')
+    list_filter = ('date_prepared', 'prepared_by')
+    
 admin.site.register(RevampProject, RevampProjectAdmin)
 admin.site.register(WasteStreams, WasteStreamsAdmin)
 admin.site.register(Prices, PricesAdmin)
 admin.site.register(TreatmentProcesses, TreatmentProcessesAdmin)
 admin.site.register(WasteQuality, WasteQualityAdmin)
+admin.site.register(Location, LocationAdmin)
