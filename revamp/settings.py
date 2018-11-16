@@ -25,6 +25,10 @@ PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+WAGTAIL_SITE_NAME = 'Revamp'
+
+WAGTAILADMIN_PERMITTED_LANGUAGES = [('en', 'English'),
+                                    ('es', 'Spanish')]
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -57,6 +61,20 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'revamp_tool',
     'graphene_django',
+    'wagtail.contrib.forms',
+    'wagtail.contrib.redirects',
+    'wagtail.embeds',
+    'wagtail.sites',
+    'wagtail.users',
+    'wagtail.snippets',
+    'wagtail.documents',
+    'wagtail.images',
+    'wagtail.search',
+    'wagtail.admin',
+    'wagtail.core',
+
+    'modelcluster',
+    'taggit',
 ]
 
 MIDDLEWARE = [
@@ -69,6 +87,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'wagtail.core.middleware.SiteMiddleware',
+    'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 ]
 
 ROOT_URLCONF = 'revamp.urls'
@@ -158,7 +178,7 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_L10N = True
+USE_L10N = False
 
 USE_TZ = True
 
