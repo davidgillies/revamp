@@ -1,3 +1,5 @@
+{% load wagtailcore_tags navigation_tags static wagtailuserbar %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,20 +24,27 @@
 
     <!-- Morris Charts CSS -->
     <link href="/static/vendor/morrisjs/morris.css" rel="stylesheet">
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="/static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/css/revamp_tool.css" rel="stylesheet" type="text/css">
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://github.com/niklasvh/html2canvas/releases/download/0.5.0-alpha1/html2canvas.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
     <script type="text/javascript">
- google.charts.load('current', {'packages':['bar']});
+ google.charts.load('current', {'packages':['corechart', 'bar', 'sankey']});
       //google.charts.setOnLoadCallback(drawFirstChart);
 
 
 
   </script>
-
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+   
 
 
 
@@ -51,9 +60,10 @@
 <body>
 
     <div id="wrapper">
+        
 
         <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <nav class="navbar navbar-green navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -64,6 +74,19 @@
                 <a class="navbar-brand" href="/">REVAMP</a>
             </div>
             <!-- /.navbar-header -->
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="/">Home</a></li>
+              <li><a href="/about/">About</a></li>
+              <li><a href="/knowledge/">Knowledge</a></li>
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">News &amp; Events
+                <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="/news">News</a></li>
+                  <li><a href="/events">Events</a></li>
+                </ul>
+              </li>
+            </ul>
 
             <ul class="nav navbar-top-links navbar-right">
 
@@ -114,23 +137,29 @@
 
             <!-- /.navbar-static-side -->
         </nav>
+{% block content %}
+        <div id="page-wrapper">
 
-        <div id="not-page-wrapper">
 
-
-            {% block content %}
             
-        <!-- /#page-wrapper -->
-        {% endblock %}
+            
+
+       
     </div>
     <!-- /#wrapper -->
+     {% endblock %}
 
 
     <!-- jQuery -->
     <script src="/static/vendor/jquery/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/amstockchart/3.13.0/exporting/rgbcolor.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stackblur-canvas/1.4.1/stackblur.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/canvg/1.5/canvg.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
 
     <!-- Metis Menu Plugin JavaScript -->
     <script src="/static/vendor/metisMenu/metisMenu.min.js"></script>
@@ -144,9 +173,15 @@
     <script type="text/javascript" src={% url 'javascript-catalog' %}></script>
     <script src="/static/js/sb-admin-2.min.js"></script>
     <script src="/static/js/graphql.min.js"></script>
+<script src="/static/js/notify.js"></script>  
 
     <script type="text/javascript" src="/static/js/revamp_tool.js"></script>
+    
+    </div>
 
+{% block js %}
+    
+{% endblock %}
 
 </body>
 
