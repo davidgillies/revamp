@@ -1,0 +1,1825 @@
+{% extends "revamp_tool/base.html" %}
+{% load i18n %}
+
+
+{% block title %} {% trans "Revamp Tool" %}{% endblock %}
+{% block content %}
+
+<div id="not-page-wrapper">
+
+
+<div id="app">
+   {% if request.user.is_authenticated %}
+    <div class="well ">
+        <div id="wastestreams" class="panel panel-success ">
+            <div class="panel-heading"><h3 class="panel-title"><a data-toggle="collapse" href="#panel_body" aria-expanded="true">Manage Projects</a></h3></div>
+                <div id="panel_body" class="panel-collapse collapse in">
+                <div  class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p>To start a new project just fill in the inputs and hit the Save Project Button below.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row row-head">
+                                <div class="col-md-4">
+                                    <h4>Project Name</h4>
+                                </div>
+                                
+                                <div class="col-md-4">
+                                    <h4>Last updated</h4>
+                                </div>
+                                <div clas="col-md-4">
+                                    <h4 class="action-header">Actions</h4>
+                                </div>
+                            </div>
+                            <div v-if="projects.length">
+                            <div  v-cloak v-for="(project, index) in projects" class="row row-buffer">
+                                <div class="col-md-4 row-text">${ project.name }</div>
+                                <div class="col-md-4 row-text"> ${ project.updated_at }</div>
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-warning " v-on:click.prevent="load(project.id)"  >Load</button>
+                                    <button id="delete_button" type="button" class="btn btn-danger load-notify" data-toggle="modal" data-target="#delete-modal" v-on:click.prevent="set_active_project(project.id, index)">Delete</button>
+                                    <a type="button" class="btn btn-success load-notify" :href="project.link_url" >Download as Excel</a>
+                                    
+                                </div>
+                                
+
+                                </div>
+                            <div v-else v-cloak><div class="col-md-12 row-text">You have no projects.</div></div>
+                                
+                            </div>
+
+       
+                        
+                        </div>
+                    </div>
+
+                    <div class="project-panel-footer">
+                        <div class="row">
+                    <div class="col-md-8">
+                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#new-modal">Load Defaults</button>
+                    </div>
+                    <div class="col-md-4">
+                             <select class="location-selector" id="approved_library" name="approved_library">
+                        <option selected disabled>Select from approved locations</option>
+                        {% for proj in approved_projects %}
+                        <option value="{{proj.id}}">{{ proj.name }}</option>
+                        {% endfor %}
+                    </select>
+                            <button id="load_approved_library" type="button" class="btn btn-warning">Load Project</button>
+                            
+                        </div>
+                            </div>
+                   
+                        
+           </div>
+            
+                    <div id="new-modal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title">Default Options</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <strong>Use default for</strong>
+                                        </div>
+                                        <div class="col-md-6">
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="row row-buffer">
+                                        <div class="col-md-6 row-text">
+                                            Feacal Sludge Treatment Process
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type='checkbox' ref="checkbox_fs_tp" :checked.prop="use_defaults.fs_tp"  data-on="Yes" data-off="No" />
+                                        </div>
+                                    </div>
+                                    <div class="row row-buffer">
+                                        <div class="col-md-6 row-text">
+                                            Sewage Sludge Treatment Process
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type='checkbox' ref="checkbox_ss_tp" :checked.prop="use_defaults.ss_tp"  data-on="Yes" data-off="No" />
+                                        </div>
+                                    </div>
+                                    <div class="row row-buffer">
+                                        <div class="col-md-6 row-text">
+                                            Solid Waste Treatment Process
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type='checkbox' ref="checkbox_sw_tp" :checked.prop="use_defaults.sw_tp"  data-on="Yes" data-off="No" />
+                                        </div>
+                                    </div>
+                                    <div class="row row-buffer">
+                                        <div class="col-md-6 row-text">
+                                            Feacal Sludge Waste Quality
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type='checkbox' ref="checkbox_fs_wq" :checked.prop="use_defaults.fs_wq"  data-on="Yes" data-off="No" />
+                                        </div>
+                                    </div>
+                                    <div class="row row-buffer">
+                                        <div class="col-md-6 row-text">
+                                            Sewage Sludge Waste Quality
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type='checkbox' ref="checkbox_ss_wq" :checked.prop="use_defaults.ss_wq"  data-on="Yes" data-off="No" />
+                                        </div>
+                                    </div>
+                                    <div class="row row-buffer">
+                                        <div class="col-md-6 row-text">
+                                            Solid Waste Waste Quality
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type='checkbox' ref="checkbox_sw_wq" :checked.prop="use_defaults.sw_wq"  data-on="Yes" data-off="No" />
+                                        </div>
+                                    </div>
+                                    <div class="row row-buffer">
+                                        <div class="col-md-6 row-text">
+                                            Prices
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type='checkbox' ref="checkbox_p" :checked.prop="use_defaults.p" data-on="Yes" data-off="No"  />
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click.prevent="load_defaults()">Load Defaults</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     <div id="delete-modal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title">Project Options</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Are you sure you want to delete this project?</p>    
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal" v-on:click.prevent="delete_project()">Delete Project</button>
+                                </div>
+                            </div>
+                        </div>
+                                
+                            </div>
+            
+                    
+            </div>
+            </div>
+        </div>
+    
+{% endif %}
+    <div class="well">
+        <h4>REVAMP TOOL Inputs</h4>
+        <div class="row">
+            <div class="col-md-12">
+                <p>The tool requires input for three waste streams and four resource recovery options.  You can use the defaults loaded immediately or add your own data.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                <div class="col-xs-3">
+                <ul class="nav nav-tabs tabs-left">
+                    <li class="active"><a data-toggle="tab" data-target="#waste-streams">Waste Streams</a></li>
+                    <li><a data-toggle="tab" data-target="#wastequality">Waste Quality</a></li>
+                    <li><a data-toggle="tab"  data-target="#treatmentprocesses">Treatment Processes</a></li>
+                    <li><a data-toggle="tab"  data-target="#prices">Prices</a></li>
+</ul>    <!--h4>REVAMP TOOL Inputs</h4></div>
+                <!--div class="col-md-4">
+                <div class="pull-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-primary  dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                        Options
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right nav-fix" role="menu">
+                                        <li><a href="#waste-streams" data-toggle="tab">Waste Streams</a>
+                                        </li>
+                                        <li><a href="#wastequality" data-toggle="tab">Waste Quality</a>
+                                        </li>
+                                        <li><a href="#treatmentprocesses" data-toggle="tab">Treatment Processes</a>
+                                        </li>
+                                        <li><a href="#prices" data-toggle="tab">Prices</a>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Separated link</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                    </div--></div>
+                
+                <div class="tab-content col-xs-9">
+                    <div id="waste-streams" class="tab-pane fade in active">
+                <div  class="panel panel-default">
+                    <div class="panel-heading"><h4>Waste Streams</h4></div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>Enter your waste streams here and determine the percentage of each waste stream to be used for each resource option.</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="panel panel-green">
+                                    <div class="panel-heading">Faecal Sludge</div>
+                                    <div class="panel-body">
+                                        <form role="form" >
+                                            <div class="form-group">
+                                                <input id="fs_amount" class="form-control" type="number" v-model:value="wastestreams.fs_amount" />
+                                                <p class="help-block">Amount available per day</p>
+                                            </div>
+                                        </form>
+                                    </div>
+                                  
+                                    <div class="panel-footer">
+                                        <form role="form">
+                                            <p class="form-control-static">Select what % of waste to what option</p>
+                                            <div class="form-group">
+                                                <label>Anaerobic Digestion </label>
+                                                <input id="fs_ad_pc" class="form-control" type="number" v-model:value="wastestreams.fs_ad_pc" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Solid Fuel </label>
+                                                <input id="fs_sf_pc" class="form-control" type="number" v-model:value="wastestreams.fs_sf_pc" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Black Soldier Fly Process</label>
+                                                <input id="fs_bsfp_pc" class="form-control" type="number" v-model:value="wastestreams.fs_bsfp_pc" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Compost </label>
+                                                <input id="fs_c_pc" class="form-control" type="number" v-model:value="wastestreams.fs_c_pc" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Total </label>
+                                                <input id="fs_t_pc" readonly class="form-control" type="number" v-model:value="wastestreams.fs_t_pc" />
+                                                <div id="fs_total_warning"></div>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>                    
+                            <div class="col-md-4">
+                                <div class="panel panel-green">
+                                    <div class="panel-heading">Sewage Sludge</div>
+                                    <div class="panel-body">
+                                    <form role="form" >
+                                            <div class="form-group">
+                                                <input id="ss_amount" class="form-control" type="number" v-model:value="wastestreams.ss_amount" />
+                                                <p class="help-block">Amount available per day</p>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    
+                                 
+                                    <div class="panel-footer">
+                                        <form role="form">
+                                            <p class="form-control-static">Select what % of waste to what option</p>
+                                            <div class="form-group">
+                                                <label>Anaerobic Digestion </label>
+                                                <input id="ss_ad_pc" class="form-control" type="number" v-model:value="wastestreams.ss_ad_pc" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Solid Fuel </label>
+                                                <input id="ss_sf_pc" class="form-control" type="number" v-model:value="wastestreams.ss_sf_pc" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Black Soldier Fly Process</label>
+                                                <input id="ss_bsfp_pc" class="form-control" type="number" v-model:value="wastestreams.ss_bsfp_pc" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Compost </label>
+                                                <input id="ss_c_pc" class="form-control" type="number" v-model:value="wastestreams.ss_c_pc" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Total </label>
+                                                <input id="ss_t_pc" readonly class="form-control" type="number" v-model:value="wastestreams.ss_t_pc" />
+                                                <div id="ss_total_warning"></div>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="panel panel-green">
+                                    <div class="panel-heading">
+                                    Organic Municipal Solid Waste
+                                    </div>
+                                    <div class="panel-body">
+                                        <form role="form" >
+                                            <div class="form-group">
+                                                <input id="sw_amount" class="form-control" type="number" v-model:value="wastestreams.sw_amount" />
+                                                <p class="help-block">Amount available per day</p>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    
+
+                                    <div class="panel-footer">
+                                    
+                                        <form role="form">
+                                            <p class="form-control-static">Select what % of waste to what option</p>
+                                            <div class="form-group">
+                                                <label>Anaerobic Digestion </label>
+                                                <input id="sw_ad_pc" class="form-control" type="number" v-model:value="wastestreams.sw_ad_pc" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Solid Fuel </label>
+                                                <input id="sw_sf_pc" class="form-control" type="number" v-model:value="wastestreams.sw_sf_pc" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Black Soldier Fly Process</label>
+                                                <input id="sw_bsfp_pc" class="form-control" type="number" v-model:value="wastestreams.sw_bsfp_pc" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Compost </label>
+                                                <input id="sw_c_pc" class="form-control" type="number" v-model:value="wastestreams.sw_c_pc" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Total </label>
+                                                <input id="sw_t_pc" readonly class="form-control" type="number" v-model:value="wastestreams.sw_t_pc" />
+                                                <div id="sw_total_warning"></div>
+                                            </div>
+                                           
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+                    <div id="wastequality" class="tab-pane fade">
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><h4>Waste Quality</h4></div> 
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <p>Waste quality has default data on the physical and chemical characteristic of waste streams.  You are free to change these.</p>
+                                        </div>
+                                    </div>
+                        <div class="row">
+                            <div class="dataTables-wrapper dt-bootstrap">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <table class="table table-striped table-bordered table-hover dataTable dtr-inline" role="grid" style="width: 100%;" width="100%">
+                                            <thead>
+                                                <tr class="row">
+                                                    <th class="col-md-4"></th>
+                                                    <th class="col-md-2">Units</th>
+                                                    <th class="col-md-2">Faecal Sludge</th>
+                                                    <th class="col-md-2">Sewage Sludge</th>
+                                                    <th class="col-md-2">Solid Waste</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                
+                                                <tr class="row">
+                                                    <th >Total Solids, TS</th>
+                                                    <td>%</td>
+                                                    <td><input type="number" class="form-control" v-model:value="wastequality_fs.total_solids_pc" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="wastequality_ss.total_solids_pc" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="wastequality_sw.total_solids_pc" /></td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Total Solids, TS</th>
+                                                    <td>mg/L</td>
+                                                    <td><input type="number" class="form-control" v-model:value="wastequality_fs.total_solids" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="wastequality_ss.total_solids" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="wastequality_sw.total_solids" /></td>
+                                                </tr>
+                                                 <tr class="row">
+                                                    <th>Volatile Solids, VS</th>
+                                                    <td>% TS</td>
+                                                    <td><input type="number" class="form-control" v-model:value="wastequality_fs.volatile_solids" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="wastequality_ss.volatile_solids" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="wastequality_sw.volatile_solids" /></td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Total Nitrogen, TN</th>
+                                                    <td>mg N/L</td>
+                                                    <td><input type="number" class="form-control" v-model:value="wastequality_fs.total_nitrogen" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="wastequality_ss.total_nitrogen" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="wastequality_sw.total_nitrogen" /></td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Total Nitrogen, TN</th>
+                                                    <td>mg N/kg TS</td>
+                                                    <td><input type="number" class="form-control" v-model:value="wastequality_fs.total_nitrogen_mg_n_kg_ts" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="wastequality_ss.total_nitrogen_mg_n_kg_ts" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="wastequality_sw.total_nitrogen_mg_n_kg_ts" /></td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Total Phosphorus, TP</th>
+                                                    <td>mg P/L</td>
+                                                    <td><input type="number" class="form-control" v-model:value="wastequality_fs.total_phosphorus" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="wastequality_ss.total_phosphorus" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="wastequality_sw.total_phosphorus" /></td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Total Phosphorus, TP</th>
+                                                    <td>mg P/Kg TS</td>
+                                                    <td><input type="number" class="form-control" v-model:value="wastequality_fs.total_phosphorus_mg_p_kg_ts" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="wastequality_ss.total_phosphorus_mg_p_kg_ts" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="wastequality_sw.total_phosphorus_mg_p_kg_ts" /></td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Total Potassium, TK</th>
+                                                    <td>mg K/L</td>
+                                                    <td><input type="number" class="form-control" v-model:value="wastequality_fs.total_potassium" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="wastequality_ss.total_potassium" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="wastequality_sw.total_potassium" /></td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Total Potassium, TK</th>
+                                                    <td>mg K/kg TS</td>
+                                                    <td><input type="number" class="form-control" v-model:value="wastequality_fs.total_potassium_mg_k_kg_ts" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="wastequality_ss.total_potassium_mg_k_kg_ts" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="wastequality_sw.total_potassium_mg_k_kg_ts" /></td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Calorific Value, CV</th>
+                                                    <td>MJ/Kg TS</td>
+                                                    <td><input type="number" class="form-control" v-model:value="wastequality_fs.calorific_value" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="wastequality_ss.calorific_value" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="wastequality_sw.calorific_value" /></td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Biomethane Potential</th>
+                                                    <td>NM<sup>3</sup>CH<sub>4</sub>/tonne VS</td>
+                                                    <td><input type="number" class="form-control" v-model:value="wastequality_fs.biomethane_potential" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="wastequality_ss.biomethane_potential" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="wastequality_sw.biomethane_potential" /></td>
+                                                </tr>
+                                                                                   
+                                            </tbody>
+                                        </table>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                                
+                            
+                        </div>
+                                </div>
+                            
+                        </div>
+                            
+                    </div>
+                    <div id="treatmentprocesses" class="tab-pane fade">
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><h4>Treatment Processes</h4> </div>
+                                <div class="panel-body">
+                        <div class="row">
+                            <div class="dataTables-wrapper dt-bootstrap">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <table class="table table-striped table-bordered table-hover dataTable dtr-inline" role="grid" style="width: 100%;" width="100%">
+                                            <thead>
+                                                <tr class="row">
+                                                    <th class="col-md-4"></th>
+                                                    <th class="col-md-2">Units</th>
+                                                    <th class="col-md-2">Faecal Sludge</th>
+                                                    <th class="col-md-2">Sewage Sludge</th>
+                                                    <th class="col-md-2">Solid Waste</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                
+                                                <tr class="row">
+                                                    <th >Volatile Solids Degradation rate, VS<sub>D</sub></th>
+                                                    <td>%</td>
+                                                    <td><input type="number" class="form-control" v-model:value="treatmentprocesses_fs.volatile_solids_degradation_rate" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="treatmentprocesses_ss.volatile_solids_degradation_rate" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="treatmentprocesses_sw.volatile_solids_degradation_rate" /></td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Dry Mass Reduction rate for anaerobic digestion (AD) residue, DMR<sub>AD</sub></th>
+                                                    <td>% of initial TS</td>
+                                                    <td><input type="number" class="form-control" v-model:value="treatmentprocesses_fs.dmr_rate_anaerobic_digestion" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="treatmentprocesses_ss.dmr_rate_anaerobic_digestion" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="treatmentprocesses_sw.dmr_rate_anaerobic_digestion" /></td>
+                                                </tr>
+                                                 <tr class="row">
+                                                    <th>Biomass conversion rate for black soldier fly (BSF) larvae, BCR</th>
+                                                    <td>%</td>
+                                                    <td><input type="number" class="form-control" v-model:value="treatmentprocesses_fs.bcr_black_soldier_fly" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="treatmentprocesses_ss.bcr_black_soldier_fly" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="treatmentprocesses_sw.bcr_black_soldier_fly" /></td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Dry Mass Reduction rate for BSF residue, DMR<sub>BSF</sub></th>
+                                                    <td>% of initial TS</td>
+                                                    <td><input type="number" class="form-control" v-model:value="treatmentprocesses_fs.dmr_rate_bsf_residue" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="treatmentprocesses_ss.dmr_rate_bsf_residue" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="treatmentprocesses_sw.dmr_rate_bsf_residue" /></td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Total nitrogen (TN) reduction in BSF residue, TNR<sub>BSF</sub></th>
+                                                    <td>% of initial TN</td>
+                                                    <td><input type="number" class="form-control" v-model:value="treatmentprocesses_fs.tnr_bsf_residue" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="treatmentprocesses_ss.tnr_bsf_residue" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="treatmentprocesses_sw.tnr_bsf_residue" /></td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Total phosphorus (TP) reduction in BSF residue, TPR<sub>BSF</sub></th>
+                                                    <td>% of initial TP</td>
+                                                    <td><input type="number" class="form-control" v-model:value="treatmentprocesses_fs.tpr_bsf_residue" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="treatmentprocesses_ss.tpr_bsf_residue" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="treatmentprocesses_sw.tpr_bsf_residue" /></td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Total potassium (TK) reduction rate in BSF residue, TKR<sub>BSF</sub></th>
+                                                    <td>% of initial TK</td>
+                                                    <td><input type="number" class="form-control" v-model:value="treatmentprocesses_fs.tpotr_bsf_residue" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="treatmentprocesses_ss.tpotr_bsf_residue" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="treatmentprocesses_sw.tpotr_bsf_residue" /></td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Dry Mass Reduction in compost, DMR<sub>C</sub></th>
+                                                    <td>% of initial mass</td>
+                                                    <td><input type="number" class="form-control" v-model:value="treatmentprocesses_fs.dmr_compost" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="treatmentprocesses_ss.dmr_compost" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="treatmentprocesses_sw.dmr_compost" /></td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Total nitrogen (TN) reduction during composting, TNR<sub>C</sub></th>
+                                                    <td>% of initial TN</td>
+                                                    <td><input type="number" class="form-control" v-model:value="treatmentprocesses_fs.tnr_composting_reduction" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="treatmentprocesses_ss.tnr_composting_reduction" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="treatmentprocesses_sw.tnr_composting_reduction" /></td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Total phosphorus (TP) reduction during composting, TPR<sub>C</sub></th>
+                                                    <td>% of initial TP</td>
+                                                    <td><input type="number" class="form-control" v-model:value="treatmentprocesses_fs.tpr_composting_reduction" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="treatmentprocesses_ss.tpr_composting_reduction" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="treatmentprocesses_sw.tpr_composting_reduction" /></td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Total potassium (TK) reduction during composting, TKR<sub>C</sub></th>
+                                                    <td>% of initial TK</td>
+                                                    <td><input type="number" class="form-control" v-model:value="treatmentprocesses_fs.tpotr_composting_reduction" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="treatmentprocesses_ss.tpotr_composting_reduction" /></td>
+                                                    <td><input type="number" class="form-control" v-model:value="treatmentprocesses_sw.tpotr_composting_reduction" /></td>
+                                                </tr>
+                                                                                   
+                                            </tbody>
+                                        </table>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                                
+                            
+                        </div>
+                                </div>
+                            
+                        </div>
+                    </div>
+                    <div id="prices" class="tab-pane fade">
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><h4>Prices</h4> </div> 
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <p>Update the prices available in your local market.</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="dataTables-wrapper dt-bootstrap">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <table class="table table-striped table-bordered table-hover dataTable dtr-inline" role="grid" style="width: 100%;" width="100%">
+                                                        <thead>
+                                                            <tr class="row">
+                                                                <th class="col-md-6">Product</th>
+                                                                <th class="col-md-3">Potential Price</th>
+                                                                <th class="col-md-3">Units</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr class="row">
+                                                                <td>Biogas</td>
+                                                                <td><input type="number" class="form-control" v-model:value="prices.biogas_price" /></td>
+                                                                <td>US$/Nm<sup>3</sup></td>
+                                                            </tr>
+                                                            <tr class="row">
+                                                                <td>Solid fuel</td>
+                                                                <td><input type="number" class="form-control" v-model:value="prices.solid_combustion_price" /></td>
+                                                                <td>US$/ton</td>
+                                                            </tr>
+                                                            <tr class="row">
+                                                                <td>Black soldier fly larvae</td>
+                                                                <td><input type="number" class="form-control" v-model:value="prices.prepupae_price" /></td>
+                                                                <td>US$/ton</td>
+                                                            </tr>
+                                                            <tr class="row">
+                                                                <td>Compost</td>
+                                                                <td><input type="number" class="form-control" v-model:value="prices.soil_conditioner_price" /></td>
+                                                                <td>US$/ton</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                           
+                        </div>
+                    </div>
+                                                 <div class="form-group pull-right" >
+                                                     {% if request.user.is_authenticated %}
+                                                     <button id="save" class="btn btn-primary" data-toggle="modal" data-target="#save-modal" type="button">Save Project</button>
+                                                     <div id="save-modal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title">Project Options</h4>
+                                </div>
+                                <div class="modal-body">
+
+                                    <div class="row row-buffer">
+                                        <div class="col-md-6 row-text">
+                                            Name
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type='text'  class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="row row-buffer">
+                                        <div class="col-md-6 row-text">
+                                            City
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type='text'  class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="row row-buffer">
+                                        <div class="col-md-6 row-text">
+                                            Country
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type='text'  class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="row row-buffer">
+                                        <div class="col-md-6 row-text">
+                                            Population
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type='text'  class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="row row-buffer">
+                                        <div class="col-md-6 row-text">
+                                            state
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type='text'  class="form-control" />
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn" data-dismiss="modal">Close</button>
+                                    <button id="save_project" type="button" class="btn btn-primary" data-dismiss="modal" >Save Project</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                                                     {% endif %} 
+                                                <button id="calculate" class="btn btn-primary " type="button">Calculate Results</button>
+                                            </div>
+                    
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div id="outputs" class="well hidden">
+        <ul class="nav nav-tabs nav-justified">
+            <li class="active"><a id="charts-trigger" data-toggle="tab" title="charts" href="#charts"><i class="fa fa-bar-chart-o fa-fw"></i> Charts</a></li>
+            <li><a data-toggle="tab" href="#results"><i class="fa fa-table fa-fw"></i> Results</a></li>
+            <li><a id="sankey-trigger" data-toggle="tab" title="sankey" href="#sankey"><i class="fa fa-bar-chart-o fa-fw"></i> Sankey Chart</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="charts" class="tab-pane fade in active">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Anaerobic Digestion - Biogas</div>
+                    <div class="panel-body">
+                        <button class="btn btn-primary" type="button" id="convert-button" v-model:value="images">Convert to PNG</button>
+                        <div class="chartset">
+                        <div class="row form-group">
+                            <div class="col-md-6">
+                                <div id="columnchart_material" style="width: 600px; height: 350px;"></div>
+                                
+                            </div>
+                            <div class="col-md-6">
+                                <div id="columnchart_material2" style="width: 600px; height: 350px;"></div>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-6">
+                                <div id="columnchart_material3" style="width: 600px; height: 350px;"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div id="columnchart_material4" style="width: 600px; height: 350px;"></div>
+                            </div>
+                        </div>
+                            </div>
+                        <div class="chartset">
+                        <div class="row form-group">
+                            <div class="col-md-6">
+                                <div id="columnchart_material5" style="width: 600px; height: 350px;"></div>
+                                
+                            </div>
+                            <div class="col-md-6">
+                                <div id="columnchart_material6" style="width: 600px; height: 350px;"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="row form-group">
+                            <div class="col-md-6">
+                                <div id="columnchart_material7" style="width: 600px; height: 350px;"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div id="columnchart_material8" style="width: 600px; height: 350px;"></div>
+                            </div>
+                        </div>
+                            </div>
+                        <div class="chartset">
+                        <div class="row form-group">
+                            <div class="col-md-6">
+                                <div id="columnchart_material9" style="width: 600px; height: 350px;"></div>
+                                
+                            </div>
+                            <div class="col-md-6">
+                                <div id="columnchart_material10" style="width: 600px; height: 350px;"></div>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-6">
+                                <div id="columnchart_material11" style="width: 600px; height: 350px;"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div id="columnchart_material12" style="width: 600px; height: 350px;"></div>
+                            </div>
+                        </div>
+                            </div>
+                        <div class="chartset">
+                        <div class="row form-group">
+                            <div class="col-md-6">
+                                <div id="columnchart_material13" style="width: 600px; height: 350px;"></div>
+                                
+                            </div>
+                            <div class="col-md-6">
+                                <div id="columnchart_material14" style="width: 600px; height: 350px;"></div>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-6">
+                                <div id="columnchart_material15" style="width: 600px; height: 350px;"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div id="columnchart_material16" style="width: 600px; height: 350px;"></div>
+                            </div>
+                        </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div id="results" class="tab-pane fade">
+        
+                <div class="panel panel-default">
+                    <div class="panel-heading">Anaerobic Digestion - Biogas</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="dataTables-wrapper dt-bootstrap">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <table class="table table-striped table-bordered table-hover dataTable dtr-inline" role="grid" style="width: 100%;" width="100%">
+                                            <thead>
+                                                <tr class="row">
+                                                    <th class="col-md-6"></th>
+                                                    <th class="col-md-2">Faecal Sludge</th>
+                                                    <th class="col-md-2">Sewage Sludge</th>
+                                                    <th class="col-md-2">Solid Waste</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                
+                                                <tr class="row">
+                                                    <th >Amount of Biogas in Nm<sup>3</sup></th>
+                                                    <td>${ results.amount_of_gas_fs | two_decs }</td>
+                                                    <td> ${ results.amount_of_gas_ss | two_decs}</td>
+                                                    <td> ${ results.amount_of_gas_sw | two_decs}</td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Energy Content (MJ)</th>
+                                                    <td > ${ results.energy_content_mj_fs | two_decs}</td>
+                                                    <td > ${ results.energy_content_mj_ss | two_decs}</td>
+                                                    <td > ${ results.energy_content_mj_sw | two_decs}</td>
+                                                </tr>
+                                                 <tr class="row">
+                                                    <th>Energy Content (KWh)</th>
+                                                    <td > ${ results.energy_content_kwh_fs | two_decs}</td>
+                                                    <td > ${ results.energy_content_kwh_ss | two_decs}</td>
+                                                    <td > ${ results.energy_content_kwh_sw | two_decs}</td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Potential biogas revenue (US$)</th>
+                                                    <td > ${ results.potential_biogas_revenue_fs | two_decs }</td>
+                                                    <td > ${ results.potential_biogas_revenue_ss | two_decs}</td>
+                                                    <td > ${ results.potential_biogas_revenue_sw | two_decs}</td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Amount of AD Residue (tonnes, dry mass)</th>
+                                                    <td > ${ results.amount_of_ad_residue_fs | two_decs}</td>
+                                                    <td > ${ results.amount_of_ad_residue_ss | two_decs}</td>
+                                                    <td > ${ results.amount_of_ad_residue_sw | two_decs}</td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Potential AD residue revenue (US$)</th>
+                                                    <td > ${ results.potential_ad_residue_revenue_fs | two_decs}</td>
+                                                    <td > ${ results.potential_ad_residue_revenue_ss | two_decs}</td>
+                                                    <td > ${ results.potential_ad_residue_revenue_sw | two_decs}</td>
+                                                </tr>
+                                                <tr class="row info">
+                                                    <th>N% of AD residue</th>
+                                                    <td > ${ results.n_pc_ad_residue_fs | two_decs}</td>
+                                                    <td > ${ results.n_pc_ad_residue_ss | two_decs}</td>
+                                                    <td > ${ results.n_pc_ad_residue_sw | two_decs}</td>
+                                                </tr>
+                                                <tr class="row info">
+                                                    <th>N by mass (tonnes)</th>
+                                                    <td > ${ results.n_by_mass_fs | two_decs}</td>
+                                                    <td > ${ results.n_by_mass_ss | two_decs}</td>
+                                                    <td > ${ results.n_by_mass_sw | two_decs}</td>
+                                                </tr>
+                                                <tr class="row info">
+                                                    <th>P% of AD residue</th>
+                                                    <td > ${ results.p_pc_ad_residue_fs | two_decs}</td>
+                                                    <td > ${ results.p_pc_ad_residue_ss | two_decs}</td>
+                                                    <td > ${ results.p_pc_ad_residue_sw | two_decs}</td>
+                                                </tr>
+                                                <tr class="row info">
+                                                    <th>P by mass (tonnes)</th>
+                                                    <td > ${ results.p_by_mass_fs | two_decs}</td>
+                                                    <td > ${ results.p_by_mass_ss | two_decs}</td>
+                                                    <td > ${ results.p_by_mass_sw | two_decs}</td>
+                                                </tr>
+                                                <tr class="row info">
+                                                    <th>K% of AD residue</th>
+                                                    <td > ${ results.k_pc_ad_residue_fs | two_decs}</td>
+                                                    <td > ${ results.k_pc_ad_residue_ss | two_decs}</td>
+                                                    <td > ${ results.k_pc_ad_residue_sw | two_decs}</td>
+                                                </tr>
+                                                <tr class="row info">
+                                                    <th>K by mass (tonnes)</th>
+                                                    <td > ${ results.k_by_mass_fs | two_decs}</td>
+                                                    <td > ${ results.k_by_mass_ss | two_decs}</td>
+                                                    <td > ${ results.k_by_mass_sw | two_decs}</td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Total potential AD revenue (US$)</th>
+                                                    <td > ${ results.total_potential_ad_revenue_fs | two_decs}</td>
+                                                    <td > ${ results.total_potential_ad_revenue_ss | two_decs}</td>
+                                                    <td > ${ results.total_potential_ad_revenue_sw | two_decs}</td>
+                                                </tr>                                    
+                                            </tbody>
+                                        </table>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                                
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">Solid Fuel</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="dataTables-wrapper dt-bootstrap">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <table class="table table-striped table-bordered table-hover dataTable dtr-inline" role="grid" style="width: 100%;" width="100%">
+                                            <tbody>
+                                                <tr class="row">
+                                                    <th class="col-md-6" >Amount of solid fuel (tonnes, dry mass)</th>
+                                                    <td class="col-md-2" > ${ results.amount_of_solid_fuel_fs | two_decs}</td>
+                                                    <td class="col-md-2" > ${ results.amount_of_solid_fuel_ss | two_decs}</td>
+                                                    <td class="col-md-2" > ${ results.amount_of_solid_fuel_sw | two_decs}</td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Energy Content (MJ)</th>
+                                                    <td > ${ results.energy_content_mj_sf_fs | two_decs}</td>
+                                                    <td > ${ results.energy_content_mj_sf_ss | two_decs}</td>
+                                                    <td > ${ results.energy_content_mj_sf_sw | two_decs}</td>
+                                                </tr>
+                                                 <tr class="row">
+                                                    <th>Energy Content (KWh)</th>
+                                                    <td > ${ results.energy_content_kwh_sf_fs | two_decs}</td>
+                                                    <td > ${ results.energy_content_kwh_sf_ss | two_decs}</td>
+                                                    <td > ${ results.energy_content_kwh_sf_sw | two_decs}</td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Total Potential solid fuel revenue (US$)</th>
+                                                    <td > ${ results.total_potential_sf_revenue_fs | two_decs}</td>
+                                                    <td > ${ results.total_potential_sf_revenue_ss | two_decs}</td>
+                                                    <td > ${ results.total_potential_sf_revenue_sw | two_decs}</td>
+                                                </tr>
+                                                                                   
+                                            </tbody>
+                                        </table>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                                
+                            <div class="panel panel-default">
+                    <div class="panel-heading">Black Soldier Fly - Larvae</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="dataTables-wrapper dt-bootstrap">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <table class="table table-striped table-bordered table-hover dataTable dtr-inline" role="grid" style="width: 100%;" width="100%">
+                                            <tbody>
+                                                <tr class="row">
+                                                    <th class="col-md-6" >Amount of BSF Larvae (tonnes, dry mass)</th>
+                                                    <td class="col-md-2" > ${ results.amount_of_bsf_larvae_fs | two_decs}</td>
+                                                    <td class="col-md-2" > ${ results.amount_of_bsf_larvae_ss | two_decs}</td>
+                                                    <td class="col-md-2" > ${ results.amount_of_bsf_larvae_sw | two_decs}</td>
+                                               </tr>
+                                                <tr class="row">
+                                                    <th>Protein content (tonnes)</th>
+                                                    <td > ${ results.protein_content_fs | two_decs}</td>
+                                                    <td > ${ results.protein_content_ss | two_decs}</td>
+                                                    <td > ${ results.protein_content_sw | two_decs}</td>
+                                                </tr>
+                                                 <tr class="row">
+                                                    <th>Fat content (tonnes)</th>
+                                                    <td > ${ results.fat_content_fs | two_decs}</td>
+                                                    <td > ${ results.fat_content_ss | two_decs}</td>
+                                                    <td > ${ results.fat_content_sw | two_decs}</td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Potential larvae revenue (US$)</th>
+                                                    <td > ${ results.potential_larvae_revenue_fs | two_decs}</td>
+                                                    <td > ${ results.potential_larvae_revenue_ss | two_decs}</td>
+                                                    <td > ${ results.potential_larvae_revenue_sw | two_decs}</td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Amount of BSF Residue (tonnes, dry mass)</th>
+                                                    <td > ${ results.amount_of_bsf_residue_fs | two_decs}</td>
+                                                    <td > ${ results.amount_of_bsf_residue_ss | two_decs}</td>
+                                                    <td > ${ results.amount_of_bsf_residue_sw | two_decs}</td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Potential BSF residue revenue (US$)</th>
+                                                    <td > ${ results.potential_bsf_residue_revenue_fs | two_decs}</td>
+                                                    <td > ${ results.potential_bsf_residue_revenue_ss | two_decs}</td>
+                                                    <td > ${ results.potential_bsf_residue_revenue_sw | two_decs}</td>
+                                                </tr>
+                                                <tr class="row info">
+                                                    <th>N% of BSF residue</th>
+                                                    <td > ${ results.n_pc_bsf_residue_fs | two_decs}</td>
+                                                    <td > ${ results.n_pc_bsf_residue_ss | two_decs}</td>
+                                                    <td > ${ results.n_pc_bsf_residue_sw | two_decs}</td>
+                                                </tr>
+                                                <tr class="row info">
+                                                    <th>N by mass (tonnes)</th>
+                                                    <td > ${ results.n_by_mass_bsf_fs | two_decs}</td>
+                                                    <td > ${ results.n_by_mass_bsf_ss | two_decs}</td>
+                                                    <td > ${ results.n_by_mass_bsf_sw | two_decs}</td>
+                                                    
+                                                </tr>
+                                                <tr class="row info">
+                                                    <th>P% of BSF residue</th>
+                                                    <td > ${ results.p_pc_bsf_residue_fs | two_decs}</td>
+                                                    <td > ${ results.p_pc_bsf_residue_ss | two_decs}</td>
+                                                    <td > ${ results.p_pc_bsf_residue_sw | two_decs}</td>
+                                                </tr>
+                                                <tr class="row info">
+                                                    <th>P by mass (tonnes)</th>
+                                                    <td > ${ results.p_by_mass_bsf_fs | two_decs}</td>
+                                                    <td > ${ results.p_by_mass_bsf_ss | two_decs}</td>
+                                                    <td > ${ results.p_by_mass_bsf_sw | two_decs}</td>
+                                                </tr>
+                                                <tr class="row info">
+                                                    <th>K% of BSF residue</th>
+                                                    <td > ${ results.k_pc_bsf_residue_fs | two_decs}</td>
+                                                    <td > ${ results.k_pc_bsf_residue_ss | two_decs}</td>
+                                                    <td > ${ results.k_pc_bsf_residue_sw | two_decs}</td>
+                                                </tr>
+                                                <tr class="row info">
+                                                    <th>K by mass (tonnes)</th>
+                                                    <td > ${ results.k_by_mass_bsf_fs | two_decs}</td>
+                                                    <td > ${ results.k_by_mass_bsf_ss | two_decs}</td>
+                                                    <td > ${ results.k_by_mass_bsf_sw | two_decs}</td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Total potential BSF revenue (US$)</th>
+                                                    <td > ${ results.total_potential_bsf_revenue_fs | two_decs}</td>
+                                                    <td > ${ results.total_potential_bsf_revenue_ss | two_decs}</td>
+                                                    <td > ${ results.total_potential_bsf_revenue_sw | two_decs}</td>
+                                                </tr>                                    
+                                            </tbody>
+                                        </table>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                                
+                            
+                        </div>
+                    </div>
+                </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">Compost</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="dataTables-wrapper dt-bootstrap">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <table class="table table-striped table-bordered table-hover dataTable dtr-inline" role="grid" style="width: 100%;" width="100%">
+                                            <tbody>
+                                                <tr class="row">
+                                                    <th class="col-md-6" >Amount of compost (tonnes, dry mass)</th>
+                                                    <td class="col-md-2" > ${ results.amount_of_compost_fs | two_decs}</td>
+                                                    <td class="col-md-2" > ${ results.amount_of_compost_ss | two_decs}</td>
+                                                    <td class="col-md-2" > ${ results.amount_of_compost_sw | two_decs}</td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <th>Total potential compost value (US$)</th>
+                                                    <td > ${ results.total_potential_compost_revenue_fs | two_decs}</td>
+                                                    <td > ${ results.total_potential_compost_revenue_ss | two_decs}</td>
+                                                    <td > ${ results.total_potential_compost_revenue_sw | two_decs}</td>
+                                                
+                                                <tr class="row info">
+                                                    <th>N% of compost</th>
+                                                    <td > ${ results.n_pc_compost_fs | two_decs}</td>
+                                                    <td > ${ results.n_pc_compost_ss | two_decs}</td>
+                                                    <td > ${ results.n_pc_compost_sw | two_decs}</td>
+                                                </tr>
+                                                <tr class="row info">
+                                                    <th>N by mass (tonnes)</th>
+                                                    <td > ${ results.n_by_mass_compost_fs | two_decs}</td>
+                                                    <td > ${ results.n_by_mass_compost_ss | two_decs}</td>
+                                                    <td > ${ results.n_by_mass_compost_sw | two_decs}</td>
+                                                </tr>
+                                                <tr class="row info">
+                                                    <th>P% of compost</th>
+                                                    <td > ${ results.p_pc_compost_fs | two_decs}</td>
+                                                    <td > ${ results.p_pc_compost_ss | two_decs}</td>
+                                                    <td > ${ results.p_pc_compost_sw | two_decs}</td>
+                                                </tr>
+                                                <tr class="row info">
+                                                    <th>P by mass (tonnes)</th>
+                                                    <td > ${ results.p_by_mass_compost_fs | two_decs}</td>
+                                                    <td > ${ results.p_by_mass_compost_ss | two_decs}</td>
+                                                    <td > ${ results.p_by_mass_compost_sw | two_decs}</td>
+                                                </tr>
+                                                <tr class="row info">
+                                                    <th>K% of compost</th>
+                                                    <td > ${ results.k_pc_compost_fs | two_decs}</td>
+                                                    <td > ${ results.k_pc_compost_ss | two_decs}</td>
+                                                    <td > ${ results.k_pc_compost_sw | two_decs}</td>
+                                                </tr>
+                                                <tr class="row info">
+                                                    <th>K by mass (tonnes)</th>
+                                                    <td > ${ results.k_by_mass_compost_fs | two_decs}</td>
+                                                    <td > ${ results.k_by_mass_compost_ss | two_decs}</td>
+                                                    <td > ${ results.k_by_mass_compost_sw | two_decs}</td>
+                                                </tr>                                   
+                                            </tbody>
+                                        </table>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                                
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="sankey" class="tab-pane fade">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                         Energy Flow Diagram
+                    </div>
+                    <div class="panel-body">
+                        <button class="btn btn-primary" type="button" id="salvapng" value="Save PNG image">Save PNG Image</button>
+	
+                        <div class="row">
+                            <div class="col-md-2"></div>
+                            <div id="html-content-holder" class="col-md-8">
+                                <div id="sankey_multiple" style="width: 900px; height: 300px;"></div></div>
+                            <div class="col-md-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+    
+                                                       
+{% endblock %}
+{% block js %}
+<script>
+
+    
+    Vue.config.devtools = true
+    var vm = new Vue({
+        filters: {
+          two_decs: function (value) {
+            if (!value) return ''
+            value = value.toFixed(2)
+            return value
+          }
+        },
+        delimiters: ['${', '}'],
+        el: '#app',
+          mounted: function() {
+               $(this.$refs.checkbox_fs_tp).bootstrapToggle().change(function(e) {
+                this.use_defaults.fs_tp = $(e.target).prop('checked');
+              }.bind(this));
+              $(this.$refs.checkbox_ss_tp).bootstrapToggle().change(function(e) {
+                this.use_defaults.ss_tp = $(e.target).prop('checked');
+              }.bind(this));
+              $(this.$refs.checkbox_sw_tp).bootstrapToggle().change(function(e) {
+                this.use_defaults.sw_tp = $(e.target).prop('checked');
+              }.bind(this));
+              $(this.$refs.checkbox_fs_wq).bootstrapToggle().change(function(e) {
+                this.use_defaults.fs_wq = $(e.target).prop('checked');
+              }.bind(this));
+              $(this.$refs.checkbox_ss_wq).bootstrapToggle().change(function(e) {
+                this.use_defaults.ss_wq = $(e.target).prop('checked');
+              }.bind(this));
+              $(this.$refs.checkbox_sw_wq).bootstrapToggle().change(function(e) {
+                this.use_defaults.sw_wq = $(e.target).prop('checked');
+              }.bind(this));
+              $(this.$refs.checkbox_p).bootstrapToggle().change(function(e) {
+                this.use_defaults.p = $(e.target).prop('checked');
+              }.bind(this));
+              
+
+          },
+          watch: {
+            'use_defaults.fs_tp': function(enabled) {
+                $(this.$refs.checkbox_fs_tp).bootstrapToggle(enabled ? 'on' : 'off')
+            },
+             'use_defaults.ss_tp': function(enabled) {
+                $(this.$refs.checkbox_ss_tp).bootstrapToggle(enabled ? 'on' : 'off')
+            },
+             'use_defaults.sw_tp': function(enabled) {
+                $(this.$refs.checkbox_sw_tp).bootstrapToggle(enabled ? 'on' : 'off')
+            },
+              'use_defaults.fs_wq': function(enabled) {
+                $(this.$refs.checkbox_fs_wq).bootstrapToggle(enabled ? 'on' : 'off')
+            },
+              'use_defaults.ss_wq': function(enabled) {
+                $(this.$refs.checkbox_ss_wq).bootstrapToggle(enabled ? 'on' : 'off')
+            },
+              'use_defaults.sw_wq': function(enabled) {
+                $(this.$refs.checkbox_sw_wq).bootstrapToggle(enabled ? 'on' : 'off')
+            },
+              'use_defaults.p': function(enabled) {
+                $(this.$refs.checkbox_p).bootstrapToggle(enabled ? 'on' : 'off')
+            }
+          },
+        data: {
+            active_project: null,
+            active_project_index: null,
+            approved_projects: [
+                {% for proj in approved_projects %}
+                    
+                    { 
+                        id: "{{ proj.id }}",
+                        name: "{{ proj.name }}"
+                    }{% if forloop.last %}{% else %},{% endif %}
+                {% endfor %}
+                ],
+            
+            images: false,
+            results: {
+                amount_of_gas_fs: null,
+                amount_of_gas_ss: null,
+                amount_of_gas_sw: null,
+                energy_content_mj_fs: null,
+                energy_content_mj_ss: null,
+                energy_content_mj_sw: null,
+                energy_content_kwh_fs: null,
+                energy_content_kwh_ss: null,
+                energy_content_kwh_sw: null,
+                potential_biogas_revenue_fs: null,
+                potential_biogas_revenue_ss: null,
+                potential_biogas_revenue_sw: null,
+                amount_of_ad_residue_fs: null,
+                amount_of_ad_residue_ss: null,
+                amount_of_ad_residue_sw: null,
+                potential_ad_residue_revenue_fs: null,
+                potential_ad_residue_revenue_ss: null,
+                potential_ad_residue_revenue_sw: null,
+                n_pc_ad_residue_fs: null,
+                n_pc_ad_residue_ss: null,
+                n_pc_ad_residue_sw: null,
+                n_by_mass_fs: null,
+                n_by_mass_ss: null,
+                n_by_mass_sw: null,
+                p_pc_ad_residue_fs: null,
+                p_pc_ad_residue_ss: null,
+                p_pc_ad_residue_sw: null,
+                p_by_mass_fs: null,
+                p_by_mass_ss: null,
+                p_by_mass_sw: null,
+                k_pc_ad_residue_fs: null,
+                k_pc_ad_residue_ss: null,
+                k_pc_ad_residue_sw: null,
+                k_by_mass_fs: null,
+                k_by_mass_ss: null,
+                k_by_mass_sw: null,
+                total_potential_ad_revenue_fs: null,
+                total_potential_ad_revenue_ss: null,
+                total_potential_ad_revenue_sw: null,
+                amount_of_solid_fuel_fs: null,
+                amount_of_solid_fuel_ss: null,
+                amount_of_solid_fuel_sw: null,
+                energy_content_mj_sf_fs: null,
+                energy_content_mj_sf_ss: null,
+                energy_content_mj_sf_sw: null,
+                energy_content_kwh_sf_fs: null,
+                energy_content_kwh_sf_fs: null,
+                energy_content_kwh_sf_fs: null,
+                total_potential_sf_revenue_fs: null,
+                total_potential_sf_revenue_ss: null,
+                total_potential_sf_revenue_sw: null,
+                amount_of_bsf_larvae_fs: null,
+                amount_of_bsf_larvae_ss: null,
+                amount_of_bsf_larvae_sw: null,
+                protein_content_fs: null,
+                protein_content_ss: null,
+                protein_content_sw: null,
+                fat_content_fs: null,
+                fat_content_ss: null,
+                fat_content_sw: null,
+                potential_larvae_revenue_fs: null,
+                potential_larvae_revenue_ss: null,
+                potential_larvae_revenue_sw: null,
+                amount_of_bsf_residue_fs: null,
+                amount_of_bsf_residue_ss: null,
+                amount_of_bsf_residue_sw: null,
+                potential_bsf_residue_revenue_fs:  null,
+                potential_bsf_residue_revenue_ss:  null,
+                potential_bsf_residue_revenue_sw:  null,
+                n_pc_bsf_residue_fs: null,
+                n_pc_bsf_residue_ss: null,
+                n_pc_bsf_residue_sw: null,
+                n_by_mass_bsf_fs: null,
+                n_by_mass_bsf_ss: null,
+                n_by_mass_bsf_sw: null,
+                p_pc_bsf_residue_fs: null,
+                p_pc_bsf_residue_ss: null,
+                p_pc_bsf_residue_sw: null,
+                p_by_mass_bsf_fs: null,
+                p_by_mass_bsf_ss: null,
+                p_by_mass_bsf_sw: null,
+                k_pc_bsf_residue_fs: null,
+                k_pc_bsf_residue_ss: null,
+                k_pc_bsf_residue_sw: null,
+                k_by_mass_bsf_fs: null,
+                k_by_mass_bsf_ss: null,
+                k_by_mass_bsf_sw: null,
+                total_potential_bsf_revenue_fs: null,
+                total_potential_bsf_revenue_ss: null,
+                total_potential_bsf_revenue_sw: null,
+                amount_of_compost_fs: null,
+                amount_of_compost_ss: null,
+                amount_of_compost_sw: null,
+                total_potential_compost_revenue_fs: null,
+                total_potential_compost_revenue_ss: null,
+                total_potential_compost_revenue_sw: null,
+                n_pc_compost_fs: null,
+                n_pc_compost_ss: null,
+                n_pc_compost_sw: null,
+                n_by_mass_compost_fs: null,
+                n_by_mass_compost_ss: null,
+                n_by_mass_compost_sw: null,
+                p_pc_compost_fs: null,
+                p_pc_compost_ss: null,
+                p_pc_compost_sw: null,
+                p_by_mass_compost_fs: null,
+                p_by_mass_compost_ss: null,
+                p_by_mass_compost_sw: null,
+                k_pc_compost_fs: null,
+                k_pc_compost_ss: null,
+                k_pc_compost_sw: null,
+                k_by_mass_compost_fs: null,
+                k_by_mass_compost_fs: null,
+                k_by_mass_compost_fs: null
+                
+            },
+            wastestreams: {
+                fs_amount: {{ wastestreams.faecal_sludge}},
+                fs_ad_pc: {{ wastestreams.fs_anaeribic_digestion}},
+                fs_sf_pc: {{ wastestreams.fs_solid_fuel }},
+                fs_bsfp_pc: {{ wastestreams.fs_black_soldier_fly_process }},
+                fs_c_pc: {{ wastestreams.fs_compost }},
+                fs_t_pc: null,
+                ss_amount: {{ wastestreams.sewage_sludge}},
+                ss_ad_pc: {{ wastestreams.ss_anaeribic_digestion}},
+                ss_sf_pc: {{ wastestreams.ss_solid_fuel }},
+                ss_bsfp_pc: {{ wastestreams.ss_black_soldier_fly_process }},
+                ss_c_pc: {{ wastestreams.ss_compost }},
+                ss_t_pc: null,
+                sw_amount: {{ wastestreams.solid_waste}},
+                sw_ad_pc: {{ wastestreams.sw_anaeribic_digestion}},
+                sw_sf_pc: {{ wastestreams.sw_solid_fuel }},
+                sw_bsfp_pc: {{ wastestreams.sw_black_soldier_fly_process }},
+                sw_c_pc: {{ wastestreams.sw_compost }},
+                sw_t_pc: null
+                
+            },
+            wastequality_fs: {
+                name: "{{ wastequalityoptions_fs.name }}",
+                created_at: "{{ wastequalityoptions_fs.created_at }}",
+                total_solids_pc: "{{ wastequalityoptions_fs.total_solids_pc}}",
+                total_solids: "{{ wastequalityoptions_fs.total_solids }}",
+                volatile_solids: "{{ wastequalityoptions_fs.volatile_solids }}",
+                total_nitrogen: "{{ wastequalityoptions_fs.total_nitrogen }}",
+                total_nitrogen_mg_n_kg_ts: "{{ wastequalityoptions_fs.total_nitrogen_mg_n_kg_ts }}",
+                total_phosphorus: "{{ wastequalityoptions_fs.total_phosphorus }}",
+                total_phosphorus_mg_p_kg_ts: "{{ wastequalityoptions_fs.total_phosphorus_mg_p_kg_ts }}",
+                total_potassium: "{{ wastequalityoptions_fs.total_potassium }}",
+                total_potassium_mg_k_kg_ts: "{{ wastequalityoptions_fs.total_potassium_mg_k_kg_ts }}",
+                calorific_value: "{{ wastequalityoptions_fs.calorific_value }}",
+                biomethane_potential: "{{ wastequalityoptions_fs.biomethane_potential }}"
+            },
+            wastequality_ss: {
+                name: "{{ wastequalityoptions_ss.name }}",
+                created_at: "{{ wastequalityoptions_ss.created_at }}",
+                total_solids_pc: "{{ wastequalityoptions_ss.total_solids_pc}}",
+                total_solids: "{{ wastequalityoptions_ss.total_solids }}",
+                volatile_solids: "{{ wastequalityoptions_ss.volatile_solids }}",
+                total_nitrogen: "{{ wastequalityoptions_ss.total_nitrogen }}",
+                total_nitrogen_mg_n_kg_ts: "{{ wastequalityoptions_ss.total_nitrogen_mg_n_kg_ts }}",
+                total_phosphorus: "{{ wastequalityoptions_ss.total_phosphorus }}",
+                total_phosphorus_mg_p_kg_ts: "{{ wastequalityoptions_ss.total_phosphorus_mg_p_kg_ts }}",
+                total_potassium: "{{ wastequalityoptions_ss.total_potassium }}",
+                total_potassium_mg_k_kg_ts: "{{ wastequalityoptions_ss.total_potassium_mg_k_kg_ts }}",
+                calorific_value: "{{ wastequalityoptions_ss.calorific_value }}",
+                biomethane_potential: "{{ wastequalityoptions_ss.biomethane_potential }}"
+            },
+            wastequality_sw: {
+                name: "{{ wastequalityoptions_sw.name }}",
+                created_at: "{{ wastequalityoptions_sw.created_at }}",
+                total_solids_pc: "{{ wastequalityoptions_sw.total_solids_pc}}",
+                total_solids: "{{ wastequalityoptions_sw.total_solids }}",
+                volatile_solids: "{{ wastequalityoptions_sw.volatile_solids }}",
+                total_nitrogen: "{{ wastequalityoptions_sw.total_nitrogen }}",
+                total_nitrogen_mg_n_kg_ts: "{{ wastequalityoptions_sw.total_nitrogen_mg_n_kg_ts }}",
+                total_phosphorus: "{{ wastequalityoptions_sw.total_phosphorus }}",
+                total_phosphorus_mg_p_kg_ts: "{{ wastequalityoptions_sw.total_phosphorus_mg_p_kg_ts }}",
+                total_potassium: "{{ wastequalityoptions_sw.total_potassium }}",
+                total_potassium_mg_k_kg_ts: "{{ wastequalityoptions_sw.total_potassium_mg_k_kg_ts }}",
+                calorific_value: "{{ wastequalityoptions_sw.calorific_value }}",
+                biomethane_potential: "{{ wastequalityoptions_sw.biomethane_potential }}"
+            },
+            treatmentprocesses_fs: {
+                name: "{{ treatmentprocesses_fs.name }}",
+                volatile_solids_degradation_rate: "{{ treatmentprocesses_fs.volatile_solids_degradation_rate}}",
+                dmr_rate_anaerobic_digestion: "{{ treatmentprocesses_fs.dmr_rate_anaerobic_digestion }}",
+                bcr_black_soldier_fly: "{{ treatmentprocesses_fs.bcr_black_soldier_fly }}",
+                dmr_rate_bsf_residue: "{{ treatmentprocesses_fs.dmr_rate_bsf_residue }}",
+                tnr_bsf_residue: "{{ treatmentprocesses_fs.tnr_bsf_residue }}",
+                tpr_bsf_residue: "{{ treatmentprocesses_fs.tpr_bsf_residue }}",
+                tpotr_bsf_residue: "{{ treatmentprocesses_fs.tpotr_bsf_residue }}",
+                dmr_compost: "{{ treatmentprocesses_fs.dmr_compost }}",
+                tnr_composting_reduction: "{{ treatmentprocesses_fs.tnr_composting_reduction }}",
+                tpr_composting_reduction: "{{ treatmentprocesses_fs.tpr_composting_reduction }}",
+                tpotr_composting_reduction: "{{ treatmentprocesses_fs.tpotr_composting_reduction }}"
+            },
+            treatmentprocesses_ss: {
+                name: "{{ treatmentprocesses_ss.name }}",
+                volatile_solids_degradation_rate: "{{ treatmentprocesses_ss.volatile_solids_degradation_rate}}",
+                dmr_rate_anaerobic_digestion: "{{ treatmentprocesses_ss.dmr_rate_anaerobic_digestion }}",
+                bcr_black_soldier_fly: "{{ treatmentprocesses_ss.bcr_black_soldier_fly }}",
+                dmr_rate_bsf_residue: "{{ treatmentprocesses_ss.dmr_rate_bsf_residue }}",
+                tnr_bsf_residue: "{{ treatmentprocesses_ss.tnr_bsf_residue }}",
+                tpr_bsf_residue: "{{ treatmentprocesses_ss.tpr_bsf_residue }}",
+                tpotr_bsf_residue: "{{ treatmentprocesses_ss.tpotr_bsf_residue }}",
+                dmr_compost: "{{ treatmentprocesses_ss.dmr_compost }}",
+                tnr_composting_reduction: "{{ treatmentprocesses_ss.tnr_composting_reduction }}",
+                tpr_composting_reduction: "{{ treatmentprocesses_ss.tpr_composting_reduction }}",
+                tpotr_composting_reduction: "{{ treatmentprocesses_ss.tpotr_composting_reduction }}"
+            },
+            treatmentprocesses_sw: {
+                name: "{{ treatmentprocesses_sw.name }}",
+                volatile_solids_degradation_rate: "{{ treatmentprocesses_sw.volatile_solids_degradation_rate}}",
+                dmr_rate_anaerobic_digestion: "{{ treatmentprocesses_sw.dmr_rate_anaerobic_digestion }}",
+                bcr_black_soldier_fly: "{{ treatmentprocesses_sw.bcr_black_soldier_fly }}",
+                dmr_rate_bsf_residue: "{{ treatmentprocesses_sw.dmr_rate_bsf_residue }}",
+                tnr_bsf_residue: "{{ treatmentprocesses_sw.tnr_bsf_residue }}",
+                tpr_bsf_residue: "{{ treatmentprocesses_sw.tpr_bsf_residue }}",
+                tpotr_bsf_residue: "{{ treatmentprocesses_sw.tpotr_bsf_residue }}",
+                dmr_compost: "{{ treatmentprocesses_sw.dmr_compost }}",
+                tnr_composting_reduction: "{{ treatmentprocesses_sw.tnr_composting_reduction }}",
+                tpr_composting_reduction: "{{ treatmentprocesses_sw.tpr_composting_reduction }}",
+                tpotr_composting_reduction: "{{ treatmentprocesses_sw.tpotr_composting_reduction }}"
+            },
+            prices: {
+                name: "{{ prices.name }}",
+                biogas_price: "{{ prices.biogas_price }}",
+                solid_combustion_price: "{{ prices.solid_combustion_price }}",
+                prepupae_price: "{{ prices.prepupae_price }}",
+                soil_conditioner_price: "{{ prices.soil_conditioner_price }}"
+            },
+            defaults: { 
+                wastequality_fs: {
+                    name: "{{ wastequalityoptions_fs.name }}",
+                    created_at: "{{ wastequalityoptions_fs.created_at }}",
+                    total_solids_pc: "{{ wastequalityoptions_fs.total_solids_pc}}",
+                    total_solids: "{{ wastequalityoptions_fs.total_solids }}",
+                    volatile_solids: "{{ wastequalityoptions_fs.volatile_solids }}",
+                    total_nitrogen: "{{ wastequalityoptions_fs.total_nitrogen }}",
+                    total_nitrogen_mg_n_kg_ts: "{{ wastequalityoptions_fs.total_nitrogen_mg_n_kg_ts }}",
+                    total_phosphorus: "{{ wastequalityoptions_fs.total_phosphorus }}",
+                    total_phosphorus_mg_p_kg_ts: "{{ wastequalityoptions_fs.total_phosphorus_mg_p_kg_ts }}",
+                    total_potassium: "{{ wastequalityoptions_fs.total_potassium }}",
+                    total_potassium_mg_k_kg_ts: "{{ wastequalityoptions_fs.total_potassium_mg_k_kg_ts }}",
+                    calorific_value: "{{ wastequalityoptions_fs.calorific_value }}",
+                    biomethane_potential: "{{ wastequalityoptions_fs.biomethane_potential }}"
+                },
+                wastequality_ss: {
+                    name: "{{ wastequalityoptions_ss.name }}",
+                    created_at: "{{ wastequalityoptions_ss.created_at }}",
+                    total_solids_pc: "{{ wastequalityoptions_ss.total_solids_pc}}",
+                    total_solids: "{{ wastequalityoptions_ss.total_solids }}",
+                    volatile_solids: "{{ wastequalityoptions_ss.volatile_solids }}",
+                    total_nitrogen: "{{ wastequalityoptions_ss.total_nitrogen }}",
+                    total_nitrogen_mg_n_kg_ts: "{{ wastequalityoptions_ss.total_nitrogen_mg_n_kg_ts }}",
+                    total_phosphorus: "{{ wastequalityoptions_ss.total_phosphorus }}",
+                    total_phosphorus_mg_p_kg_ts: "{{ wastequalityoptions_ss.total_phosphorus_mg_p_kg_ts }}",
+                    total_potassium: "{{ wastequalityoptions_ss.total_potassium }}",
+                    total_potassium_mg_k_kg_ts: "{{ wastequalityoptions_ss.total_potassium_mg_k_kg_ts }}",
+                    calorific_value: "{{ wastequalityoptions_ss.calorific_value }}",
+                    biomethane_potential: "{{ wastequalityoptions_ss.biomethane_potential }}"
+                },
+                wastequality_sw: {
+                    name: "{{ wastequalityoptions_sw.name }}",
+                    created_at: "{{ wastequalityoptions_sw.created_at }}",
+                    total_solids_pc: "{{ wastequalityoptions_sw.total_solids_pc}}",
+                    total_solids: "{{ wastequalityoptions_sw.total_solids }}",
+                    volatile_solids: "{{ wastequalityoptions_sw.volatile_solids }}",
+                    total_nitrogen: "{{ wastequalityoptions_sw.total_nitrogen }}",
+                    total_nitrogen_mg_n_kg_ts: "{{ wastequalityoptions_sw.total_nitrogen_mg_n_kg_ts }}",
+                    total_phosphorus: "{{ wastequalityoptions_sw.total_phosphorus }}",
+                    total_phosphorus_mg_p_kg_ts: "{{ wastequalityoptions_sw.total_phosphorus_mg_p_kg_ts }}",
+                    total_potassium: "{{ wastequalityoptions_sw.total_potassium }}",
+                    total_potassium_mg_k_kg_ts: "{{ wastequalityoptions_sw.total_potassium_mg_k_kg_ts }}",
+                    calorific_value: "{{ wastequalityoptions_sw.calorific_value }}",
+                    biomethane_potential: "{{ wastequalityoptions_sw.biomethane_potential }}"
+                },
+                treatmentprocesses_fs: {
+                    name: "{{ treatmentprocesses_fs.name }}",
+                    volatile_solids_degradation_rate: "{{ treatmentprocesses_fs.volatile_solids_degradation_rate}}",
+                    dmr_rate_anaerobic_digestion: "{{ treatmentprocesses_fs.dmr_rate_anaerobic_digestion }}",
+                    bcr_black_soldier_fly: "{{ treatmentprocesses_fs.bcr_black_soldier_fly }}",
+                    dmr_rate_bsf_residue: "{{ treatmentprocesses_fs.dmr_rate_bsf_residue }}",
+                    tnr_bsf_residue: "{{ treatmentprocesses_fs.tnr_bsf_residue }}",
+                    tpr_bsf_residue: "{{ treatmentprocesses_fs.tpr_bsf_residue }}",
+                    tpotr_bsf_residue: "{{ treatmentprocesses_fs.tpotr_bsf_residue }}",
+                    dmr_compost: "{{ treatmentprocesses_fs.dmr_compost }}",
+                    tnr_composting_reduction: "{{ treatmentprocesses_fs.tnr_composting_reduction }}",
+                    tpr_composting_reduction: "{{ treatmentprocesses_fs.tpr_composting_reduction }}",
+                    tpotr_composting_reduction: "{{ treatmentprocesses_fs.tpotr_composting_reduction }}"
+                },
+                treatmentprocesses_ss: {
+                    name: "{{ treatmentprocesses_ss.name }}",
+                    volatile_solids_degradation_rate: "{{ treatmentprocesses_ss.volatile_solids_degradation_rate}}",
+                    dmr_rate_anaerobic_digestion: "{{ treatmentprocesses_ss.dmr_rate_anaerobic_digestion }}",
+                    bcr_black_soldier_fly: "{{ treatmentprocesses_ss.bcr_black_soldier_fly }}",
+                    dmr_rate_bsf_residue: "{{ treatmentprocesses_ss.dmr_rate_bsf_residue }}",
+                    tnr_bsf_residue: "{{ treatmentprocesses_ss.tnr_bsf_residue }}",
+                    tpr_bsf_residue: "{{ treatmentprocesses_ss.tpr_bsf_residue }}",
+                    tpotr_bsf_residue: "{{ treatmentprocesses_ss.tpotr_bsf_residue }}",
+                    dmr_compost: "{{ treatmentprocesses_ss.dmr_compost }}",
+                    tnr_composting_reduction: "{{ treatmentprocesses_ss.tnr_composting_reduction }}",
+                    tpr_composting_reduction: "{{ treatmentprocesses_ss.tpr_composting_reduction }}",
+                    tpotr_composting_reduction: "{{ treatmentprocesses_ss.tpotr_composting_reduction }}"
+                },
+                treatmentprocesses_sw: {
+                    name: "{{ treatmentprocesses_sw.name }}",
+                    volatile_solids_degradation_rate: "{{ treatmentprocesses_sw.volatile_solids_degradation_rate}}",
+                    dmr_rate_anaerobic_digestion: "{{ treatmentprocesses_sw.dmr_rate_anaerobic_digestion }}",
+                    bcr_black_soldier_fly: "{{ treatmentprocesses_sw.bcr_black_soldier_fly }}",
+                    dmr_rate_bsf_residue: "{{ treatmentprocesses_sw.dmr_rate_bsf_residue }}",
+                    tnr_bsf_residue: "{{ treatmentprocesses_sw.tnr_bsf_residue }}",
+                    tpr_bsf_residue: "{{ treatmentprocesses_sw.tpr_bsf_residue }}",
+                    tpotr_bsf_residue: "{{ treatmentprocesses_sw.tpotr_bsf_residue }}",
+                    dmr_compost: "{{ treatmentprocesses_sw.dmr_compost }}",
+                    tnr_composting_reduction: "{{ treatmentprocesses_sw.tnr_composting_reduction }}",
+                    tpr_composting_reduction: "{{ treatmentprocesses_sw.tpr_composting_reduction }}",
+                    tpotr_composting_reduction: "{{ treatmentprocesses_sw.tpotr_composting_reduction }}"
+                },
+                prices: {
+                    name: "{{ prices.name }}",
+                    biogas_price: "{{ prices.biogas_price }}",
+                    solid_combustion_price: "{{ prices.solid_combustion_price }}",
+                    prepupae_price: "{{ prices.prepupae_price }}",
+                    soil_conditioner_price: "{{ prices.soil_conditioner_price }}"
+                },
+                wastestreams: {
+                    fs_amount: "{{ wastestreams.faecal_sludge}}",
+                    fs_ad_pc: "{{ wastestreams.fs_anaeribic_digestion}}",
+                    fs_sf_pc: "{{ wastestreams.fs_solid_fuel }}",
+                    fs_bsfp_pc: "{{ wastestreams.fs_black_soldier_fly_process }}",
+                    fs_c_pc: "{{ wastestreams.fs_compost }}",
+                    fs_t_pc: null,
+                    ss_amount: "{{ wastestreams.sewage_sludge}}",
+                    ss_ad_pc: "{{ wastestreams.ss_anaeribic_digestion}}",
+                    ss_sf_pc: "{{ wastestreams.ss_solid_fuel }}",
+                    ss_bsfp_pc: "{{ wastestreams.ss_black_soldier_fly_process }}",
+                    ss_c_pc: "{{ wastestreams.ss_compost }}",
+                    ss_t_pc: null,
+                    sw_amount: "{{ wastestreams.solid_waste}}",
+                    sw_ad_pc: "{{ wastestreams.sw_anaeribic_digestion}}",
+                    sw_sf_pc: "{{ wastestreams.sw_solid_fuel }}",
+                    sw_bsfp_pc: "{{ wastestreams.sw_black_soldier_fly_process }}",
+                    sw_c_pc: "{{ wastestreams.sw_compost }}",
+                    sw_t_pc: null
+
+                }
+            },
+            use_defaults: {
+                fs_tp: true,
+                ss_tp: true,
+                sw_tp: true,
+                fs_wq: true,
+                ss_wq: true,
+                sw_wq: true,
+                p: true  
+            },
+            projects: [
+                {% for proj in projects %}
+                    
+                    { 
+                        id: "{{ proj.id }}",
+                        link_url: "{{ proj.link_url }}",
+                        name: "{{ proj.name }}",
+                        created_at: "{{ proj.created_at }}",
+                        updated_at: "{{ proj.updated_at }}",
+                        prices: {
+                            biogas_price: "{{ proj.prices.biogas_price }}",
+                            solid_combustion_price: "{{ proj.prices.solid_combustion_price}}",
+                            prepupae_price: "{{ proj.prices.prepupae_price }}",
+                            soil_conditioner_price: "{{ proj.prices.soil_conditioner_price }}"
+                        },
+                        treatmentprocesses_fs: {
+                            name: "{{ proj.fs_treatment_processes.name }}",
+                            volatile_solids_degradation_rate: "{{ proj.fs_treatment_processes.volatile_solids_degradation_rate}}",
+                            dmr_rate_anaerobic_digestion: "{{ proj.fs_treatment_processes.dmr_rate_anaerobic_digestion }}",
+                            bcr_black_soldier_fly: "{{ proj.fs_treatment_processes.bcr_black_soldier_fly }}",
+                            dmr_rate_bsf_residue: "{{ proj.fs_treatment_processes.dmr_rate_bsf_residue }}",
+                            tnr_bsf_residue: "{{ proj.fs_treatment_processes.tnr_bsf_residue }}",
+                            tpr_bsf_residue: "{{ proj.fs_treatment_processes.tpr_bsf_residue }}",
+                            tpotr_bsf_residue: "{{ proj.fs_treatment_processes.tpotr_bsf_residue }}",
+                            dmr_compost: "{{ proj.fs_treatment_processes.dmr_compost }}",
+                            tnr_composting_reduction: "{{ proj.fs_treatment_processes.tnr_composting_reduction }}",
+                            tpr_composting_reduction: "{{ proj.fs_treatment_processes.tpr_composting_reduction }}",
+                            tpotr_composting_reduction: "{{ proj.fs_treatment_processes.tpotr_composting_reduction }}"
+                            },
+                        treatmentprocesses_ss: {
+                            name: "{{ proj.ss_treatment_processes.name }}",
+                            volatile_solids_degradation_rate: "{{ proj.ss_treatment_processes.volatile_solids_degradation_rate}}",
+                            dmr_rate_anaerobic_digestion: "{{ proj.ss_treatment_processes.dmr_rate_anaerobic_digestion }}",
+                            bcr_black_soldier_fly: "{{ proj.ss_treatment_processes.bcr_black_soldier_fly }}",
+                            dmr_rate_bsf_residue: "{{ proj.ss_treatment_processes.dmr_rate_bsf_residue }}",
+                            tnr_bsf_residue: "{{ proj.ss_treatment_processes.tnr_bsf_residue }}",
+                            tpr_bsf_residue: "{{ proj.ss_treatment_processes.tpr_bsf_residue }}",
+                            tpotr_bsf_residue: "{{ proj.ss_treatment_processes.tpotr_bsf_residue }}",
+                            dmr_compost: "{{ proj.ss_treatment_processes.dmr_compost }}",
+                            tnr_composting_reduction: "{{ proj.ss_treatment_processes.tnr_composting_reduction }}",
+                            tpr_composting_reduction: "{{ proj.ss_treatment_processes.tpr_composting_reduction }}",
+                            tpotr_composting_reduction: "{{ proj.ss_treatment_processes.tpotr_composting_reduction }}"
+                        },
+                        treatmentprocesses_sw: {
+                            name: "{{ proj.sw_treatment_processes.name }}",
+                            volatile_solids_degradation_rate: "{{ proj.sw_treatment_processes.volatile_solids_degradation_rate}}",
+                            dmr_rate_anaerobic_digestion: "{{ proj.sw_treatment_processes.dmr_rate_anaerobic_digestion }}",
+                            bcr_black_soldier_fly: "{{ proj.sw_treatment_processes.bcr_black_soldier_fly }}",
+                            dmr_rate_bsf_residue: "{{ proj.sw_treatment_processes.dmr_rate_bsf_residue }}",
+                            tnr_bsf_residue: "{{ proj.sw_treatment_processes.tnr_bsf_residue }}",
+                            tpr_bsf_residue: "{{ proj.treatmentprocesses_sw.tpr_bsf_residue }}",
+                            tpotr_bsf_residue: "{{ proj.sw_treatment_processes.tpotr_bsf_residue }}",
+                            dmr_compost: "{{ proj.sw_treatment_processes.dmr_compost }}",
+                            tnr_composting_reduction: "{{ proj.sw_treatment_processes.tnr_composting_reduction }}",
+                            tpr_composting_reduction: "{{ proj.sw_treatment_processes.tpr_composting_reduction }}",
+                            tpotr_composting_reduction: "{{ proj.sw_treatment_processes.tpotr_composting_reduction }}"
+                        },
+                       wastequality_fs: {
+                            name: "{{ proj.fs_waste_quality.name }}",
+                            created_at: "{{ proj.fs_waste_quality.created_at }}",
+                            total_solids_pc: "{{ proj.fs_waste_quality.total_solids_pc}}",
+                            total_solids: "{{ proj.fs_waste_quality.total_solids }}",
+                            volatile_solids: "{{ proj.fs_waste_quality.volatile_solids }}",
+                            total_nitrogen: "{{ proj.fs_waste_quality.total_nitrogen }}",
+                            total_nitrogen_mg_n_kg_ts: "{{ proj.fs_waste_quality.total_nitrogen_mg_n_kg_ts }}",
+                            total_phosphorus: "{{ proj.fs_waste_quality.total_phosphorus }}",
+                            total_phosphorus_mg_p_kg_ts: "{{ proj.fs_waste_quality.total_phosphorus_mg_p_kg_ts }}",
+                            total_potassium: "{{ proj.fs_waste_quality.total_potassium }}",
+                            total_potassium_mg_k_kg_ts: "{{ proj.fs_waste_quality.total_potassium_mg_k_kg_ts }}",
+                            calorific_value: "{{ proj.wastequalityoptions_fs.calorific_value }}",
+                            biomethane_potential: "{{ proj.fs_waste_quality.biomethane_potential }}"
+                        },
+                        wastequality_ss: {
+                            name: "{{ proj.ss_waste_quality.name }}",
+                            created_at: "{{ proj.ss_waste_quality.created_at }}",
+                            total_solids_pc: "{{ proj.ss_waste_quality.total_solids_pc}}",
+                            total_solids: "{{ proj.ss_waste_quality.total_solids }}",
+                            volatile_solids: "{{ proj.ss_waste_quality.volatile_solids }}",
+                            total_nitrogen: "{{ proj.ss_waste_quality.total_nitrogen }}",
+                            total_nitrogen_mg_n_kg_ts: "{{ proj.ss_waste_quality.total_nitrogen_mg_n_kg_ts }}",
+                            total_phosphorus: "{{ proj.ss_waste_quality.total_phosphorus }}",
+                            total_phosphorus_mg_p_kg_ts: "{{ proj.ss_waste_quality.total_phosphorus_mg_p_kg_ts }}",
+                            total_potassium: "{{ proj.ss_waste_quality.total_potassium }}",
+                            total_potassium_mg_k_kg_ts: "{{ proj.ss_waste_quality.total_potassium_mg_k_kg_ts }}",
+                            calorific_value: "{{ proj.ss_waste_quality.calorific_value }}",
+                            biomethane_potential: "{{ proj.ss_waste_quality.biomethane_potential }}"
+                        },
+                        wastequality_sw: {
+                            name: "{{ proj.sw_waste_quality.name }}",
+                            created_at: "{{ proj.sw_waste_quality.created_at }}",
+                            total_solids_pc: "{{ proj.sw_waste_quality.total_solids_pc}}",
+                            total_solids: "{{ proj.sw_waste_quality.total_solids }}",
+                            volatile_solids: "{{ proj.sw_waste_quality.volatile_solids }}",
+                            total_nitrogen: "{{ proj.sw_waste_quality.total_nitrogen }}",
+                            total_nitrogen_mg_n_kg_ts: "{{ proj.sw_waste_quality.total_nitrogen_mg_n_kg_ts }}",
+                            total_phosphorus: "{{ proj.sw_waste_quality.total_phosphorus }}",
+                            total_phosphorus_mg_p_kg_ts: "{{ proj.sw_waste_quality.total_phosphorus_mg_p_kg_ts }}",
+                            total_potassium: "{{ proj.sw_waste_quality.total_potassium }}",
+                            total_potassium_mg_k_kg_ts: "{{ proj.sw_waste_quality.total_potassium_mg_k_kg_ts }}",
+                            calorific_value: "{{ proj.sw_waste_quality.calorific_value }}",
+                            biomethane_potential: "{{ proj.sw_waste_quality.biomethane_potential }}"
+                        },
+                        wastestreams: {
+                            fs_amount: "{{ proj.wastestreams.faecal_sludge}}",
+                            fs_ad_pc: "{{ proj.wastestreams.fs_anaeribic_digestion}}",
+                            fs_sf_pc: "{{ proj.wastestreams.fs_solid_fuel }}",
+                            fs_bsfp_pc: "{{ proj.wastestreams.fs_black_soldier_fly_process }}",
+                            fs_c_pc: "{{ proj.wastestreams.fs_compost }}",
+                            fs_t_pc: null,
+                            ss_amount: "{{ proj.wastestreams.sewage_sludge}}",
+                            ss_ad_pc: "{{ proj.wastestreams.ss_anaeribic_digestion}}",
+                            ss_sf_pc: "{{ proj.wastestreams.ss_solid_fuel }}",
+                            ss_bsfp_pc: "{{ proj.wastestreams.ss_black_soldier_fly_process }}",
+                            ss_c_pc: "{{ proj.wastestreams.ss_compost }}",
+                            ss_t_pc: null,
+                            sw_amount: "{{ proj.wastestreams.solid_waste}}",
+                            sw_ad_pc: "{{ proj.wastestreams.sw_anaeribic_digestion}}",
+                            sw_sf_pc: "{{ proj.wastestreams.sw_solid_fuel }}",
+                            sw_bsfp_pc: "{{ proj.wastestreams.sw_black_soldier_fly_process }}",
+                            sw_c_pc: "{{ proj.wastestreams.sw_compost }}",
+                            sw_t_pc: null
+
+                        }
+                    }{% if forloop.last %}{% else %},{% endif %}
+                {% endfor %}
+            ]
+            
+        },
+        methods: {
+            toggleCheckbox() {
+               this.use_defaults.p = !this.use_defaults.p;
+            },
+            load: function(id) {
+                console.log('loader');
+                console.log(id);
+                    
+                for (var p in this.projects) {
+                    
+                    if (id == this.projects[p].id) {
+                        console.log('matched');
+                        this.prices = JSON.parse(JSON.stringify(this.projects[p].prices));
+                        this.treatmentprocesses_fs = JSON.parse(JSON.stringify(this.projects[p].treatmentprocesses_fs));
+                        this.treatmentprocesses_ss = JSON.parse(JSON.stringify(this.projects[p].treatmentprocesses_ss));
+                        this.treatmentprocesses_sw = JSON.parse(JSON.stringify(this.projects[p].treatmentprocesses_sw));
+                        this.wastequality_fs = JSON.parse(JSON.stringify(this.projects[p].wastequality_fs));
+                        this.wastequality_ss = JSON.parse(JSON.stringify(this.projects[p].wastequality_ss));
+                        this.wastequality_sw = JSON.parse(JSON.stringify(this.projects[p].wastequality_sw));
+                        this.wastestreams = JSON.parse(JSON.stringify(this.projects[p].wastestreams));
+                        
+                    }
+                }
+                $('.navbar-top-links').notify(
+                  "Project loaded.", 
+                  { position: 'left',className: "success",autoHideDelay: 2000,arrowShow: false }
+                );
+
+            },
+            delete_project: function() {
+                
+                console.log('deleting...', this.active_project);
+                
+                var dp = delete_project(this.active_project);
+                console.log('deleted!', dp);
+                    
+                if (dp) {
+                    this.projects.splice(this.active_project_index, 1);
+                    this.active_project = null;
+                    this.active_project_index = null;
+                    
+                    $('.navbar-top-links').notify(
+                      "Project Deleted.", 
+                      { className: "success", position: 'left', autoHideDelay: 2000,arrowShow: false }
+                    );
+                }
+
+                
+                
+                
+            }, 
+            set_active_project: function(id, index) {
+                this.active_project = id;
+                this.active_project_index = index;
+                console.log('setting active project...');
+                //console.log(this.active_project);
+            },
+            load_defaults: function() {
+                console.log('loading defaults');
+                if (this.use_defaults.p) {
+                    this.prices = JSON.parse(JSON.stringify(this.defaults.prices));
+                    
+                }
+                if (this.use_defaults.fs_tp) {
+                    this.treatmentprocesses_fs = JSON.parse(JSON.stringify(this.defaults.treatmentprocesses_fs));
+                }
+                if (this.use_defaults.ss_tp) {
+                    this.treatmentprocesses_ss = JSON.parse(JSON.stringify(this.defaults.treatmentprocesses_ss));
+                }
+                if (this.use_defaults.sw_tp) {
+                    this.treatmentprocesses_sw = JSON.parse(JSON.stringify(this.defaults.treatmentprocesses_sw));
+                }
+                if (this.use_defaults.fs_wq) {
+                    this.wastequality_fs = JSON.parse(JSON.stringify(this.defaults.wastequality_fs));
+                } 
+                if (this.use_defaults.ss_wq) {
+                    this.wastequality_ss = JSON.parse(JSON.stringify(this.defaults.wastequality_ss));
+                }
+                if (this.use_defaults.sw_wq) {
+                    this.wastequality_sw = JSON.parse(JSON.stringify(this.defaults.wastequality_sw));
+                } 
+                
+                
+                $('.navbar-top-links').notify(
+                  "Defaults loaded.", 
+                  { className: "success", position: 'left', autoHideDelay: 2000,arrowShow: false }
+                );
+                
+                        
+            }
+
+                
+           
+        }
+    });
+    Vue.config.devtools = true
+</script>
+{% endblock %}
+

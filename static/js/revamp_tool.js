@@ -1,3 +1,5 @@
+var charts = [];
+
 var results = [
           ['Resource Recovery Options', 'Nitrogen', 'Phosphorus', 'Potassium'],
           ['Anaerobic Digestion', 0, 0, 0],
@@ -7,19 +9,19 @@ var results = [
 ];
 
 var results2 = [
-          ['Resource Recovery Options', 'Nitrogen', 'Phosphorus', 'Potassium'],
-          ['Anaerobic Digestion', 0, 0, 0],
-          ['Solid Fuel', 0, 0, 0],
-          ['BSF Processing', 0, 0, 0],
-          ['Composting', 0, 0, 0]
+          ['Resource Recovery Options', 'Value'],
+          ['Anaerobic Digestion', 0],
+          ['Solid Fuel', 0],
+          ['BSF Processing', 0],
+          ['Composting', 0]
 ];
 
 var results3 = [
-          ['Resource Recovery Options', 'Nitrogen', 'Phosphorus', 'Potassium'],
-          ['Anaerobic Digestion', 0, 0, 0],
-          ['Solid Fuel', 0, 0, 0],
-          ['BSF Processing',0, 0, 0],
-          ['Composting', 0, 0, 0]
+          ['Resource Recovery Options', 'Value'],
+          ['Anaerobic Digestion', 0],
+          ['Solid Fuel', 0],
+          ['BSF Processing',0],
+          ['Composting', 0]
 ];
 
 var results4 = [
@@ -30,6 +32,322 @@ var results4 = [
           ['Composting', 0, 0, 0]
 ];
 
+var results5 = [
+          ['Resource Recovery Options', 'Nitrogen', 'Phosphorus', 'Potassium'],
+          ['Anaerobic Digestion', 0, 0, 0],
+          ['Solid Fuel', 0, 0, 0],
+          ['BSF Processing', 0, 0, 0],
+          ['Composting', 0, 0, 0]
+];
+
+var results6 = [
+          ['Resource Recovery Options', 'Value'],
+          ['Anaerobic Digestion', 0],
+          ['Solid Fuel', 0],
+          ['BSF Processing', 0],
+          ['Composting', 0]
+];
+var results7 = [
+          ['Resource Recovery Options', 'Value'],
+          ['Anaerobic Digestion', 0],
+          ['Solid Fuel', 0],
+          ['BSF Processing',0],
+          ['Composting', 0]
+];
+
+
+var results9 = [
+          ['Resource Recovery Options', 'Nitrogen', 'Phosphorus', 'Potassium'],
+          ['Anaerobic Digestion', 0, 0, 0],
+          ['Solid Fuel', 0, 0, 0],
+          ['BSF Processing', 0, 0, 0],
+          ['Composting', 0, 0, 0]
+];
+
+var results10 = [
+          ['Resource Recovery Options', 'Value'],
+          ['Anaerobic Digestion', 0],
+          ['Solid Fuel', 0],
+          ['BSF Processing', 0],
+          ['Composting', 0]
+];
+var results11 = [
+          ['Resource Recovery Options', 'Value'],
+          ['Anaerobic Digestion', 0],
+          ['Solid Fuel', 0],
+          ['BSF Processing',0],
+          ['Composting', 0]
+];
+
+var comparison_results_revenue = [
+          ['Resource Recovery Options', 'Value'],
+          ['Anaerobic Digestion', 0],
+          ['Solid Fuel', 0],
+          ['BSF Processing', 0],
+          ['Composting', 0]
+];
+
+var comparison_results_outputs = [
+          ['Resource Recovery Options', 'Nitrogen', 'Phosphorus', 'Potassium'],
+          ['Anaerobic Digestion', 0, 0, 0],
+          ['Solid Fuel', 0, 0, 0],
+          ['BSF Processing', 0, 0, 0],
+          ['Composting', 0, 0, 0]
+];
+
+var comparison_results_energy = [
+          ['Resource Recovery Options', 'Value'],
+          ['Anaerobic Digestion', 0],
+          ['Solid Fuel', 0],
+          ['BSF Processing', 0],
+          ['Composting', 0]
+];
+
+var sankey_results = [
+   [ 'Faecal Sludge', 'Anaerobic Digestion', 0 ],
+   [ 'Faecal Sludge', 'Solid Fuel', 0 ],
+   [ 'Faecal Sludge', 'Black Soldier Fly Process', 0 ],
+   [ 'Faecal Sludge', 'Compost', 0 ],
+   [ 'Sewage Sludge', 'Anaerobic Digestion', 0 ],
+   [ 'Sewage Sludge', 'Solid Fuel', 0 ],
+   [ 'Sewage Sludge', 'Black Soldier Fly Process', 0 ],
+   ['Sewage Sludge', 'Compost', 0],
+   [ 'Solid Waste', 'Anaerobic Digestion', 0 ],
+   [ 'Solid Waste', 'Solid Fuel', 0 ],
+   [ 'Solid Waste', 'Black Soldier Fly Process', 0 ],
+   [ 'Solid Waste', 'Compost', 0 ],
+   [ 'Anaerobic Digestion', 'Energy (MJ)', 0 ],
+   [ 'Anaerobic Digestion', 'Nutrients (tons)', 0 ],
+   [ 'Anaerobic Digestion', 'Revenue $US', 0 ],
+   [ 'Solid Fuel', 'Energy (MJ)', 0 ],
+   [ 'Solid Fuel', 'Nutrients (tons)', 0 ],
+   [ 'Solid Fuel', 'Revenue $US', 0 ],
+   [ 'Black Soldier Fly Process', 'Energy (MJ)', 0 ],
+   [ 'Black Soldier Fly Process', 'Nutrients (tons)', 0 ],
+   [ 'Black Soldier Fly Process', 'Revenue $US', 0 ],
+   [ 'Compost', 'Energy (MJ)', 0 ],
+   [ 'Compost', 'Nutrients (tons)', 0 ],
+   [ 'Compost', 'Revenue $US', 0 ]
+
+];
+
+
+function drawcharts() {
+               console.log('CHARTS');
+		    //drawFirstChart();
+		    //drawSecondChart();
+		    //drawThirdChart();
+              
+            chart_options = {
+                sf_chart1: {
+                    options: {
+                        
+                            title: 'Nutrient Content from Faecal Sludge',
+                            //subtitle: 'Bla',
+                            width: '600px',
+                            height: '350px',
+                        
+                        vAxis: {title: 'Mass (tonnes)', 
+//                               direction:-1, 
+                                slantedText:true, 
+                                slantedTextAngle:90
+                               },
+
+                    },
+                    div: 'columnchart_material',
+                    results: results
+                },
+                sf_chart2: {
+                    options: {
+                      
+                        title: 'Potential Revenuse From Faecal Sludge',
+                        //subtitle: 'Bla',
+                        width: '600px',
+                        height: '350px',
+                     
+                      vAxis: {title: 'Revenue (US$)', 
+                              //direction:-1, 
+                              slantedText:true, slantedTextAngle:90},
+                      legend: {position: 'none'},
+                      bar: {groupWidth: "50%"},
+                        
+                    },
+                    div:  'columnchart_material2',
+                    results: results2
+                },
+                sf_chart3: {
+                    options: {
+                      
+                        title: 'Energy Content from Faecal Sludge',
+                        //subtitle: 'Bla',
+                        width: '600px',
+                        height: '350px',
+                     
+                      vAxis: {title: 'Thousand MJ', 
+                              //direction:-1, 
+                              slantedText:true, slantedTextAngle:90},
+                      legend: {position: 'none'},
+                      bar: {groupWidth: "50%"},
+                    },
+                    div:  'columnchart_material3',
+                    results: results3
+                },
+                ss_chart1: {
+                    options: {
+                        
+                            title: 'Nutrient Content from Sewage Sludge',
+                            //subtitle: 'Bla',
+                            width: '600px',
+                            height: '350px',
+                       
+                        vAxis: {title: 'Mass (tonnes)', //direction:-1,
+                                slantedText:true, slantedTextAngle:90}
+                    },
+                    div: 'columnchart_material5',
+                    results: results5      
+                },
+                ss_chart2: {
+                    options: {
+                      
+                        title: 'Potential Revenuse From Sewage Sludge',
+                        //subtitle: 'Bla',
+                        width: '600px',
+                        height: '350px',
+                      
+                      vAxis: {title: 'Revenue (US$)', //direction:-1, 
+                              slantedText:true, slantedTextAngle:90},
+                      legend: {position: 'none'},
+                      bar: {groupWidth: "50%"},
+                        
+                    },
+                    div:  'columnchart_material6',
+                    results: results6 
+                },
+                ss_chart3: {
+                    options: {
+                      
+                        title: 'Energy Content from Sewage Sludge',
+                        //subtitle: 'Bla',
+                        width: '600px',
+                        height: '350px',
+                      
+                      vAxis: {title: 'Thousand MJ', //direction:-1, 
+                              slantedText:true, slantedTextAngle:90},
+                      legend: {position: 'none'},
+                      bar: {groupWidth: "50%"},
+                    },
+                    div:  'columnchart_material7',
+                    results: results7   
+                },
+                sw_chart1: {
+                    options: {
+                        
+                            title: 'Nutrient Content from Organic MSW',
+                            //subtitle: 'Bla',
+                            width: '600px',
+                            height: '350px',
+                       
+                        vAxis: {title: 'Mass (tonnes)', //direction:-1, 
+                                slantedText:true, slantedTextAngle:90}
+                    },
+                    div: 'columnchart_material9',
+                    results: results9      
+                },
+                sw_chart2: {
+                    options: {
+                      
+                        title: 'Potential Revenuse From Organic MSW',
+                        //subtitle: 'Bla',
+                        width: '600px',
+                        height: '350px',
+                     
+                      vAxis: {title: 'Revenue (US$)', //direction:-1, 
+                              slantedText:true, slantedTextAngle:90},
+                      legend: {position: 'none'},
+                      bar: {groupWidth: "50%"},
+                        
+                    },
+                    div:  'columnchart_material10',
+                    results: results10 
+                },
+                sw_chart3: {
+                    options: {
+                      
+                        title: 'Energy Content from Organic MSW',
+                        //subtitle: 'Bla',
+                        width: '600px',
+                        height: '350px',
+                      
+                      vAxis: {title: 'Thousand MJ', //direction:-1, 
+                              slantedText:true, slantedTextAngle:90},
+                      legend: {position: 'none'},
+                      bar: {groupWidth: "50%"},
+                    },
+                    div:  'columnchart_material11',
+                    results: results11
+                },
+                totals_chart1: {
+                    options: {
+                        
+                            title: 'Comparison title',
+                            subtitle: 'Subtitle for comparison',
+                            width: '600px',
+                            height: '350px',
+                        
+                        vAxis: {title: 'Mass (tonnes)', //direction:-1,
+                                slantedText:true, slantedTextAngle:90}
+                    },
+                    div: 'columnchart_material13',
+                    results: comparison_results_outputs      
+                },
+                totals_chart2: {
+                    options: {
+                      
+                        title: 'Comparison Revenue',
+                        //subtitle: 'Bla',
+                        width: '600px',
+                        height: '350px',
+                      
+                      vAxis: {title: 'Revenue (US$)', //direction:-1,
+                              slantedText:true, slantedTextAngle:90},
+                      legend: {position: 'none'},
+                      bar: {groupWidth: "50%"},
+                        
+                    },
+                    div:  'columnchart_material14',
+                    results: comparison_results_revenue 
+                },
+                totals_chart3: {
+                    options: {
+                     
+                        title: 'Energy Content Comparison',
+                        //subtitle: 'Bla',
+                        width: '600px',
+                        height: '350px',
+                     
+                      vAxis: {title: 'Thousand MJ', //direction:-1, 
+                              slantedText:true, slantedTextAngle:90},
+                      legend: {position: 'none'},
+                      bar: {groupWidth: "50%"},
+                    },
+                    div:  'columnchart_material15',
+                    results: comparison_results_energy
+                }
+                
+                
+            }
+            
+                                 
+            const keys = Object.keys(chart_options);
+            for (const key of keys) {
+                console.log(chart_options[key]);
+                console.log(chart_options[key].results);
+                drawBarChart(chart_options[key].results, chart_options[key].options, chart_options[key].div);
+                console.log(key);
+
+            }
+}
+
 
 function check_total() {
 	console.log('checking total');
@@ -38,7 +356,8 @@ function check_total() {
 	var fs_bsfp_pc = parseFloat($('#fs_bsfp_pc').val());
 	var fs_c_pc = parseFloat($('#fs_c_pc').val());
 	//var fs_t_pc = parseFloat($('#fs_t_pc').val());
-	$('#fs_t_pc').val(fs_ad_pc+fs_sf_pc+fs_bsfp_pc+fs_c_pc);
+	//$('#fs_t_pc').val(fs_ad_pc+fs_sf_pc+fs_bsfp_pc+fs_c_pc);
+    vm.wastestreams.fs_t_pc = fs_ad_pc+fs_sf_pc+fs_bsfp_pc+fs_c_pc;
 
 	if ((fs_ad_pc+fs_sf_pc+fs_bsfp_pc+fs_c_pc)> 100 ) {
 		console.log('too much');
@@ -50,218 +369,485 @@ function check_total() {
 		//$('#fs_t_pc').removeClass('alert');
 		$('#total_warning').html('');
 	}
-
 }
 
 
 
-function calculate_ad(project, amount, pc) {
-	var amount_of_gas = (amount*(pc/100)*1000)*(project['wasteQuality']['totalSolids']/(10**9))*(project['wasteQuality']['volatileSolids']/100)*(project['treatmentProcesses']['volatileSolidsDegradationRate']/100)*project['wasteQuality']['biomethanePotential']*(100/60);
-	console.log(amount_of_gas);
-	$('#amount_of_gas').html(amount_of_gas.toFixed(2));
+function calculate_ad() {
+    
+	vm.results.amount_of_gas_fs = (vm.wastestreams.fs_amount*(vm.wastestreams.fs_ad_pc/100)*1000)*(vm.wastequality_fs.total_solids/(10**9))*(vm.wastequality_fs.volatile_solids/100)*(vm.treatmentprocesses_fs.volatile_solids_degradation_rate/100)*vm.wastequality_fs.biomethane_potential*(100/60);
 
-	var energy_content_mj = amount_of_gas * 21.6;
-	console.log(energy_content_mj);
-	$('#energy_content_mj').html(energy_content_mj.toFixed(2));
-	results3[1][1] = energy_content_mj;
+	//$('#amount_of_gas_fs').html(amount_of_gas.toFixed(2));
+    vm.results.amount_of_gas_ss = (vm.wastestreams.ss_amount*(vm.wastestreams.ss_ad_pc/100))*(vm.wastequality_ss.total_solids_pc/100)* (vm.wastequality_ss.volatile_solids/100)*(vm.treatmentprocesses_ss.volatile_solids_degradation_rate/100)*vm.wastequality_ss.biomethane_potential*(100/60);
 
-	var energy_content_kwh = amount_of_gas * 6;
-	console.log(energy_content_kwh);
-	$('#energy_content_kwh').html(energy_content_kwh.toFixed(2));
+    vm.results.amount_of_gas_sw = (vm.wastestreams.sw_amount*(vm.wastestreams.sw_ad_pc/100))*(vm.wastequality_sw.total_solids_pc/100)* (vm.wastequality_sw.volatile_solids/100)*(vm.treatmentprocesses_sw.volatile_solids_degradation_rate/100)*vm.wastequality_sw.biomethane_potential*(100/60);
 
-	var potential_biogas_revenue = amount_of_gas * project['prices']['biogasPrice'];
-	console.log(potential_biogas_revenue);
-	$('#potential_biogas_revenue').html(potential_biogas_revenue.toFixed(2));
-	results2[1][1] = potential_biogas_revenue;
+	vm.results.energy_content_mj_fs = vm.results.amount_of_gas_fs * 21.6;
+	results3[1][1] = vm.results.energy_content_mj_fs;
+    
+	vm.results.energy_content_mj_ss = vm.results.amount_of_gas_ss * 21.6;
+	results7[1][1] = vm.results.energy_content_mj_ss;
+    
+	vm.results.energy_content_mj_sw = vm.results.amount_of_gas_sw * 21.6;
+	results11[1][1] = vm.results.energy_content_mj_sw;
 
-	var amount_of_ad_residue = (amount*(pc/100)*1000)*(project['wasteQuality']['totalSolids']/(10**9))*(1-(project['treatmentProcesses']['dmrRateAnaerobicDigestion']/100))*(1-(project['treatmentProcesses']['dmrCompost']/100));
-	console.log(amount_of_ad_residue);
-	$('#amount_of_ad_residue').html(amount_of_ad_residue.toFixed(2));
-
-	var potential_ad_residue_revenue = amount_of_ad_residue * project['prices']['soilConditionerPrice'];
-	console.log(potential_ad_residue_revenue);
-	$('#potential_ad_residue_revenue').html(potential_ad_residue_revenue.toFixed(2));
+	vm.results.energy_content_kwh_fs = vm.results.amount_of_gas_fs * 6;
+    vm.results.energy_content_kwh_ss = vm.results.amount_of_gas_ss * 6;
+    vm.results.energy_content_kwh_sw = vm.results.amount_of_gas_sw * 6;
 
 
-	var n_by_mass = (amount*(pc/100)*1000)*(project['wasteQuality']['totalNitrogen']/(10**9))*(1-(project['treatmentProcesses']['tnrCompostingReduction']/100));
-	console.log(n_by_mass);
-	$('#n_by_mass').html(n_by_mass.toFixed(2));
-	results[1][1] = n_by_mass;
+	vm.results.potential_biogas_revenue_fs = vm.results.amount_of_gas_fs * vm.prices.biogas_price;
+	results2[1][1] = vm.results.potential_biogas_revenue_fs;
+    
+	vm.results.potential_biogas_revenue_ss = vm.results.amount_of_gas_ss * vm.prices.biogas_price;
+	results6[1][1] = vm.results.potential_biogas_revenue_ss;
+    
+	vm.results.potential_biogas_revenue_sw = vm.results.amount_of_gas_sw * vm.prices.biogas_price;
+	results10[1][1] = vm.results.potential_biogas_revenue_sw;
 
-	var n_pc_ad_residue = (n_by_mass / amount_of_ad_residue) * 100;
-	console.log(n_pc_ad_residue);
-	$('#n_pc_ad_residue').html(n_pc_ad_residue.toFixed(2));
+	vm.results.amount_of_ad_residue_fs = (vm.wastestreams.fs_amount*(vm.wastestreams.fs_ad_pc/100)*1000)*(vm.wastequality_fs.total_solids/(10**9))*(1-(vm.treatmentprocesses_fs.dmr_rate_anaerobic_digestion/100))*(1-(vm.treatmentprocesses_fs.dmr_compost/100));
+    
+	vm.results.amount_of_ad_residue_ss = (vm.wastestreams.ss_amount*(vm.wastestreams.ss_ad_pc/100))*(vm.wastequality_ss.total_solids_pc/(100))*(1-(vm.treatmentprocesses_ss.dmr_rate_anaerobic_digestion/100))*(1-(vm.treatmentprocesses_ss.dmr_compost/100));
+    
+	vm.results.amount_of_ad_residue_sw = (vm.wastestreams.sw_amount*(vm.wastestreams.sw_ad_pc/100))*(vm.wastequality_sw.total_solids_pc/(100))*(1-(vm.treatmentprocesses_sw.dmr_rate_anaerobic_digestion/100))*(1-(vm.treatmentprocesses_sw.dmr_compost/100));
 
-	var p_by_mass = (amount*(pc/100)*1000)*(project['wasteQuality']['totalPhosphorus']/(10**9))*(1-(project['treatmentProcesses']['tprCompostingReduction']/100));
-	console.log(p_by_mass);
-	$('#p_by_mass').html(p_by_mass.toFixed(2));
-	results[1][2] = p_by_mass;
+	vm.results.potential_ad_residue_revenue_fs = vm.results.amount_of_ad_residue_fs * vm.prices.soil_conditioner_price;
+	vm.results.potential_ad_residue_revenue_ss = vm.results.amount_of_ad_residue_ss * vm.prices.soil_conditioner_price;
+	vm.results.potential_ad_residue_revenue_sw = vm.results.amount_of_ad_residue_sw * vm.prices.soil_conditioner_price;
 
-	var p_pc_ad_residue = (p_by_mass / amount_of_ad_residue) * 100;
-	console.log(p_pc_ad_residue);
-	$('#p_pc_ad_residue').html(p_pc_ad_residue.toFixed(2));
+	vm.results.n_by_mass_fs = (vm.wastestreams.fs_amount*(vm.wastestreams.fs_ad_pc/100)*1000)*(vm.wastequality_fs.total_nitrogen/(10**9))*(1-(vm.treatmentprocesses_fs.tnr_composting_reduction/100));
+	results[1][1] = vm.results.n_by_mass_fs;
+    
+	vm.results.n_by_mass_ss = (vm.wastestreams.ss_amount*(vm.wastestreams.ss_ad_pc/100))*(vm.wastequality_ss.total_solids_pc/(100))*(vm.wastequality_ss.total_nitrogen_mg_n_kg_ts/(10**6)) *(1-(vm.treatmentprocesses_ss.tnr_composting_reduction/100));
+	results5[1][1] = vm.results.n_by_mass_ss;
 
-	var k_by_mass = (amount*(pc/100)*1000)*(project['wasteQuality']['totalPotassium']/(10**9))*(1-(project['treatmentProcesses']['tpotrCompostingReduction']/100));
-	console.log(k_by_mass);
-	$('#k_by_mass').html(k_by_mass.toFixed(2));
-	results[1][3] = k_by_mass;
+    
+	vm.results.n_by_mass_sw = (vm.wastestreams.sw_amount*(vm.wastestreams.sw_ad_pc/100))*(vm.wastequality_sw.total_solids_pc/(100))*(vm.wastequality_sw.total_nitrogen_mg_n_kg_ts/(10**6)) *(1-(vm.treatmentprocesses_sw.tnr_composting_reduction/100));
+	results9[1][1] = vm.results.n_by_mass_sw;
+    
+	vm.results.n_pc_ad_residue_fs = (vm.results.n_by_mass_fs / vm.results.amount_of_ad_residue_fs) * 100;
+    vm.results.n_pc_ad_residue_ss = (vm.results.n_by_mass_ss / vm.results.amount_of_ad_residue_ss) * 100;
+    vm.results.n_pc_ad_residue_sw = (vm.results.n_by_mass_sw / vm.results.amount_of_ad_residue_sw) * 100;
 
-	var k_pc_ad_residue = (k_by_mass / amount_of_ad_residue) * 100;
-	console.log(k_pc_ad_residue);
-	$('#k_pc_ad_residue').html(k_pc_ad_residue.toFixed(2));
+	vm.results.p_by_mass_fs = (vm.wastestreams.fs_amount*(vm.wastestreams.fs_ad_pc/100)*1000)*(vm.wastequality_fs.total_phosphorus/(10**9))*(1-(vm.treatmentprocesses_fs.tpr_composting_reduction/100));
+	results[1][2] = vm.results.p_by_mass_fs;
+    
+	vm.results.p_by_mass_ss = (vm.wastestreams.ss_amount*(vm.wastestreams.ss_ad_pc/100))*(vm.wastequality_ss.total_solids_pc/(100))*(vm.wastequality_ss.total_phosphorus_mg_p_kg_ts/(10**6))*(1-(vm.treatmentprocesses_ss.tpr_composting_reduction/100));
+	results5[1][2] = vm.results.p_by_mass_ss;
 
-	var total_potential_ad_revenue = potential_biogas_revenue + potential_ad_residue_revenue;
-	console.log(total_potential_ad_revenue);
-	$('#total_potential_ad_revenue').html(total_potential_ad_revenue.toFixed(2));
+	vm.results.p_by_mass_sw = (vm.wastestreams.sw_amount*(vm.wastestreams.sw_ad_pc/100))*(vm.wastequality_sw.total_solids_pc/(100))*(vm.wastequality_sw.total_phosphorus_mg_p_kg_ts/(10**6))*(1-(vm.treatmentprocesses_sw.tpr_composting_reduction/100));
+	results9[1][2] = vm.results.p_by_mass_sw;
+
+	vm.results.p_pc_ad_residue_fs = (vm.results.p_by_mass_fs / vm.results.amount_of_ad_residue_fs) * 100;
+	vm.results.p_pc_ad_residue_ss = (vm.results.p_by_mass_ss / vm.results.amount_of_ad_residue_ss) * 100;
+	vm.results.p_pc_ad_residue_sw = (vm.results.p_by_mass_sw / vm.results.amount_of_ad_residue_sw) * 100;
+
+	vm.results.k_by_mass_fs = (vm.wastestreams.fs_amount*(vm.wastestreams.fs_ad_pc/100)*1000)*(vm.wastequality_fs.total_potassium/(10**9))*(1-(vm.treatmentprocesses_fs.tpotr_composting_reduction/100));
+	results[1][3] = vm.results.k_by_mass_fs;
+    
+	vm.results.k_by_mass_ss = (vm.wastestreams.ss_amount*(vm.wastestreams.ss_ad_pc/100))*(vm.wastequality_ss.total_solids_pc/(100))*(vm.wastequality_ss.total_potassium_mg_k_kg_ts/(10**6))*(1-(vm.treatmentprocesses_ss.tpotr_composting_reduction/100));
+	results5[1][3] = vm.results.k_by_mass_ss;
+    
+	vm.results.k_by_mass_sw = (vm.wastestreams.sw_amount*(vm.wastestreams.sw_ad_pc/100))*(vm.wastequality_sw.total_solids_pc/(100))*(vm.wastequality_sw.total_potassium_mg_k_kg_ts/(10**6))*(1-(vm.treatmentprocesses_sw.tpotr_composting_reduction/100));
+	results9[1][3] = vm.results.k_by_mass_sw;
+
+	vm.results.k_pc_ad_residue_fs = (vm.results.k_by_mass_fs / vm.results.amount_of_ad_residue_fs) * 100;
+    vm.results.k_pc_ad_residue_ss = (vm.results.k_by_mass_ss / vm.results.amount_of_ad_residue_ss) * 100;
+    vm.results.k_pc_ad_residue_sw = (vm.results.k_by_mass_sw / vm.results.amount_of_ad_residue_sw) * 100;
+    
+	vm.results.total_potential_ad_revenue_fs = vm.results.potential_biogas_revenue_fs + vm.results.potential_ad_residue_revenue_fs;
+    
+	vm.results.total_potential_ad_revenue_ss = vm.results.potential_biogas_revenue_ss + vm.results.potential_ad_residue_revenue_ss;
+    
+	vm.results.total_potential_ad_revenue_sw = vm.results.potential_biogas_revenue_sw + vm.results.potential_ad_residue_revenue_sw;
 }
 
 
-function calculate_sf(project, amount, pc) {
-	var amount_of_solid_fuel = (amount*(pc/100)*1000)*(project['wasteQuality']['totalSolids']/(10**9));
-	console.log(amount_of_solid_fuel);
-	$('#amount_of_solid_fuel').html(amount_of_solid_fuel.toFixed(2));
+function calculate_sf() {
+	vm.results.amount_of_solid_fuel_fs = (vm.wastestreams.fs_amount*(vm.wastestreams.fs_sf_pc/100)*1000)*(vm.wastequality_fs.total_solids/(10**9));
+    
+	vm.results.amount_of_solid_fuel_ss = (vm.wastestreams.ss_amount*(vm.wastestreams.ss_sf_pc/100))*(vm.wastequality_ss.total_solids_pc/(100));
+    
+	vm.results.amount_of_solid_fuel_sw = (vm.wastestreams.sw_amount*(vm.wastestreams.sw_sf_pc/100))*(vm.wastequality_sw.total_solids_pc/(100));
 
-	var energy_content_mj = (amount*(pc/100)*1000)*(project['wasteQuality']['totalSolids']/(10**9))*1000*project['wasteQuality']['calorificValue'];
-	console.log(energy_content_mj);
-	$('#energy_content_mj_sf').html(energy_content_mj.toFixed(2));
-	results3[2][1] = energy_content_mj;
+	vm.results.energy_content_mj_sf_fs = (vm.wastestreams.fs_amount*(vm.wastestreams.fs_sf_pc/100)*1000)*(vm.wastequality_fs.total_solids/(10**9))*1000*vm.wastequality_fs.calorific_value;
+	results3[2][1] = vm.results.energy_content_mj_sf_fs;
+    
+	vm.results.energy_content_mj_sf_ss = (vm.wastestreams.ss_amount*(vm.wastestreams.ss_sf_pc/100))*(vm.wastequality_ss.total_solids_pc/(100))*1000*vm.wastequality_ss.calorific_value;
+	results7[2][1] = vm.results.energy_content_mj_sf_ss;
+    
+	vm.results.energy_content_mj_sf_sw = (vm.wastestreams.sw_amount*(vm.wastestreams.sw_sf_pc/100))*(vm.wastequality_sw.total_solids_pc/(100))*1000*vm.wastequality_sw.calorific_value;
+	results11[2][1] = vm.results.energy_content_mj_sf_sw;
 
-	var energy_content_kwh = (amount*(pc/100)*1000)*(project['wasteQuality']['totalSolids']/(10**9))*1000*project['wasteQuality']['calorificValue']*0.277778;
-	console.log(energy_content_kwh);
-	$('#energy_content_kwh_sf').html(energy_content_kwh.toFixed(2));
+	vm.results.energy_content_kwh_sf_fs = (vm.wastestreams.fs_amount*(vm.wastestreams.fs_sf_pc/100)*1000)*(vm.wastequality_fs.total_solids/(10**9))*1000*vm.wastequality_fs.calorific_value*0.277778;
+    
+	vm.results.energy_content_kwh_sf_ss = (vm.wastestreams.ss_amount*(vm.wastestreams.ss_sf_pc/100))*(vm.wastequality_ss.total_solids_pc/(100))*1000*vm.wastequality_ss.calorific_value*0.277778;
+    
+	vm.results.energy_content_kwh_sf_sw = (vm.wastestreams.sw_amount*(vm.wastestreams.sw_sf_pc/100))*(vm.wastequality_sw.total_solids_pc/(100))*1000*vm.wastequality_sw.calorific_value*0.277778;
 
-	var total_potential_sf_revenue = amount_of_solid_fuel * project['prices']['solidCombustionPrice']
-	console.log(total_potential_sf_revenue);
-	$('#total_potential_sf_revenue').html(total_potential_sf_revenue.toFixed(2));
-	results2[2][1] = total_potential_sf_revenue;
+	vm.results.total_potential_sf_revenue_fs = vm.results.amount_of_solid_fuel_fs * vm.prices.solid_combustion_price;
+	results2[2][1] = vm.results.total_potential_sf_revenue_fs;
+    
+	vm.results.total_potential_sf_revenue_ss = vm.results.amount_of_solid_fuel_ss * vm.prices.solid_combustion_price;
+	results6[2][1] = vm.results.total_potential_sf_revenue_ss;
+    
+	vm.results.total_potential_sf_revenue_sw = vm.results.amount_of_solid_fuel_sw * vm.prices.solid_combustion_price;
+	results10[2][1] = vm.results.total_potential_sf_revenue_sw;
 	
 }
 
-function calculate_bsf(project, amount, pc) {
-	var amount_of_bsf_larvae = (amount*(pc/100)*1000)*(project['wasteQuality']['totalSolids']/(10**9))*(project['treatmentProcesses']['bcrBlackSoldierFly']/100);
-	console.log(amount_of_bsf_larvae);
-	$('#amount_of_bsf_larvae').html(amount_of_bsf_larvae.toFixed(2));
+function calculate_bsf() {
+	vm.results.amount_of_bsf_larvae_fs = (vm.wastestreams.fs_amount*(vm.wastestreams.fs_bsfp_pc/100)*1000)*(vm.wastequality_fs.total_solids/(10**9))*(vm.treatmentprocesses_fs.bcr_black_soldier_fly/100);
 
-	var protein_content = amount_of_bsf_larvae * 0.4;
-	console.log(protein_content);
-	$('#protein_content').html(protein_content.toFixed(2));
+    
+	vm.results.amount_of_bsf_larvae_ss = (vm.wastestreams.ss_amount*(vm.wastestreams.ss_bsfp_pc/100))*(vm.wastequality_ss.total_solids_pc/(100))*(vm.treatmentprocesses_ss.bcr_black_soldier_fly/100);
 
-	var fat_content = amount_of_bsf_larvae * 0.3;
-	console.log(fat_content);
-	$('#fat_content').html(fat_content.toFixed(2));
+    
+	vm.results.amount_of_bsf_larvae_sw = (vm.wastestreams.sw_amount*(vm.wastestreams.sw_bsfp_pc/100))*(vm.wastequality_sw.total_solids_pc/(100))*(vm.treatmentprocesses_sw.bcr_black_soldier_fly/100);
 
-	var potential_larvae_revenue = amount_of_bsf_larvae * project['prices']['prepupaePrice'];
-	console.log(potential_larvae_revenue);
-	$('#potential_larvae_revenue').html(potential_larvae_revenue.toFixed(2));
-	results2[3][1] = potential_larvae_revenue;
 
-	var amount_of_bsf_residue = (amount*(pc/100)*1000)*(project['wasteQuality']['totalSolids']/(10**9))*(1-(project['treatmentProcesses']['dmrRateBsfResidue']/100))*(1-(project['treatmentProcesses']['dmrCompost']/100));
-	console.log(amount_of_bsf_residue);
-	$('#amount_of_bsf_residue').html(amount_of_bsf_residue.toFixed(2));
+	vm.results.protein_content_fs = vm.results.amount_of_bsf_larvae_fs * 0.4;
+    vm.results.protein_content_ss = vm.results.amount_of_bsf_larvae_ss * 0.4;
+    vm.results.protein_content_sw = vm.results.amount_of_bsf_larvae_sw * 0.4;
 
-	var potential_bsf_residue_revenue = amount_of_bsf_residue * project['prices']['soilConditionerPrice'];
-	console.log(potential_bsf_residue_revenue);
-	$('#potential_bsf_residue_revenue').html(potential_bsf_residue_revenue.toFixed(2));
 
-	var n_by_mass = (amount*(pc/100)*1000)*(project['wasteQuality']['totalNitrogen']/(10**9))*(1-(project['treatmentProcesses']['tnrCompostingReduction']/100))*(1-(project['treatmentProcesses']['tnrBsfResidue']/100));
-	console.log(n_by_mass);
-	$('#n_by_mass_bsf').html(n_by_mass.toFixed(2));
-	results[3][1] = n_by_mass;
+	vm.results.fat_content_fs = vm.results.amount_of_bsf_larvae_fs * 0.3;
+    vm.results.fat_content_ss = vm.results.amount_of_bsf_larvae_ss * 0.3;
+    vm.results.fat_content_sw = vm.results.amount_of_bsf_larvae_sw * 0.3;
 
-	var n_pc_bsf_residue = n_by_mass / amount_of_bsf_residue;
-	console.log(n_pc_bsf_residue);
-	$('#n_pc_bsf_residue').html(n_pc_bsf_residue.toFixed(2));
-////
-	var p_by_mass = (amount*(pc/100)*1000)*(project['wasteQuality']['totalPhosphorus']/(10**9))*(1-(project['treatmentProcesses']['tprCompostingReduction']/100))*(1-(project['treatmentProcesses']['tprBsfResidue']/100));
-	console.log(p_by_mass);
-	$('#p_by_mass_bsf').html(p_by_mass.toFixed(2));
-	results[3][2] = p_by_mass;
+	vm.results.potential_larvae_revenue_fs = vm.results.amount_of_bsf_larvae_fs * vm.prices.prepupae_price;
+	results2[3][1] = vm.results.potential_larvae_revenue_fs;
+    
+	vm.results.potential_larvae_revenue_ss = vm.results.amount_of_bsf_larvae_ss * vm.prices.prepupae_price;
+	results6[3][1] = vm.results.potential_larvae_revenue_ss;
 
-	var p_pc_bsf_residue = p_by_mass / amount_of_bsf_residue;
-	console.log(p_pc_bsf_residue);
-	$('#p_pc_bsf_residue').html(p_pc_bsf_residue.toFixed(2));
+	vm.results.potential_larvae_revenue_sw = vm.results.amount_of_bsf_larvae_sw * vm.prices.prepupae_price;
+	results10[3][1] = vm.results.potential_larvae_revenue_sw;
+    
+	vm.results.amount_of_bsf_residue_fs = (vm.wastestreams.fs_amount*(vm.wastestreams.fs_bsfp_pc/100)*1000)*(vm.wastequality_fs.total_solids/(10**9))*(1-(vm.treatmentprocesses_fs.dmr_rate_bsf_residue/100))*(1-(vm.treatmentprocesses_fs.dmr_compost/100));
+    
+	vm.results.amount_of_bsf_residue_ss = (vm.wastestreams.ss_amount*(vm.wastestreams.ss_bsfp_pc/100))*(vm.wastequality_ss.total_solids_pc/(100))*(1-(vm.treatmentprocesses_ss.dmr_rate_bsf_residue/100))*(1-(vm.treatmentprocesses_ss.dmr_compost/100));
+    
+	vm.results.amount_of_bsf_residue_sw = (vm.wastestreams.sw_amount*(vm.wastestreams.sw_bsfp_pc/100))*(vm.wastequality_sw.total_solids_pc/(100))*(1-(vm.treatmentprocesses_sw.dmr_rate_bsf_residue/100))*(1-(vm.treatmentprocesses_sw.dmr_compost/100));
 
-	var k_by_mass = (amount*(pc/100)*1000)*(project['wasteQuality']['totalPotassium']/(10**9))*(1-(project['treatmentProcesses']['tpotrCompostingReduction']/100))*(1-(project['treatmentProcesses']['tpotrBsfResidue']/100));
-	console.log(k_by_mass);
-	$('#k_by_mass_bsf').html(k_by_mass.toFixed(2));
-	results[3][3] = k_by_mass;
 
-	var k_pc_bsf_residue = k_by_mass / amount_of_bsf_residue;
-	console.log(k_pc_bsf_residue);
-	$('#k_pc_bsf_residue').html(k_pc_bsf_residue.toFixed(2));
+	vm.results.potential_bsf_residue_revenue_fs = vm.results.amount_of_bsf_residue_fs * vm.prices.soil_conditioner_price;
+    vm.results.potential_bsf_residue_revenue_ss = vm.results.amount_of_bsf_residue_ss * vm.prices.soil_conditioner_price;
+    vm.results.potential_bsf_residue_revenue_sw = vm.results.amount_of_bsf_residue_sw * vm.prices.soil_conditioner_price;
 
-	var total_potential_bsf_revenue = potential_larvae_revenue + potential_bsf_residue_revenue;
-	console.log(total_potential_bsf_revenue);
-	$('#total_potential_bsf_revenue').html(total_potential_bsf_revenue.toFixed(2));
+
+	vm.results.n_by_mass_bsf_fs = (vm.wastestreams.fs_amount*(vm.wastestreams.fs_bsfp_pc/100)*1000)*(vm.wastequality_fs.total_nitrogen/(10**9))*(1-(vm.treatmentprocesses_fs.tnr_composting_reduction/100))*(1-(vm.treatmentprocesses_fs.tnr_bsf_residue/100));
+	results[3][1] = vm.results.n_by_mass_bsf_fs;
+    
+	vm.results.n_by_mass_bsf_ss = (vm.wastestreams.ss_amount*(vm.wastestreams.ss_bsfp_pc/100))*(vm.wastequality_ss.total_solids_pc/(100))*(vm.wastequality_ss.total_nitrogen_mg_n_kg_ts/(10**6))*(1-(vm.treatmentprocesses_ss.tnr_composting_reduction/100))*(1-(vm.treatmentprocesses_ss.tnr_bsf_residue/100));
+	results5[3][1] = vm.results.n_by_mass_bsf_ss;
+    
+	vm.results.n_by_mass_bsf_sw = (vm.wastestreams.sw_amount*(vm.wastestreams.sw_bsfp_pc/100))*(vm.wastequality_sw.total_solids_pc/(100))*(vm.wastequality_sw.total_nitrogen_mg_n_kg_ts/(10**6))*(1-(vm.treatmentprocesses_sw.tnr_composting_reduction/100))*(1-(vm.treatmentprocesses_sw.tnr_bsf_residue/100));
+	results9[3][1] = vm.results.n_by_mass_bsf_sw;
+
+	vm.results.n_pc_bsf_residue_fs = (vm.results.n_by_mass_bsf_fs / vm.results.amount_of_bsf_residue_fs) * 100;
+	vm.results.n_pc_bsf_residue_ss = (vm.results.n_by_mass_bsf_ss / vm.results.amount_of_bsf_residue_ss) * 100;
+	vm.results.n_pc_bsf_residue_sw = (vm.results.n_by_mass_bsf_sw / vm.results.amount_of_bsf_residue_sw) * 100;
+
+    
+	vm.results.p_by_mass_bsf_fs = (vm.wastestreams.fs_amount*(vm.wastestreams.fs_bsfp_pc/100)*1000)*(vm.wastequality_fs.total_phosphorus/(10**9))*(1-(vm.treatmentprocesses_fs.tpr_composting_reduction/100))*(1-(vm.treatmentprocesses_fs.tpr_bsf_residue/100));
+	results[3][2] = vm.results.p_by_mass_bsf_fs;
+    
+	vm.results.p_by_mass_bsf_ss = (vm.wastestreams.ss_amount*(vm.wastestreams.ss_bsfp_pc/100))*(vm.wastequality_ss.total_solids_pc/(100))*(vm.wastequality_ss.total_phosphorus_mg_p_kg_ts/(10**6))*(1-(vm.treatmentprocesses_ss.tpr_composting_reduction/100))*(1-(vm.treatmentprocesses_ss.tpr_bsf_residue/100));
+	results5[3][2] = vm.results.p_by_mass_bsf_ss;
+    
+	vm.results.p_by_mass_bsf_sw = (vm.wastestreams.sw_amount*(vm.wastestreams.sw_bsfp_pc/100))*(vm.wastequality_sw.total_solids_pc/(100))*(vm.wastequality_sw.total_phosphorus_mg_p_kg_ts/(10**6))*(1-(vm.treatmentprocesses_sw.tpr_composting_reduction/100))*(1-(vm.treatmentprocesses_sw.tpr_bsf_residue/100));
+	results9[3][2] = vm.results.p_by_mass_bsf_sw;
+    
+    
+
+	vm.results.p_pc_bsf_residue_fs = (vm.results.p_by_mass_bsf_fs / vm.results.amount_of_bsf_residue_fs) * 100;
+    vm.results.p_pc_bsf_residue_ss = (vm.results.p_by_mass_bsf_ss / vm.results.amount_of_bsf_residue_ss) * 100;
+    vm.results.p_pc_bsf_residue_sw = (vm.results.p_by_mass_bsf_sw / vm.results.amount_of_bsf_residue_sw) * 100;
+
+
+	vm.results.k_by_mass_bsf_fs = (vm.wastestreams.fs_amount*(vm.wastestreams.fs_bsfp_pc/100)*1000)*(vm.wastequality_fs.total_potassium/(10**9))*(1-(vm.treatmentprocesses_fs.tpotr_composting_reduction/100))*(1-(vm.treatmentprocesses_fs.tpotr_bsf_residue/100));
+	results[3][3] = vm.results.k_by_mass_bsf_fs;
+    
+	vm.results.k_by_mass_bsf_ss = (vm.wastestreams.ss_amount*(vm.wastestreams.ss_bsfp_pc/100))*(vm.wastequality_ss.total_solids_pc/(100))*(vm.wastequality_ss.total_potassium_mg_k_kg_ts/(10**6))*(1-(vm.treatmentprocesses_ss.tpotr_composting_reduction/100))*(1-(vm.treatmentprocesses_ss.tpotr_bsf_residue/100));
+	results5[3][3] = vm.results.k_by_mass_bsf_ss;
+    
+	vm.results.k_by_mass_bsf_sw = (vm.wastestreams.sw_amount*(vm.wastestreams.sw_bsfp_pc/100))*(vm.wastequality_sw.total_solids_pc/(100))*(vm.wastequality_sw.total_potassium_mg_k_kg_ts/(10**6))*(1-(vm.treatmentprocesses_sw.tpotr_composting_reduction/100))*(1-(vm.treatmentprocesses_sw.tpotr_bsf_residue/100));
+	results9[3][3] = vm.results.k_by_mass_bsf_sw;
+
+	vm.results.k_pc_bsf_residue_fs = (vm.results.k_by_mass_bsf_fs / vm.results.amount_of_bsf_residue_fs) * 100;
+    vm.results.k_pc_bsf_residue_ss = (vm.results.k_by_mass_bsf_ss / vm.results.amount_of_bsf_residue_ss) * 100;
+    vm.results.k_pc_bsf_residue_sw = (vm.results.k_by_mass_bsf_sw / vm.results.amount_of_bsf_residue_sw) * 100;
+
+
+	vm.results.total_potential_bsf_revenue_fs = vm.results.potential_larvae_revenue_fs + vm.results.potential_bsf_residue_revenue_fs;
+    
+    vm.results.total_potential_bsf_revenue_ss = vm.results.potential_larvae_revenue_ss + vm.results.potential_bsf_residue_revenue_ss;
+    
+    vm.results.total_potential_bsf_revenue_sw = vm.results.potential_larvae_revenue_sw + vm.results.potential_bsf_residue_revenue_sw;
 }
 
-function calculate_compost(project, amount, pc) {
-	var amount_of_compost = (amount*(pc/100)*1000)*(project['wasteQuality']['totalSolids']/(10**9))*(1-(project['treatmentProcesses']['dmrCompost']/100));
-	console.log(amount_of_compost);
-	$('#amount_of_compost').html(amount_of_compost.toFixed(2));
+function calculate_compost() {
+	vm.results.amount_of_compost_fs = (vm.wastestreams.fs_amount*(vm.wastestreams.fs_c_pc/100)*1000)*(vm.wastequality_fs.total_solids/(10**9))*(1-(vm.treatmentprocesses_fs.dmr_compost/100));
 
-	var total_potential_compost_revenue = amount_of_compost * project['prices']['soilConditionerPrice'];
-	console.log(total_potential_compost_revenue);
-	$('#total_potential_compost_revenue').html(total_potential_compost_revenue.toFixed(2));
-	results2[4][1] = total_potential_compost_revenue;
 
-	var n_by_mass = (amount*(pc/100)*1000)*(project['wasteQuality']['totalNitrogen']/(10**9))*(1-(project['treatmentProcesses']['tnrCompostingReduction']/100));
-	console.log(n_by_mass);
-	$('#n_by_mass_compost').html(n_by_mass.toFixed(2));
-	results[4][1] = n_by_mass;
+	vm.results.amount_of_compost_ss = (vm.wastestreams.ss_amount*(vm.wastestreams.ss_c_pc/100))*(vm.wastequality_ss.total_solids_pc/(100))*(1-(vm.treatmentprocesses_ss.dmr_compost/100));
+    
+	vm.results.amount_of_compost_sw = (vm.wastestreams.sw_amount*(vm.wastestreams.sw_c_pc/100))*(vm.wastequality_sw.total_solids_pc/(100))*(1-(vm.treatmentprocesses_sw.dmr_compost/100));
 
-	var n_pc_compost = n_by_mass / amount_of_compost;
-	console.log(n_pc_compost);
-	$('#n_pc_compost').html(n_pc_compost.toFixed(2));
+	vm.results.total_potential_compost_revenue_fs = vm.results.amount_of_compost_fs * vm.prices.soil_conditioner_price;
+	results2[4][1] = vm.results.total_potential_compost_revenue_fs;
+    
+	vm.results.total_potential_compost_revenue_ss = vm.results.amount_of_compost_ss * vm.prices.soil_conditioner_price;
+	results6[4][1] = vm.results.total_potential_compost_revenue_ss;
+    
+	vm.results.total_potential_compost_revenue_sw = vm.results.amount_of_compost_sw * vm.prices.soil_conditioner_price;
+	results10[4][1] = vm.results.total_potential_compost_revenue_sw;
 
-	var p_by_mass = (amount*(pc/100)*1000)*(project['wasteQuality']['totalPhosphorus']/(10**9))*(1-(project['treatmentProcesses']['tprCompostingReduction']/100));
-	console.log(p_by_mass);
-	$('#p_by_mass_compost').html(p_by_mass.toFixed(2));
-	results[4][2] = p_by_mass;
+	vm.results.n_by_mass_compost_fs = (vm.wastestreams.fs_amount*(vm.wastestreams.fs_c_pc/100)*1000)*(vm.wastequality_fs.total_nitrogen/(10**9))*(1-(vm.treatmentprocesses_fs.tnr_composting_reduction/100));
+	results[4][1] = vm.results.n_by_mass_compost_fs;
+    
+	vm.results.n_by_mass_compost_ss = (vm.wastestreams.ss_amount*(vm.wastestreams.ss_c_pc/100))*(vm.wastequality_ss.total_solids_pc/(100))*(vm.wastequality_ss.total_nitrogen_mg_n_kg_ts/(10**6))*(1-(vm.treatmentprocesses_ss.tnr_composting_reduction/100));
+	results5[4][1] = vm.results.n_by_mass_compost_ss;
+    
+	vm.results.n_by_mass_compost_sw = (vm.wastestreams.sw_amount*(vm.wastestreams.sw_c_pc/100))*(vm.wastequality_sw.total_solids_pc/(100))*(vm.wastequality_sw.total_nitrogen_mg_n_kg_ts/(10**6))*(1-(vm.treatmentprocesses_sw.tnr_composting_reduction/100));
+	results9[4][1] = vm.results.n_by_mass_compost_sw;
 
-	var p_pc_compost = p_by_mass / amount_of_compost;
-	console.log(p_pc_compost);
-	$('#p_pc_compost').html(p_pc_compost.toFixed(2));
+	vm.results.n_pc_compost_fs = (vm.results.n_by_mass_compost_fs / vm.results.amount_of_compost_fs) * 100;
+    vm.results.n_pc_compost_ss = (vm.results.n_by_mass_compost_ss / vm.results.amount_of_compost_ss) * 100;
+    vm.results.n_pc_compost_sw = (vm.results.n_by_mass_compost_sw / vm.results.amount_of_compost_sw) * 100;
 
-	var k_by_mass = (amount*(pc/100)*1000)*(project['wasteQuality']['totalPotassium']/(10**9))*(1-(project['treatmentProcesses']['tpotrCompostingReduction']/100));
-	console.log(k_by_mass);
-	$('#k_by_mass_compost').html(k_by_mass.toFixed(2));
-	results[4][3] = k_by_mass;
 
-	var k_pc_compost = k_by_mass / amount_of_compost;
-	console.log(k_pc_compost);
-	$('#k_pc_compost').html(k_pc_compost.toFixed(2));
+	vm.results.p_by_mass_compost_fs = (vm.wastestreams.fs_amount*(vm.wastestreams.fs_c_pc/100)*1000)*(vm.wastequality_fs.total_phosphorus/(10**9))*(1-(vm.treatmentprocesses_fs.tpr_composting_reduction/100));
+	results[4][2] = vm.results.p_by_mass_compost_fs;
+    
+	vm.results.p_by_mass_compost_ss = (vm.wastestreams.ss_amount*(vm.wastestreams.ss_c_pc/100))*(vm.wastequality_ss.total_solids_pc/(100))*(vm.wastequality_ss.total_phosphorus_mg_p_kg_ts/(10**6))*(1-(vm.treatmentprocesses_ss.tpr_composting_reduction/100));
+	results5[4][2] = vm.results.p_by_mass_compost_ss;
+    
+	vm.results.p_by_mass_compost_sw = (vm.wastestreams.sw_amount*(vm.wastestreams.sw_c_pc/100))*(vm.wastequality_sw.total_solids_pc/(100))*(vm.wastequality_sw.total_phosphorus_mg_p_kg_ts/(10**6))*(1-(vm.treatmentprocesses_sw.tpr_composting_reduction/100));
+	results9[4][2] = vm.results.p_by_mass_compost_sw;
+    
+
+	vm.results.p_pc_compost_fs = (vm.results.p_by_mass_compost_fs / vm.results.amount_of_compost_fs) * 100;
+    vm.results.p_pc_compost_ss = (vm.results.p_by_mass_compost_ss / vm.results.amount_of_compost_ss) * 100;
+    vm.results.p_pc_compost_sw = (vm.results.p_by_mass_compost_sw / vm.results.amount_of_compost_sw) * 100;
+
+	vm.results.k_by_mass_compost_fs = (vm.wastestreams.fs_amount*(vm.wastestreams.fs_c_pc/100)*1000)*(vm.wastequality_fs.total_potassium/(10**9))*(1-(vm.treatmentprocesses_fs.tpotr_composting_reduction/100));
+	results[4][3] = vm.results.k_by_mass_compost_fs;
+
+	vm.results.k_by_mass_compost_ss = (vm.wastestreams.ss_amount*(vm.wastestreams.ss_c_pc/100))*(vm.wastequality_ss.total_solids_pc/(100))*(vm.wastequality_ss.total_potassium_mg_k_kg_ts/(10**6))*(1-(vm.treatmentprocesses_ss.tpotr_composting_reduction/100));
+	results5[4][3] = vm.results.k_by_mass_compost_ss;
+    
+	vm.results.k_by_mass_compost_sw = (vm.wastestreams.sw_amount*(vm.wastestreams.sw_c_pc/100))*(vm.wastequality_sw.total_solids_pc/(100))*(vm.wastequality_sw.total_potassium_mg_k_kg_ts/(10**6))*(1-(vm.treatmentprocesses_sw.tpotr_composting_reduction/100));
+	results9[4][3] = vm.results.k_by_mass_compost_sw;
+
+	vm.results.k_pc_compost_fs = (vm.results.k_by_mass_compost_fs / vm.results.amount_of_compost_fs) * 100;
+    vm.results.k_pc_compost_ss = (vm.results.k_by_mass_compost_ss / vm.results.amount_of_compost_ss) * 100;
+    vm.results.k_pc_compost_sw = (vm.results.k_by_mass_compost_sw / vm.results.amount_of_compost_sw) * 100;
+	//console.log(k_pc_compost);
+	//$('#k_pc_compost_fs').html(k_pc_compost.toFixed(2));
 
 }
 
+function do_comparisons() {
+    var ad_total_revenues = vm.results.total_potential_ad_revenue_fs + vm.results.total_potential_ad_revenue_ss + vm.results.total_potential_ad_revenue_sw;
+    var sf_total_revenues = vm.results.total_potential_sf_revenue_fs + vm.results.total_potential_sf_revenue_ss + vm.results.total_potential_sf_revenue_sw;
+    var bsf_total_revenues = vm.results.total_potential_bsf_revenue_fs + vm.results.total_potential_bsf_revenue_ss + vm.results.total_potential_bsf_revenue_sw;
+    var c_total_revenues = vm.results.total_potential_compost_revenue_fs + vm.results.total_potential_compost_revenue_ss + vm.results.total_potential_compost_revenue_sw;
+    
+    comparison_results_revenue[1][1] = ad_total_revenues;
+    comparison_results_revenue[2][1] = sf_total_revenues;
+    comparison_results_revenue[3][1] = bsf_total_revenues;
+    comparison_results_revenue[4][1] = c_total_revenues;
+    
+    var total_n_by_mass_ad = vm.results.n_by_mass_fs + vm.results.n_by_mass_ss + vm.results.n_by_mass_sw;
+    var total_p_by_mass_ad = vm.results.p_by_mass_fs + vm.results.p_by_mass_ss + vm.results.p_by_mass_sw;
+    var total_k_by_mass_ad = vm.results.k_by_mass_fs + vm.results.k_by_mass_ss + vm.results.k_by_mass_sw;
+    
+    var total_n_by_mass_sf = 0;
+    var total_p_by_mass_sf = 0;
+    var total_k_by_mass_sf = 0;
+    
+    var total_n_by_mass_bsf = vm.results.n_by_mass_bsf_fs + vm.results.n_by_mass_bsf_ss + vm.results.n_by_mass_basf_sw;
+    var total_p_by_mass_bsf = vm.results.p_by_mass_bsf_fs + vm.results.p_by_mass_bsf_ss + vm.results.n_by_mass_basf_sw;
+    var total_k_by_mass_bsf = vm.results.k_by_mass_bsf_fs + vm.results.k_by_mass_bsf_ss + vm.results.k_by_mass_basf_sw;
+    
+    var total_n_by_mass_compost = vm.results.n_by_mass_compost_fs + vm.results.n_by_mass_compost_ss + vm.results.n_by_mass_compost_sw;
+    var total_p_by_mass_compost = vm.results.p_by_mass_compost_fs + vm.results.p_by_mass_compost_ss + vm.results.k_by_mass_compost_sw;
+    var total_k_by_mass_compost = vm.results.k_by_mass_compost_fs + vm.results.k_by_mass_compost_ss + vm.results.k_by_mass_compost_sw;
+    
+    comparison_results_outputs[1][1] = total_n_by_mass_ad;
+    comparison_results_outputs[1][2] = total_p_by_mass_ad;
+    comparison_results_outputs[1][3] = total_k_by_mass_ad;
+    comparison_results_outputs[2][1] = total_n_by_mass_sf;
+    comparison_results_outputs[2][2] = total_p_by_mass_sf;
+    comparison_results_outputs[2][3] = total_k_by_mass_sf;
+    comparison_results_outputs[3][1] = total_n_by_mass_bsf;
+    comparison_results_outputs[3][2] = total_p_by_mass_bsf;
+    comparison_results_outputs[3][3] = total_k_by_mass_bsf;
+    comparison_results_outputs[4][1] = total_n_by_mass_compost;
+    comparison_results_outputs[4][2] = total_p_by_mass_compost;
+    comparison_results_outputs[4][3] = total_k_by_mass_compost;
+    
+    var total_energy_content_ad = vm.results.energy_content_mj_fs + vm.results.energy_content_mj_ss  + vm.results.energy_content_mj_sw;
+    var total_enery_content_sf = vm.results.energy_content_mj_sf_fs + vm.results.energy_content_mj_sf_ss + vm.results.energy_content_mj_sf_sw;
+    var total_enery_content_bsf = 0;
+    var total_enery_content_compost = 0;
+    
+    comparison_results_energy[1][1] = total_energy_content_ad;
+    comparison_results_energy[2][1] = total_enery_content_sf;
+    comparison_results_energy[3][1] = total_enery_content_bsf;
+    comparison_results_energy[4][1] = total_enery_content_compost;
+}
 
-function calculate_results(project) {
+function calculate_sankey() {
+    console.log('SANKEY', sankey_results);
+    
+    sankey_results[0][2] = vm.wastestreams.fs_amount * (vm.wastestreams.fs_ad_pc/100);
+    sankey_results[1][2] = vm.wastestreams.fs_amount * (vm.wastestreams.fs_sf_pc/100);
+    sankey_results[2][2] = vm.wastestreams.fs_amount * (vm.wastestreams.fs_bsfp_pc/100);
+    sankey_results[3][2] = vm.wastestreams.fs_amount * (vm.wastestreams.fs_c_pc/100);
+    
+    sankey_results[4][2] = vm.wastestreams.ss_amount * (vm.wastestreams.ss_ad_pc/100);
+    sankey_results[5][2] = vm.wastestreams.ss_amount * (vm.wastestreams.ss_sf_pc/100);
+    sankey_results[6][2] = vm.wastestreams.ss_amount * (vm.wastestreams.ss_bsfp_pc/100);
+    sankey_results[7][2] = vm.wastestreams.ss_amount * (vm.wastestreams.ss_c_pc/100);
+    
+    sankey_results[8][2] = vm.wastestreams.sw_amount * (vm.wastestreams.sw_ad_pc/100);
+    sankey_results[9][2] = vm.wastestreams.sw_amount * (vm.wastestreams.sw_sf_pc/100);
+    sankey_results[10][2] = vm.wastestreams.sw_amount * (vm.wastestreams.sw_bsfp_pc/100);
+    sankey_results[11][2] = vm.wastestreams.sw_amount * (vm.wastestreams.sw_c_pc/100);
+
+    sankey_results[12][2] = (vm.results.energy_content_mj_fs + vm.results.energy_content_mj_ss + vm.results.energy_content_mj_sw)/1000;
+    sankey_results[13][2] = (vm.results.n_by_mass_fs + vm.results.n_by_mass_ss + vm.results.n_by_mass_sw + vm.results.p_by_mass_fs + vm.results.p_by_mass_ss + vm.results.p_by_mass_sw + vm.results.k_by_mass_fs +vm.results.k_by_mass_ss + vm.results.k_by_mass_sw)/1000;
+    sankey_results[14][2] = (vm.results.total_potential_ad_revenue_fs +  vm.results.total_potential_ad_revenue_ss + vm.results.total_potential_ad_revenue_sw)/1000;
+    
+    sankey_results[15][2] = (vm.results.energy_content_mj_sf_fs + vm.results.energy_content_mj_sf_ss + vm.results.energy_content_mj_sf_sw)/1000;
+    sankey_results[17][2] = (vm.results.total_potential_sf_revenue_fs +  vm.results.total_potential_sf_revenue_ss + vm.results.total_potential_sf_revenue_sw)/1000;
+    
+
+    sankey_results[19][2] = vm.results.n_by_mass_bsf_fs + vm.results.n_by_mass_bsf_ss + vm.results.n_by_mass_bsf_sw + vm.results.p_by_mass_bsf_fs + vm.results.p_by_mass_bsf_ss + vm.results.p_by_mass_bsf_sw + vm.results.k_by_mass_bsf_fs +vm.results.k_by_mass_bsf_ss + vm.results.k_by_mass_bsf_sw;
+    sankey_results[20][2] = vm.results.total_potential_bsf_revenue_fs +  vm.results.total_potential_bsf_revenue_ss + vm.results.total_potential_bsf_revenue_sw;
+    
+
+    sankey_results[21][2] = vm.results.n_by_mass_compost_fs + vm.results.n_by_mass_compost_ss + vm.results.n_by_mass_compost_sw + vm.results.p_by_mass_compost_fs + vm.results.p_by_mass_compost_ss + vm.results.p_by_mass_compost_sw + vm.results.k_by_mass_compost_fs +vm.results.k_by_mass_compost_ss + vm.results.k_by_mass_compost_sw;
+    sankey_results[22][2] = vm.results.total_potential_compost_revenue_fs +  vm.results.total_potential_compost_revenue_ss + vm.results.total_potential_compost_revenue_sw;
+    
+    console.log('SANKEY', sankey_results);
+}
+
+
+function calculate_results() {
+    $('#outputs').removeClass('hidden');
 	console.log('calculating results');
-	console.log(project['prices']['biogasPrice']);
+	console.log(vm.prices.biogas_price);
 	console.log(results[1][2]);
-	// results[1][2] = results[1][2] + 100;
-	// results[1][2]= 100;
-	var fs_amount = parseFloat($('#fs_amount').val());
-	console.log(fs_amount);
-	var fs_ad_pc = parseFloat($('#fs_ad_pc').val());
-	var fs_sf_pc = parseFloat($('#fs_sf_pc').val());
-	var fs_bsfp_pc = parseFloat($('#fs_bsfp_pc').val());
-	var fs_c_pc = parseFloat($('#fs_c_pc').val());
-	var fs_t_pc = parseFloat($('#fs_t_pc').val());
+
+//	var fs_amount = parseFloat($('#fs_amount').val());
+//	var fs_ad_pc = parseFloat($('#fs_ad_pc').val());
+//	var fs_sf_pc = parseFloat($('#fs_sf_pc').val());
+//	var fs_bsfp_pc = parseFloat($('#fs_bsfp_pc').val());
+//	var fs_c_pc = parseFloat($('#fs_c_pc').val());
+//	var fs_t_pc = parseFloat($('#fs_t_pc').val());
+    
+	var fs_amount = parseFloat(vm.wastestreams.fs_amount);
+	var fs_ad_pc = parseFloat(vm.wastestreams.fs_ad_pc);
+	var fs_sf_pc = parseFloat(vm.wastestreams.fs_sf_pc);
+	var fs_bsfp_pc = parseFloat(vm.wastestreams.fs_bsfp_pc);
+	var fs_c_pc = parseFloat(vm.wastestreams.fs_c_pc);
+	var fs_t_pc = parseFloat(vm.wastestreams.fs_t_pc);
+    
 
 	if ((fs_ad_pc+fs_sf_pc+fs_bsfp_pc+fs_c_pc)> 100 ) {
+
 		// do something
 		console.log('doing nothing');
+
 	}
 	else {
 		console.log('calculating...');
-		calculate_ad(project, fs_amount, fs_ad_pc);
-		calculate_sf(project, fs_amount, fs_sf_pc);
-		calculate_bsf(project, fs_amount, fs_bsfp_pc);
-		calculate_compost(project, fs_amount, fs_c_pc);
+        $('html, body').animate({scrollTop: $('#outputs').offset().top}, 1000);
+		calculate_ad();
+		calculate_sf();
+		calculate_bsf();
+		calculate_compost();
+        do_comparisons();
+        calculate_sankey();
 	}
 
 
+}
+
+function delete_project(proj_id) {
+    var bla = false;
+    
+    $.ajax({type: 'GET',
+            url: '/revamp_tool/delete_project/', 
+            async: false,
+           data: {
+        'proj_id': proj_id
+    },
+           dataType: 'text',
+           success: function(data) {
+            bla = true;
+            console.log('ajax call made', data);
+           }
+    });
+    
+    return bla;
+}
+
+function load_approved_library() {
+    var lib_id = $('#approved_library').val();
+    console.log(lib_id);
+    
+    $.ajax({type: 'GET',
+            url: '/revamp_tool/load_approved_library/', 
+            async: false,
+           data: {
+        'proj_id': lib_id,
+    },
+           dataType: 'text',
+           success: function(data) {
+               
+            console.log('ajax call made', typeof(JSON.parse(data)));
+               proj_data = JSON.parse(data);
+               console.log(proj_data['wastestreams']['faecal_sludge']);
+               vm.wastequality_fs = proj_data['fs_waste_quality'] ;
+               vm.wastequality_ss = proj_data['ss_waste_quality'] ;
+               vm.wastequality_sw = proj_data['sw_waste_quality'] ;
+               vm.treatmentprocesses_fs = proj_data['fs_treatment_processes'];
+               vm.treatmentprocesses_ss = proj_data['ss_treatment_processes'];
+               vm.treatmentprocesses_sw = proj_data['sw_treatment_processes'];
+               vm.prices = proj_data['prices'] ;
+               vm.wastestreams.fs_amount = proj_data['wastestreams']['faecal_sludge'];
+               vm.wastestreams.fs_ad_pc = proj_data['wastestreams']['fs_anaeribic_digestion'];
+               vm.wastestreams.fs_sf_pc = proj_data['wastestreams']['fs_solid_fuel'];
+               vm.wastestreams.fs_bsfp_pc = proj_data['wastestreams']['fs_black_soldier_fly_process'];
+               vm.wastestreams.fs_c_pc = proj_data['wastestreams']['fs_compost'];
+               vm.wastestreams.ss_amount = proj_data['wastestreams']['sewage_sludge'];
+               vm.wastestreams.ss_ad_pc = proj_data['wastestreams']['ss_anaeribic_digestion'];
+               vm.wastestreams.ss_sf_pc = proj_data['wastestreams']['ss_solid_fuel'];
+               vm.wastestreams.ss_bsfp_pc = proj_data['wastestreams']['ss_black_soldier_fly_process'];
+               vm.wastestreams.ss_c_pc = proj_data['wastestreams']['ss_compost'];
+               vm.wastestreams.sw_amount = proj_data['wastestreams']['solid_waste'];
+               vm.wastestreams.sw_ad_pc = proj_data['wastestreams']['sw_anaeribic_digestion'];
+               vm.wastestreams.sw_sf_pc = proj_data['wastestreams']['sw_solid_fuel'];
+               vm.wastestreams.sw_bsfp_pc = proj_data['wastestreams']['sw_black_soldier_fly_process'];
+               vm.wastestreams.sw_c_pc = proj_data['wastestreams']['sw_compost'];
+            
+                $('.navbar-top-links').notify(
+                  "Project loaded.", 
+                  { className: "success", position: 'left', autoHideDelay: 2000,arrowShow: false }
+                );
+           }
+    });
+    
+}
+
+
+function save_project() {
+    console.log('saving');
 }
 
 function gql(query) {
@@ -269,158 +855,168 @@ function gql(query) {
             method: "POST",
 
         });
-        var project = graph(query);
-        project().then(function(project) {
+        //var project = graph(query);
+        //project().then(function(project) {
 
-        	calculate_results(project['project']);
+        	calculate_results();
             console.log('done');
-        })
-
+        //})
  }
 
-function drawFirstChart() {
-		var data = google.visualization.arrayToDataTable(results);
+function drawBarChart(results_for_chart, options, div) {
+		var data = google.visualization.arrayToDataTable(results_for_chart);
 
-        var options = {
-          chart: {
-            title: 'Nutrient Content from Faecal Sludge',
-            //subtitle: 'Bla',
-            width: '600px',
-            height: '350px'
-          },
-          vAxis: {title: 'Mass (tonnes)', direction:-1, slantedText:true, slantedTextAngle:90}
-        };
+
 
         $(".nav-tabs a[title='charts']").click()
         //$(".tabs a[title='content_1']").click()
+        var chart_div = document.getElementById(div);
 
-        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
-
-        chart.draw(data, google.charts.Bar.convertOptions(options));
-}
-
-function drawSecondChart() {
-		var data = google.visualization.arrayToDataTable(results2);
-
-        var options = {
-          chart: {
-            title: 'Potential Revenuse From Faecal Sludge',
-            //subtitle: 'Bla',
-            width: '600px',
-            height: '350px'
-          },
-          vAxis: {title: 'Revenue (US$)', direction:-1, slantedText:true, slantedTextAngle:90}
-        };
-
-        $(".nav-tabs a[title='charts']").click()
-        //$(".tabs a[title='content_1']").click()
-
-        var chart = new google.charts.Bar(document.getElementById('columnchart_material2'));
+        //var chart = new google.charts.Bar(chart_div);
+        var chart = new google.visualization.ColumnChart(chart_div);
+    
+    
+        if (vm.images) {
+          google.visualization.events.addListener(chart, 'ready', function () {
+            chart_div.innerHTML = '<img src="' + chart.getImageURI() + '">';
+            console.log(chart_div.innerHTML);
+          });
+        }
 
         chart.draw(data, google.charts.Bar.convertOptions(options));
+
 }
 
-function drawThirdChart() {
-		var data = google.visualization.arrayToDataTable(results3);
 
-        var options = {
-          chart: {
-            title: 'Energy Content from Faecal Sludge',
-            //subtitle: 'Bla',
-            width: '600px',
-            height: '350px'
-          },
-          vAxis: {title: 'Thousand MJ', direction:-1, slantedText:true, slantedTextAngle:90}
-        };
 
-        $(".nav-tabs a[title='charts']").click()
-        //$(".tabs a[title='content_1']").click()
 
-        var chart = new google.charts.Bar(document.getElementById('columnchart_material3'));
 
-        chart.draw(data, google.charts.Bar.convertOptions(options));
-}
 
-function drawFourthChart() {
-		var data = google.visualization.arrayToDataTable(results4);
 
-        var options = {
-          chart: {
-            title: 'Nutrient Content from Faecal Sludge',
-            //subtitle: 'Bla',
-            width: '600px',
-            height: '350px'
-          },
-          vAxis: {title: 'Mass (tonnes)', direction:-1, slantedText:true, slantedTextAngle:90}
-        };
 
-        $(".nav-tabs a[title='charts']").click()
-        //$(".tabs a[title='content_1']").click()
 
-        var chart = new google.charts.Bar(document.getElementById('columnchart_material4'));
 
-        chart.draw(data, google.charts.Bar.convertOptions(options));
-}
+function drawChart() {
+    
+    var data = new google.visualization.DataTable();
+    
+    data.addColumn('string', 'From');
+    data.addColumn('string', 'To');
+    data.addColumn('number', 'Weight');
+    data.addRows(sankey_results);
+
+    // Set chart options
+    var options = {
+      width: 900,
+    };
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.Sankey(document.getElementById('sankey_multiple'));
+    
+    var chart_div = document.getElementById('sankey_multiple');
+//      google.visualization.events.addListener(chart, 'ready', function () {
+//        chart_div.innerHTML = '<img src="' + chart.getImageURI() + '">';
+//        console.log(chart_div.innerHTML);
+//      });
+    
+    chart.draw(data, options);
+   }
 
 
 $(document).ready(function () {
+    
+$(function() {    
+$("#salvapng").click(function() { 
+var element = $("#html-content-holder");          
+html2canvas(element, {
+    letterRendering: true,
+}).then(function(canvas){
+                var imgageData = canvas.toDataURL("image/png");
+        var newData = imgageData.replace(/^data:image\/png/, "data:application/octet-stream");
+        $("<a>", {href:newData, download:"Proof1.png",on:{click:function(){$(this).remove()}}})
+        .appendTo("body")[0].click()
+ })
+}); 
+});
+
+  
+$(function() {    
+$("#salvajpg").click(function() { 
+var element = $("#html-content-holder");         
+html2canvas(element, {
+    letterRendering: true,
+}).then(function(canvas){
+                var imgageData = canvas.toDataURL("image/jpg");
+        var newData = imgageData.replace(/^data:image\/jpg/, "data:application/octet-stream");
+        $("<a>", {href:newData, download:"Proof1.jpg",on:{click:function(){$(this).remove()}}})
+        .appendTo("body")[0].click()
+ })
+}); 
+}); 
+    
+    // Quick fix for an issue with the bootstrap dropdown not working.
+    $('.nav-fix li').click(function() {
+        $('.nav-fix li.active').removeClass("active");
+    });
+
+
+$('#convert-button').click(function() {
+   vm.images = !vm.images;
+    drawcharts();
+    if (vm.images) {
+        $('#convert-button').html('Convert to SVG');
+    } else {
+        $('#convert-button').html('Convert to PNG');
+    }
+    
+    
+});
+    
+$("#editor_save").click(function() {
+
+// the canvg call that takes the svg xml and converts it to a canvas
+  canvg('canvas', $("#svg")[0].outerHTML);
+
+// the canvas calls to output a png
+var canvas = document.getElementById("canvas");
+var img = canvas.toDataURL("image/png");
+// do what you want with the base64, write to screen, post to server, etc...
+});
 	console.log('hello revamp');
 
 	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 
 		  if($(e.target).attr('id') == 'charts-trigger')
 		  {
-		  	
-
-		    drawFirstChart();
-		    drawSecondChart();
-		    drawThirdChart();
-		    drawFourthChart();
+		  	 drawcharts();
+  
 		  }
+           if($(e.target).attr('id') == 'sankey-trigger')
+		  {
+              console.log('SANKEY');
+              drawChart();
+          }
 	});
 
 	$('button#calculate').click(function() {
+        
 		console.log('clicked');
-		var query = `query {project (id:2) {
-							prices {
-								biogasPrice
-								solidCombustionPrice
-								prepupaePrice
-								soilConditionerPrice
 
-							}
-							treatmentProcesses {
-								volatileSolidsDegradationRate
-								dmrRateAnaerobicDigestion
-								bcrBlackSoldierFly
-								dmrRateBsfResidue
-								tnrBsfResidue
-								tprBsfResidue
-								tpotrBsfResidue
-								dmrCompost
-								tnrCompostingReduction
-								tprCompostingReduction
-								tpotrCompostingReduction
-							}
-							wasteQuality {
-								totalSolidsPc
-								totalSolids
-								volatileSolids
-								totalNitrogen
-								totalNitrogenMgNKgTs
-								totalPhosphorus
-								totalPhosphorusMgPKgTs
-								totalPotassium
-								totalPotassiumMgKKgTs
-								calorificValue
-								biomethanePotential
-
-
-							}
-						}
-					}`;
-		gql(query);
+        calculate_results();
+        drawcharts();
+        drawChart();
+        
 	});
+    
+    $('#load_approved_library').click(function() {
+       console.log('loading approved library');
+        load_approved_library();
+    });
+    
+    $('#save_project').click(function() {
+       console.log('saving project...');
+        save_project();
+    });
 
 	$('#fs_ad_pc').focusout(function() {
 		console.log('focus_out');
@@ -432,7 +1028,7 @@ $(document).ready(function () {
 		check_total();
 	});
 
-	$('#fs_bsf_pc').focusout(function() {
+	$('#fs_bsfp_pc').focusout(function() {
 		console.log('focus_out');
 		check_total();
 	});

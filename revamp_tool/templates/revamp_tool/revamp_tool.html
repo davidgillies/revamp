@@ -10,7 +10,7 @@
 {# view.prices.biogas_price #}
 </div> 
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-md-12">
 
         <ul class="nav nav-tabs nav-justified">
             <li class="active"><a data-toggle="tab" href="#wastestreams">1. Waste Streams</a></li>
@@ -19,47 +19,138 @@
         </ul>
         <div class="tab-content">
             <div id="wastestreams" class="tab-pane fade in active">
-                <div id="wastestreams" class="panel panel-default">
+                <div  class="panel panel-default">
                     <div class="panel-heading">Waste Streams</div>
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-lg-6">
-                                <form role="form" >
-                                    <div class="form-group">
-                                        <label>Faecal Sludge </label>
-                                        <input id="fs_amount" class="form-control" type="number" name="fs_amount" />
-                                        <p class="help-block">Amount available per day</p>
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <form role="form" >
+                                            <div class="form-group">
+                                                <label>Faecal Sludge </label>
+                                                <input id="fs_amount" class="form-control" type="number" name="fs_amount" />
+                                                <p class="help-block">Amount available per day</p>
+                                            </div>
+                                        </form>
                                     </div>
-                                </form>
+                                </div>
+                                <div class="row">    
+                                    <div class="col-md-12">
+                                        <form role="form">
+                                            <p class="form-control-static">Select what % of waste to what option</p>
+                                            <div class="form-group">
+                                                <label>Anaerobic Digestion </label>
+                                                <input id="fs_ad_pc" class="form-control" type="number" name="fs_ad_pc" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Solid Fuel </label>
+                                                <input id="fs_sf_pc" class="form-control" type="number" name="fs_sf_pc" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Black Soldier Fly Process</label>
+                                                <input id="fs_bsfp_pc" class="form-control" type="number" name="fs_bsfp_pc" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Compost </label>
+                                                <input id="fs_c_pc" class="form-control" type="number" name="fs_c_pc" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Total </label>
+                                                <input id="fs_t_pc" readonly class="form-control" type="number" name="fs_t_pc" />
+                                                <div id="total_warning"></div>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                </div>
                             </div>                    
-                            <div class="col-lg-6">
-                                <form role="form">
-                                    <p class="form-control-static">Select what % of waste to what option</p>
-                                    <div class="form-group">
-                                        <label>Anaerobic Digestion </label>
-                                        <input id="fs_ad_pc" class="form-control" type="number" name="fs_ad_pc" />
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                    <form role="form" >
+                                            <div class="form-group">
+                                                <label>Sewage Sludge </label>
+                                                <input id="fs_amount" class="form-control" type="number" name="fs_amount" />
+                                                <p class="help-block">Amount available per day</p>
+                                            </div>
+                                        </form>
                                     </div>
-                                    <div class="form-group">
-                                        <label>Solid Fuel </label>
-                                        <input id="fs_sf_pc" class="form-control" type="number" name="fs_sf_pc" />
+                                </div>
+                                <div class="row">    
+                                    <div class="col-md-12">
+                                        <form role="form">
+                                            <p class="form-control-static">Select what % of waste to what option</p>
+                                            <div class="form-group">
+                                                <label>Anaerobic Digestion </label>
+                                                <input id="fs_ad_pc" class="form-control" type="number" name="fs_ad_pc" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Solid Fuel </label>
+                                                <input id="fs_sf_pc" class="form-control" type="number" name="fs_sf_pc" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Black Soldier Fly Process</label>
+                                                <input id="fs_bsfp_pc" class="form-control" type="number" name="fs_bsfp_pc" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Compost </label>
+                                                <input id="fs_c_pc" class="form-control" type="number" name="fs_c_pc" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Total </label>
+                                                <input id="fs_t_pc" readonly class="form-control" type="number" name="fs_t_pc" />
+                                                <div id="total_warning"></div>
+                                            </div>
+
+                                        </form>
                                     </div>
-                                    <div class="form-group">
-                                        <label>Black Soldier Fly Process</label>
-                                        <input id="fs_bsfp_pc" class="form-control" type="number" name="fs_bsfp_pc" />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <form role="form" >
+                                            <div class="form-group">
+                                                <label>Organic Municipal Solid Waste </label>
+                                                <input id="fs_amount" class="form-control" type="number" name="fs_amount" />
+                                                <p class="help-block">Amount available per day</p>
+                                            </div>
+                                        </form>
                                     </div>
-                                    <div class="form-group">
-                                        <label>Compost </label>
-                                        <input id="fs_c_pc" class="form-control" type="number" name="fs_c_pc" />
+                                </div>
+                                <div class="row">  
+                                    <div class="col-md-12">
+                                    
+                                        <form role="form">
+                                            <p class="form-control-static">Select what % of waste to what option</p>
+                                            <div class="form-group">
+                                                <label>Anaerobic Digestion </label>
+                                                <input id="fs_ad_pc" class="form-control" type="number" name="fs_ad_pc" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Solid Fuel </label>
+                                                <input id="fs_sf_pc" class="form-control" type="number" name="fs_sf_pc" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Black Soldier Fly Process</label>
+                                                <input id="fs_bsfp_pc" class="form-control" type="number" name="fs_bsfp_pc" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Compost </label>
+                                                <input id="fs_c_pc" class="form-control" type="number" name="fs_c_pc" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Total </label>
+                                                <input id="fs_t_pc" readonly class="form-control" type="number" name="fs_t_pc" />
+                                                <div id="total_warning"></div>
+                                            </div>
+                                            <div class="form-group">
+                                                <button id="calculate" class="btn btn-primary" type="button">Calculate</button>
+                                            </div>
+                                        </form>
                                     </div>
-                                    <div class="form-group">
-                                        <label>Total </label>
-                                        <input id="fs_t_pc" readonly class="form-control" type="number" name="fs_t_pc" />
-                                        <div id="total_warning"></div>
-                                    </div>
-                                    <div class="form-group">
-                                        <button id="calculate" class="btn btn-primary" type="button">Calculate</button>
-                                    </div>
-                                </form>
+                                </div>
                             </div>
                             
                         </div>
@@ -308,19 +399,30 @@
                     <div class="panel-heading">Anaerobic Digestion - Biogas</div>
                     <div class="panel-body">
                         <div class="row form-group">
-                            <div class="col-lg-6">
+                            <div class="col-md-6">
                                 <div id="columnchart_material" style="width: 600px; height: 350px;"></div>
+                                
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-md-6">
                                 <div id="columnchart_material2" style="width: 600px; height: 350px;"></div>
                             </div>
                         </div>
                         <div class="row form-group">
-                            <div class="col-lg-6">
+                            <div class="col-md-6">
                                 <div id="columnchart_material3" style="width: 600px; height: 350px;"></div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-md-6">
                                 <!--div id="columnchart_material4" style="width: 600px; height: 350px;"></div-->
+                                <div id="editor" class="chart">
+<svg id="svg" width="100" height="100">
+  <circle cx="50" cy="50" r="40" stroke="green" stroke-width="4" fill="red" />
+</svg>
+<br />
+<button id="editor_save">Save</button>
+</div>
+<div>
+  <canvas id="canvas" width="1000px" height="600px"></canvas> 
+</div>
                             </div>
                             
                         </div>
