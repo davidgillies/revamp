@@ -189,7 +189,7 @@ def download_excel(request, project_id):
     
     
     response = HttpResponse(content_type='application/vnd.ms-excel')
-    response['Content-Disposition'] = 'attachment; filename="revamp.xlsm"'
+    response['Content-Disposition'] = 'attachment; filename="revamp.xlsx"'
     
     wb.save(response)
     return response
