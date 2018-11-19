@@ -88,7 +88,7 @@ class RevampTool(TemplateView):
 def download_excel(request, project_id):
     project = RevampProject.objects.get(id=project_id)
     
-    wb = load_workbook('REVAMPv2.xlsm')
+    wb = load_workbook('/app/revamp_tool/REVAMPv2.xlsm')
     
     wb['WasteQuality']['C2'] = project.fs_waste_quality.total_solids_pc
     wb['WasteQuality']['C3'] = project.fs_waste_quality.total_solids
