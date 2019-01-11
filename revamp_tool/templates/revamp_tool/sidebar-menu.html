@@ -1,0 +1,46 @@
+{% load navigation_tags wagtailcore_tags %}
+{% get_site_root as site_root %}
+
+
+  <!--div class="off-canvas position-left reveal-for-large bla" id="offCanvasLeft" data-off-canvas>
+    {#% protocol_menu calling_page=calling_page %#}
+  </div-->
+
+  <!--div class="off-canvas position-left reveal-for-large" id="offCanvasLeft" data-off-canvas>
+    <nav class="sidebar-nav">
+      <h3>In this section</h3>
+        {#% for p in page.get_children %#}
+        <li><a href="{{ p.url }}">{{ p.title }}</a></li>
+        {#% endfor %#}
+      <ul class="vertical menu">
+        {#% for menuitem in ancestor.children %#}
+          <li class="{#% if menuitem.is_active %#}is-active{#% endif %#}">
+            <a href="{#% pageurl menuitem %#}">{#{ menuitem.title }#}</a>
+
+            {#% if menuitem.is_active and menuitem.has_children %#}
+              <ul class="nested vertical menu is-active">
+                {#% for child in menuitem.children %#}
+                  <li>
+                    <a href="{#% pageurl child %#}">{{ child.title }}</a>
+                  </li>
+
+                {#% endfor %#}
+              </ul>
+            {#% endif %#}
+          </li>
+        {#% endfor %#}
+      </ul>
+    </nav>
+  </div-->
+
+               <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav in" id="side-menu">
+                         <li>
+                            <a href="/revamp_tool"><i class="fa fa-wrench fa-fw"></i> Revamp Tool</a>
+                        </li>
+                        {% for p in site_root.get_children %}
+                        <li><a href="{{ p.url }}">{{ p.title }}</a></li>
+                        {% endfor %}
+
+                    </ul>
+                </div>
