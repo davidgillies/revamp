@@ -292,6 +292,8 @@ class Location(models.Model):
     state = models.CharField(max_length=30, blank=True, null=True)
     date_prepared = models.DateField()
     prepared_by = models.ForeignKey(User, on_delete=models.PROTECT)
+    latitude = models.FloatField(blank=True, null=True)
+    longitude = models.FloatField(blank=True, null=True)
 
 
 class RevampProject(models.Model):

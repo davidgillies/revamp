@@ -132,6 +132,22 @@ var sankey_results = [
 ];
 
 
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
 function drawcharts() {
                console.log('CHARTS');
 		    //drawFirstChart();
@@ -361,8 +377,8 @@ function check_total() {
 
 	if ((fs_ad_pc+fs_sf_pc+fs_bsfp_pc+fs_c_pc)> 100 ) {
 		console.log('too much');
-		$('#total_warning').addClass('alert alert-danger');
-		$('#total_warning').html('Total cannot be more than 100');
+		$('#fs_total_warning').addClass('alert alert-danger');
+		$('#fs_total_warning').html('Total cannot be more than 100');
 	} else {
 		console.log('too little');
 		$('#total_warning').removeClass('alert alert-danger');
@@ -797,6 +813,45 @@ function delete_project(proj_id) {
     return bla;
 }
 
+function save_project() {
+    var bla = false;
+    var csrftoken = getCookie('csrftoken');
+    console.log('save function called...');
+    $.ajax({type: "POST",
+            url: vm.save_project_url, 
+            async: false,
+            data: {
+                csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
+                wastequality_fs: JSON.stringify(vm.wastequality_fs),
+                wastequality_ss: JSON.stringify(vm.wastequality_ss),
+                wastequality_sw: JSON.stringify(vm.wastequality_sw),
+                wastestreams:                JSON.stringify(vm.wastestreams),
+                treatmentprocesses_fs: JSON.stringify(vm.treatmentprocesses_fs),
+                treatmentprocesses_ss: JSON.stringify(vm.treatmentprocesses_ss),
+                treatmentprocesses_sw: JSON.stringify(vm.treatmentprocesses_sw),
+                prices: JSON.stringify(vm.prices),
+                location: JSON.stringify(vm.location),
+                save_new: JSON.stringify(vm.use_defaults.save_new),
+                project_id: JSON.stringify(vm.project_id),
+                project_name: JSON.stringify(vm.name)
+            },
+            dataType: 'json',
+            success: function(data) {
+            
+            console.log('ajax call made', data);
+            if ('error' in data) {
+                $('#save_warning').addClass('alert alert-danger');
+		        $('#save_warning').html(data['error']);
+            } else {
+                document.location.reload(true);
+            }
+
+            }
+    });
+    
+    return;
+}
+
 function load_approved_library() {
     var lib_id = $('#approved_library').val();
     console.log(lib_id);
@@ -813,6 +868,8 @@ function load_approved_library() {
             console.log('ajax call made', typeof(JSON.parse(data)));
                proj_data = JSON.parse(data);
                console.log(proj_data['wastestreams']['faecal_sludge']);
+               vm.project_id = proj_data['id'];
+               vm.name = proj_data['name'];
                vm.wastequality_fs = proj_data['fs_waste_quality'] ;
                vm.wastequality_ss = proj_data['ss_waste_quality'] ;
                vm.wastequality_sw = proj_data['sw_waste_quality'] ;
@@ -846,9 +903,7 @@ function load_approved_library() {
 }
 
 
-function save_project() {
-    console.log('saving');
-}
+
 
 function gql(query) {
         var graph = graphql("/graphql", {

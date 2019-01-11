@@ -1,16 +1,56 @@
 {% extends "revamp_tool/base.html" %}
 {% load i18n %}
+{% load leaflet_tags %}
 
 
 {% block title %} {% trans "Revamp Tool" %}{% endblock %}
+{% block head_content %}
+    {% leaflet_js %}
+    {% leaflet_css %}
+
+<script type="text/javascript">
+    function map_init_basic (map, options) {
+      
+        var glasgow = L.marker([55.864239, -4.251806]).addTo(map);
+        var edinburgh = L.marker([55.953251, -3.188267]).addTo(map);  
+        glasgow.bindPopup("Glasgow <a href='http://www.york.ac.uk'>York</a>").openPopup();
+        edinburgh.bindPopup("Edinburgh").openPopup();
+        function bla() {
+            console.log('worked');
+        }
+        glasgow.on('click', bla);
+   
+    
+        var popup = L.popup();
+        function onMapClick(e) {
+            popup.setLatLng(e.latlng).setContent("Click a city to load...").openOn(map);
+        }
+        map.on('click', onMapClick);
+    }
+</script>
+
+
+
+{% endblock %}
 {% block content %}
-
+{% csrf_token %}
 <div id="not-page-wrapper">
-
 
 <div id="app">
    {% if request.user.is_authenticated %}
     <div class="well ">
+        <!--div id="map" class="panel panel-success ">
+        <div class="panel-heading"><h3 class="panel-title"><a data-toggle="collapse" href="#map_panel_body" aria-expanded="true">Map</a></h3></div>
+        <div id="map_panel_body" class="panel-collapse collapse in">
+            <div  class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+    {% leaflet_map "yourmap" callback="window.map_init_basic" %}
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div-->
         <div id="wastestreams" class="panel panel-success ">
             <div class="panel-heading"><h3 class="panel-title"><a data-toggle="collapse" href="#panel_body" aria-expanded="true">Manage Projects</a></h3></div>
                 <div id="panel_body" class="panel-collapse collapse in">
@@ -23,11 +63,11 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="row row-head">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <h4>Project Name</h4>
                                 </div>
-                                
-                                <div class="col-md-4">
+                                <div class="col-md-3 row-text">City</div>
+                                <div class="col-md-2">
                                     <h4>Last updated</h4>
                                 </div>
                                 <div clas="col-md-4">
@@ -36,8 +76,9 @@
                             </div>
                             <div v-if="projects.length">
                             <div  v-cloak v-for="(project, index) in projects" class="row row-buffer">
-                                <div class="col-md-4 row-text">${ project.name }</div>
-                                <div class="col-md-4 row-text"> ${ project.updated_at }</div>
+                                <div class="col-md-3 row-text">${ project.name }</div>
+                                <div class="col-md-3 row-text">${ project.location.city }</div>
+                                <div class="col-md-2 row-text"> ${ project.updated_at }</div>
                                 <div class="col-md-4">
                                     <button type="button" class="btn btn-warning " v-on:click.prevent="load(project.id)"  >Load</button>
                                     <button id="delete_button" type="button" class="btn btn-danger load-notify" data-toggle="modal" data-target="#delete-modal" v-on:click.prevent="set_active_project(project.id, index)">Delete</button>
@@ -665,7 +706,7 @@
                                             Name
                                         </div>
                                         <div class="col-md-6">
-                                            <input type='text'  class="form-control" />
+                                            <input type='text'  class="form-control" v-model:value="name"/>
                                         </div>
                                     </div>
                                     <div class="row row-buffer">
@@ -673,7 +714,7 @@
                                             City
                                         </div>
                                         <div class="col-md-6">
-                                            <input type='text'  class="form-control" />
+                                            <input type='text'  class="form-control" v-model:value="location.city"/>
                                         </div>
                                     </div>
                                     <div class="row row-buffer">
@@ -681,7 +722,7 @@
                                             Country
                                         </div>
                                         <div class="col-md-6">
-                                            <input type='text'  class="form-control" />
+                                            <input type='text'  class="form-control" v-model:value="location.country"/>
                                         </div>
                                     </div>
                                     <div class="row row-buffer">
@@ -689,7 +730,7 @@
                                             Population
                                         </div>
                                         <div class="col-md-6">
-                                            <input type='text'  class="form-control" />
+                                            <input type='text'  class="form-control" v-model:value="location.population"/>
                                         </div>
                                     </div>
                                     <div class="row row-buffer">
@@ -697,7 +738,15 @@
                                             state
                                         </div>
                                         <div class="col-md-6">
-                                            <input type='text'  class="form-control" />
+                                            <input type='text'  class="form-control" v-model:value="location.state"/>
+                                        </div>
+                                    </div>
+                                    <div class="row row-buffer">
+                                        <div class="col-md-6">
+                                            Save as New
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type='checkbox' ref="checkbox_save_new" :checked.prop="use_defaults.save_new" data-on="Yes" data-off="No"  />
                                         </div>
                                     </div>
                                     
@@ -712,6 +761,7 @@
                     </div>
                                                      {% endif %} 
                                                 <button id="calculate" class="btn btn-primary " type="button">Calculate Results</button>
+                                                <div id="save_warning"></div>
                                             </div>
                     
                     
@@ -1198,6 +1248,9 @@
               $(this.$refs.checkbox_p).bootstrapToggle().change(function(e) {
                 this.use_defaults.p = $(e.target).prop('checked');
               }.bind(this));
+              $(this.$refs.checkbox_save_new).bootstrapToggle().change(function(e) {
+                this.use_defaults.save_new = $(e.target).prop('checked');
+              }.bind(this));
               
 
           },
@@ -1222,9 +1275,15 @@
             },
               'use_defaults.p': function(enabled) {
                 $(this.$refs.checkbox_p).bootstrapToggle(enabled ? 'on' : 'off')
+            },
+               'use_defaults.save_new': function(enabled) {
+                $(this.$refs.checkbox_save_new).bootstrapToggle(enabled ? 'on' : 'off')
             }
           },
         data: {
+            project_id: {{ project_id }},
+            name: "{{ name }}",
+            save_project_url: "{% url 'save_project' %}",
             active_project: null,
             active_project_index: null,
             approved_projects: [
@@ -1470,7 +1529,14 @@
                 prepupae_price: "{{ prices.prepupae_price }}",
                 soil_conditioner_price: "{{ prices.soil_conditioner_price }}"
             },
+            location: {
+                city: "{{ location.city }}",
+                country: "{{ location.country }}",
+                population: "{{ location.population }}",
+                state: "{{ location.state }}",
+            },
             defaults: { 
+                name: 'default',
                 wastequality_fs: {
                     name: "{{ wastequalityoptions_fs.name }}",
                     created_at: "{{ wastequalityoptions_fs.created_at }}",
@@ -1585,6 +1651,12 @@
                     sw_c_pc: "{{ wastestreams.sw_compost }}",
                     sw_t_pc: null
 
+                },
+                location: {
+                    city: "{{ location.city }}",
+                    country: "{{ location.country }}",
+                    population: "{{ location.population }}",
+                    state: "{{ location.state }}",
                 }
             },
             use_defaults: {
@@ -1594,7 +1666,8 @@
                 fs_wq: true,
                 ss_wq: true,
                 sw_wq: true,
-                p: true  
+                p: true,
+                save_new: false
             },
             projects: [
                 {% for proj in projects %}
@@ -1718,16 +1791,20 @@
                             sw_c_pc: "{{ proj.wastestreams.sw_compost }}",
                             sw_t_pc: null
 
-                        }
+                        },
+                        location: {
+                            city: "{{ proj.location.city }}",
+                            country: "{{ proj.location.country }}",
+                            population: "{{ proj.location.population }}",
+                            state: "{{ proj.location.state }}",
+                        },
                     }{% if forloop.last %}{% else %},{% endif %}
                 {% endfor %}
             ]
             
         },
         methods: {
-            toggleCheckbox() {
-               this.use_defaults.p = !this.use_defaults.p;
-            },
+            
             load: function(id) {
                 console.log('loader');
                 console.log(id);
@@ -1744,6 +1821,9 @@
                         this.wastequality_ss = JSON.parse(JSON.stringify(this.projects[p].wastequality_ss));
                         this.wastequality_sw = JSON.parse(JSON.stringify(this.projects[p].wastequality_sw));
                         this.wastestreams = JSON.parse(JSON.stringify(this.projects[p].wastestreams));
+                        this.location = JSON.parse(JSON.stringify(this.projects[p].location));
+                        this.project_id = this.projects[p].id;
+                        this.name = this.projects[p].name;
                         
                     }
                 }
@@ -1752,6 +1832,9 @@
                   { position: 'left',className: "success",autoHideDelay: 2000,arrowShow: false }
                 );
 
+            },
+            add_project: function() {
+                this.projects.push({id: 100, link_url: '/bkla', name: 'Bla', updated_at: 'now'});
             },
             delete_project: function() {
                 
@@ -1775,6 +1858,7 @@
                 
                 
             }, 
+ 
             set_active_project: function(id, index) {
                 this.active_project = id;
                 this.active_project_index = index;

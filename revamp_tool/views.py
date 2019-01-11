@@ -2,12 +2,28 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.views.generic import TemplateView, View
 from django.forms.models import model_to_dict
+from django.utils.crypto import get_random_string
 from openpyxl import load_workbook
 from openpyxl.writer.excel import save_virtual_workbook
+from datetime import datetime
 
 import json
 
-from revamp_tool.models import WasteQuality, TreatmentProcesses, Prices, RevampProject
+from revamp_tool.models import WasteQuality, TreatmentProcesses, Prices, RevampProject, WasteStreams, Location
+
+
+def convert_results(items):
+    result = {}
+    for key, value in items:
+        if value == 'None' or value == '':
+            value = 0
+        else:
+            try:
+                value = float(value)
+            except:
+                pass
+        result[key] = value
+    return result
 
 
 # Home page
@@ -15,7 +31,6 @@ class HomePage(TemplateView):
     template_name = 'revamp_tool/home.html'
 
 
-# tool
 class RevampDev(TemplateView):
     template_name = 'revamp_tool/revamp_tool.html'
 
@@ -23,20 +38,20 @@ class RevampDev(TemplateView):
         context = super(RevampDev, self).get_context_data(*args, **kwargs)
         context['wastequalityoptions'] = WasteQuality.objects.get(name='fs_default')
         context['treatmentprocesses'] = TreatmentProcesses.objects.get(name='fs_default')
-        context['prices'] = Prices.objects.get(name='default')
+        context['prices'] = Prices.objects.get(id=2)
         return context
 
     def prices(self):
-        return Prices.objects.get(name='default')
+        return Prices.objects.get(id=2)
 
-    
+#tool
 class RevampTool(TemplateView):
     template_name = "revamp_tool/revamp_dev.html"
     
     def get_context_data(self, *args, **kwargs):
         if self.request.user.is_authenticated:
             approved_projects = RevampProject.objects.filter(active=True)
-            projects_db = RevampProject.objects.filter(user=self.request.user).exclude(deleted=True)
+            projects_db = RevampProject.objects.filter(user=self.request.user).exclude(deleted=True).order_by('-updated_at')
             projects = []
             for p in projects_db:
                 proj = {}
@@ -52,6 +67,8 @@ class RevampTool(TemplateView):
                 proj['ss_waste_quality'] = p.ss_waste_quality
                 proj['sw_waste_quality'] = p.sw_waste_quality
                 proj['wastestreams'] = p.waste_streams
+                proj['location'] = p.location
+                print("LOC: %s" % p.location.city)
                 proj['link_url'] = '/revamp_tool/download_excel/'+str(p.id)
                 
                 projects.append(proj)
@@ -59,8 +76,12 @@ class RevampTool(TemplateView):
             context = super(RevampTool, self).get_context_data(*args, **kwargs)
             if projects_db:
                 project = projects_db.latest('updated_at')
+                print("PROJECT %s" % project.id)
             else:
                 project = RevampProject.objects.get(id=2)
+            context['project_id'] = project.id
+            context['name'] = project.name
+            print("NAME %s" % project.name)
             context['wastestreams'] = project.waste_streams
             context['wastequalityoptions_fs'] = project.fs_waste_quality
             context['treatmentprocesses_fs'] = project.fs_treatment_processes
@@ -68,12 +89,17 @@ class RevampTool(TemplateView):
             context['treatmentprocesses_ss'] = project.ss_treatment_processes
             context['wastequalityoptions_sw'] = project.sw_waste_quality
             context['treatmentprocesses_sw'] = project.sw_treatment_processes
-            context['prices'] = Prices.objects.get(name='default')
+            context['location'] = project.location
+            print("LOC2: %s" % project.location.city)
+            context['prices'] = project.prices
             context['projects'] = projects
             context['approved_projects'] = approved_projects
         else:
             context = super(RevampTool, self).get_context_data(*args, **kwargs)
             project = RevampProject.objects.get(id=2)
+            context['project_id'] = project.id
+            context['name'] = project.name
+            print("NAME2 %s" % project.name)
             context['wastestreams'] = project.waste_streams
             context['wastequalityoptions_fs'] = project.fs_waste_quality
             context['treatmentprocesses_fs'] = project.fs_treatment_processes
@@ -81,8 +107,130 @@ class RevampTool(TemplateView):
             context['treatmentprocesses_ss'] = project.ss_treatment_processes
             context['wastequalityoptions_sw'] = project.sw_waste_quality
             context['treatmentprocesses_sw'] = project.sw_treatment_processes
-            context['prices'] = Prices.objects.get(name='default')
+            context['location'] = project.location
+            print("LOC3: %s" % project.location.city)
+            context['prices'] = Prices.objects.get(id=2)
         return context
+    
+
+class ProjectSaveView(View):
+    def post(self,request):
+        if request.is_ajax():
+            print(request.POST)
+            random_name = get_random_string()[0:7]
+            
+            wq_fs_dict = json.loads(request.POST.get('wastequality_fs'))
+            wq_ss_dict = json.loads(request.POST.get('wastequality_ss'))
+            wq_sw_dict = json.loads(request.POST.get('wastequality_sw'))
+            tp_fs_dict = json.loads(request.POST.get('treatmentprocesses_fs'))
+            tp_ss_dict = json.loads(request.POST.get('treatmentprocesses_ss'))
+            tp_sw_dict = json.loads(request.POST.get('treatmentprocesses_sw'))
+            prices_dict = json.loads(request.POST.get('prices'))
+            location_dict = json.loads(request.POST.get('location'))
+            wastestreams_dict = json.loads(request.POST.get('wastestreams'))
+            project_id = json.loads(request.POST.get('project_id'))
+            project_name = json.loads(request.POST.get('project_name'))
+            save_new = json.loads(request.POST.get('save_new'))
+                   
+            print("LOC-DICT: %s" % location_dict)
+            wq_fs_dict = convert_results(wq_fs_dict.items())
+            print("LOC-DICT: %s" % location_dict)
+            wq_fs_dict['name'] = 'wq_fs_'+request.user.username+random_name
+            wq_fs_dict.pop('created_at', None)
+            print("WQ-FS : %s" % wq_fs_dict)
+            wq_ss_dict = convert_results(wq_ss_dict.items())
+            wq_ss_dict['name'] = 'wq_ss_'+request.user.username+random_name
+            wq_ss_dict.pop('created_at', None)
+            wq_sw_dict = convert_results(wq_sw_dict.items())
+            wq_sw_dict['name'] = 'wq_sw_'+request.user.username+random_name
+            wq_sw_dict.pop('created_at', None)
+            tp_fs_dict = convert_results(tp_fs_dict.items())
+            tp_fs_dict['name'] = 'tp_fs_'+request.user.username+random_name
+            tp_ss_dict = convert_results(tp_ss_dict.items())
+            tp_ss_dict['name'] = 'tp_ss_'+request.user.username+random_name
+            tp_sw_dict = convert_results(tp_sw_dict.items())
+            tp_sw_dict['name'] = 'tp_sw_'+request.user.username+random_name
+            prices_dict = convert_results(prices_dict.items())
+            prices_dict['name'] = 'prices_'+request.user.username+random_name
+            #location_dict = convert_results(location_dict.items())
+            location_dict['date_prepared'] = datetime.now()
+            location_dict['prepared_by'] = request.user
+            if location_dict['population'] == 'None':
+                location_dict['population'] = 0
+            
+            wastestreams_dict = convert_results(wastestreams_dict.items())
+            
+            wastestreams = {}
+            wastestreams['faecal_sludge'] = wastestreams_dict['fs_amount']
+            wastestreams['fs_anaeribic_digestion'] = wastestreams_dict['fs_ad_pc']
+            wastestreams['fs_solid_fuel'] = wastestreams_dict['fs_sf_pc']
+            wastestreams['fs_black_soldier_fly_process'] = wastestreams_dict['fs_bsfp_pc']
+            wastestreams['fs_compost'] = wastestreams_dict['fs_c_pc']
+            wastestreams['sewage_sludge'] = wastestreams_dict['ss_amount']
+            wastestreams['ss_anaeribic_digestion'] = wastestreams_dict['ss_ad_pc']
+            wastestreams['ss_solid_fuel'] = wastestreams_dict['ss_sf_pc']
+            wastestreams['ss_black_soldier_fly_process'] = wastestreams_dict['ss_bsfp_pc']
+            wastestreams['ss_compost'] = wastestreams_dict['ss_c_pc']
+            wastestreams['solid_waste'] = wastestreams_dict['sw_amount']
+            wastestreams['sw_anaeribic_digestion'] = wastestreams_dict['sw_ad_pc']
+            wastestreams['sw_solid_fuel'] = wastestreams_dict['sw_sf_pc']
+            wastestreams['sw_black_soldier_fly_process'] = wastestreams_dict['sw_bsfp_pc']
+            wastestreams['sw_compost'] = wastestreams_dict['sw_c_pc']
+            wastestreams['name'] = 'ws_'+request.user.username+random_name
+            print("WQ-FS: %s" % wq_fs_dict)
+
+
+            if save_new:
+                wq_fs = WasteQuality.objects.create(**wq_fs_dict)
+                wq_ss = WasteQuality.objects.create(**wq_ss_dict)
+                wq_sw = WasteQuality.objects.create(**wq_sw_dict)
+                tp_fs = TreatmentProcesses.objects.create(**tp_fs_dict)
+                tp_ss = TreatmentProcesses.objects.create(**tp_ss_dict)
+                tp_sw = TreatmentProcesses.objects.create(**tp_sw_dict)
+                prices = Prices.objects.create(**prices_dict)
+                location = Location.objects.create(**location_dict)
+                waste_streams = WasteStreams.objects.create(**wastestreams)
+                project = RevampProject() 
+                
+                project.user = request.user
+                project.name = project_name
+                project.location = location
+                project.waste_streams = waste_streams
+                project.prices = prices
+                project.fs_treatment_processes = tp_fs
+                project.ss_treatment_processes = tp_ss
+                project.sw_treatment_processes = tp_sw
+                project.fs_waste_quality = wq_fs
+                project.ss_waste_quality = wq_ss
+                project.sw_waste_quality = wq_sw
+
+                project.save()
+                data = {"project_id":project.id}
+            else:
+                try:
+                    project = RevampProject.objects.filter(id=project_id).filter(user=request.user)[0]
+                except:
+                    project = None
+            
+                if project:
+                    WasteQuality.objects.filter(pk=project.fs_waste_quality.id).update(**wq_fs_dict)
+                    WasteQuality.objects.filter(pk=project.ss_waste_quality.id).update(**wq_ss_dict)
+                    WasteQuality.objects.filter(pk=project.sw_waste_quality.id).update(**wq_sw_dict)
+
+                    TreatmentProcesses.objects.filter(pk=project.fs_treatment_processes.id).update(**tp_fs_dict)
+                    TreatmentProcesses.objects.filter(pk=project.ss_treatment_processes.id).update(**tp_ss_dict)
+                    TreatmentProcesses.objects.filter(pk=project.sw_treatment_processes.id).update(**tp_sw_dict)
+                    Prices.objects.filter(pk=project.prices.id).update(**prices_dict)
+                    Location.objects.filter(pk=project.location.id).update(**location_dict)
+                    WasteStreams.objects.filter(pk=project.waste_streams.id).update(**wastestreams)
+                    project.name = project_name
+                    project.save()
+                    data = {"project_id":project.id, "updated": project.updated_at}
+                    print(project.updated_at)
+                else:
+                    data = {"error": "You cannot save this project.  Please use Save as New."}
+            
+            return JsonResponse(data)
 
     
 def download_excel(request, project_id):
@@ -204,12 +352,13 @@ def delete_project(request):
 
 def load_approved_project(request):
     if request.user.is_authenticated:
-        project = RevampProject.objects.filter(user=request.user).get(id=int(request.GET.get('proj_id')))
+        project = RevampProject.objects.filter(active=True).get(id=int(request.GET.get('proj_id')))
         
         proj = {}
         proj['id'] = project.id
         proj['created_at'] = project.created_at
         proj['updated_at'] = project.updated_at
+        print(project.updated_at)
         proj['prices'] = model_to_dict(project.prices)
         proj['name'] = project.name
         proj['fs_treatment_processes'] = model_to_dict(project.fs_treatment_processes)
