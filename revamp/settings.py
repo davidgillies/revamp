@@ -72,7 +72,7 @@ INSTALLED_APPS = [
     'wagtail.search',
     'wagtail.admin',
     'wagtail.core',
-
+    'leaflet',
     'modelcluster',
     'taggit',
 ]
@@ -92,6 +92,17 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'revamp.urls'
+
+LEAFLET_CONFIG = {
+    #'SPATIAL_EXTENT': (5.0, 44.0, 7.5, 46),
+    'DEFAULT_CENTER': (6.0, 45.0),
+    'DEFAULT_ZOOM': 2,
+    'MIN_ZOOM': 2,
+    'MAX_ZOOM': 18,
+    'MINIMAP': True,
+    'RESET_VIEW': False,
+}
+
 
 ADMIN_TOOLS_INDEX_DASHBOARD = 'fluent_dashboard.dashboard.FluentIndexDashboard'
 ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'fluent_dashboard.dashboard.FluentAppIndexDashboard'
