@@ -72,9 +72,12 @@ INSTALLED_APPS = [
     'wagtail.search',
     'wagtail.admin',
     'wagtail.core',
+    'wagtail.contrib.modeladmin',
+    'wagtailmenus',
     'leaflet',
     'modelcluster',
     'taggit',
+    'condensedinlinepanel',
 ]
 
 MIDDLEWARE = [
@@ -119,6 +122,11 @@ TEMPLATES = [
                 'django.template.context_processors.i18n',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+                'wagtail.contrib.settings.context_processors.settings',
+                'wagtailmenus.context_processors.wagtailmenus',
             ],
             'loaders': [
                 'django.template.loaders.filesystem.Loader',
