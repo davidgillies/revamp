@@ -16,7 +16,7 @@ def convert_results(items):
     result = {}
     for key, value in items:
         if value == 'None' or value == '':
-            value = 0
+            value = None
         else:
             try:
                 value = float(value)

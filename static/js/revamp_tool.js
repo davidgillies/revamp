@@ -892,7 +892,8 @@ function load_approved_library() {
                vm.wastestreams.sw_sf_pc = proj_data['wastestreams']['sw_solid_fuel'];
                vm.wastestreams.sw_bsfp_pc = proj_data['wastestreams']['sw_black_soldier_fly_process'];
                vm.wastestreams.sw_c_pc = proj_data['wastestreams']['sw_compost'];
-            
+               $('#current_project_name').text(vm.name);
+               $('#current_project_city').text(vm.location.city);
                 $('.navbar-top-links').notify(
                   "Project loaded.", 
                   { className: "success", position: 'left', autoHideDelay: 2000,arrowShow: false }
@@ -979,6 +980,19 @@ function drawChart() {
 
 
 $(document).ready(function () {
+    
+//    $('form').on('focus', 'input[type=number]', function (e) {
+//      $(this).on('mousewheel.disableScroll', function (e) {
+//        e.preventDefault()
+//      })
+//    });
+//    $('form').on('blur', 'input[type=number]', function (e) {
+//      $(this).off('mousewheel.disableScroll')
+//    });
+    
+    $('[data-toggle="tooltip"]').tooltip({
+        placement : 'top'
+    });
     
 $(function() {    
 $("#salvapng").click(function() { 
@@ -1073,23 +1087,19 @@ var img = canvas.toDataURL("image/png");
         save_project();
     });
 
-	$('#fs_ad_pc').focusout(function() {
-		console.log('focus_out');
+	$('#fs_ad_pc').change(function() {
 		check_total();
 	});
 
-	$('#fs_sf_pc').focusout(function() {
-		console.log('focus_out');
+	$('#fs_sf_pc').change(function() {
 		check_total();
 	});
 
-	$('#fs_bsfp_pc').focusout(function() {
-		console.log('focus_out');
+	$('#fs_bsfp_pc').change(function() {
 		check_total();
 	});
 
-	$('#fs_c_pc').focusout(function() {
-		console.log('focus_out');
+	$('#fs_c_pc').change(function() {
 		check_total();
 	});
 

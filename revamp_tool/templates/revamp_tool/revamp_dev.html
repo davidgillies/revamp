@@ -224,7 +224,10 @@
     
 {% endif %}
     <div class="well">
-        <h4>REVAMP TOOL Inputs</h4>
+        {% if request.user.is_authenticated %}<h4>Project Name: <span id="current_project_name">{{name}}</span> City: <span id="current_project_city">{{ location.city }}</span></h4>
+        {% else%}
+            <h4> REVAMP TOOL Inputs </h4>
+        {% endif %}
         <div class="row">
             <div class="col-md-12">
                 <p>The tool requires input for three waste streams and four resource recovery options.  You can use the defaults loaded immediately or add your own data.</p>
@@ -267,7 +270,9 @@
                 <div class="tab-content col-xs-9">
                     <div id="waste-streams" class="tab-pane fade in active">
                 <div  class="panel panel-default">
-                    <div class="panel-heading"><h4>Waste Streams</h4></div>
+                    <div class="panel-heading"><h4>Waste Streams<span class="info_link">
+          <span class="glyphicon glyphicon-info-sign"></span>
+        </span></h4></div>
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-12">
@@ -277,7 +282,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="panel panel-green">
-                                    <div class="panel-heading">Faecal Sludge</div>
+                                    <div class="panel-heading">Faecal Sludge </div>
                                     <div class="panel-body">
                                         <form role="form" >
                                             <div class="form-group">
@@ -425,11 +430,11 @@
                                         <table class="table table-striped table-bordered table-hover dataTable dtr-inline" role="grid" style="width: 100%;" width="100%">
                                             <thead>
                                                 <tr class="row">
-                                                    <th colspan="2" rowspan="1" class="col-md-4"></th>
-                                                    <th colspan="1" rowspan="1" class="col-md-2">Units</th>
-                                                    <th colspan="1" rowspan="1" class="col-md-2">Faecal Sludge</th>
-                                                    <th colspan="1" rowspan="1" class="col-md-2">Sewage Sludge</th>
-                                                    <th colspan="1" rowspan="1" class="col-md-2">Solid Waste</th>
+                                                    <th  class="col-md-4"></th>
+                                                    <th  class="col-md-2">Units</th>
+                                                    <th  class="col-md-2">Faecal Sludge</th>
+                                                    <th  class="col-md-2">Sewage Sludge</th>
+                                                    <th  class="col-md-2">Solid Waste</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -1824,6 +1829,8 @@
                         this.location = JSON.parse(JSON.stringify(this.projects[p].location));
                         this.project_id = this.projects[p].id;
                         this.name = this.projects[p].name;
+                        $('#current_project_name').text(this.name);
+                        $('#current_project_city').text(this.location.city);
                         
                     }
                 }
