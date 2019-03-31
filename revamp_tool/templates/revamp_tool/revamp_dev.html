@@ -297,7 +297,7 @@
                                             <p class="form-control-static">Select what % of waste to what option</p>
                                             <div class="form-group">
                                                 <label>Anaerobic Digestion </label>
-                                                <input id="fs_ad_pc" name="faecal_sum" class="form-control sum_boxes" type="number" step="any" v-model:value="wastestreams.fs_ad_pc" />
+                                                <input id="fs_ad_pc" name="faecal_sum" class="form-control sum_boxes" type="number" step="any" v-model:value="wastestreams.fs_ad_pc" min="0" max="100" />
                                             </div>
                                             <div class="form-group">
                                                 <label>Solid Fuel </label>
@@ -313,7 +313,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Total </label>
-                                                <input id="fs_t_pc" readonly class="form-control sum_boxes" type="number" step="any" v-model:value="wastestreams.fs_t_pc" />
+                                                <input id="fs_t_pc" readonly class="form-control" type="number" step="any" v-model:value="wastestreams.fs_t_pc" />
                                                 <div id="fs_total_warning"></div>
                                             </div>
 
@@ -400,7 +400,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Total </label>
-                                                <input id="sw_t_pc" readonly class="form-control sw_sum_boxes" type="number" step="any" v-model:value="wastestreams.sw_t_pc" />
+                                                <input id="sw_t_pc" readonly class="form-control" type="number" step="any" v-model:value="wastestreams.sw_t_pc" />
                                                 <div id="sw_total_warning"></div>
                                             </div>
                                            
@@ -919,7 +919,7 @@
                         </div>
                     </div>
                                                      {% endif %} 
-                                                <button id="calculate" class="btn btn-primary " type="button">Calculate Results</button>
+                                                <button id="calculate" class="btn btn-primary " type="button" >Calculate Results</button>
                                                 <div id="save_warning"></div>
                                             </div>
                     

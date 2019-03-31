@@ -371,7 +371,7 @@ function check_total() {
 	var fs_sf_pc = parseFloat($('#fs_sf_pc').val());
 	var fs_bsfp_pc = parseFloat($('#fs_bsfp_pc').val());
 	var fs_c_pc = parseFloat($('#fs_c_pc').val());
-	//var fs_t_pc = parseFloat($('#fs_t_pc').val());
+	var fs_t_pc = parseFloat($('#fs_t_pc').val());
 	//$('#fs_t_pc').val(fs_ad_pc+fs_sf_pc+fs_bsfp_pc+fs_c_pc);
     vm.wastestreams.fs_t_pc = fs_ad_pc+fs_sf_pc+fs_bsfp_pc+fs_c_pc;
 
@@ -990,17 +990,7 @@ $(document).ready(function () {
 //      $(this).off('mousewheel.disableScroll')
 //    });
     
-    
-	if ((fs_ad_pc+fs_sf_pc+fs_bsfp_pc+fs_c_pc)> 100 ) {
-		console.log('too much');
-		$('#fs_total_warning').addClass('alert alert-danger');
-		$('#fs_total_warning').html('Total cannot be more than 100');
-	} else {
-		console.log('too little');
-		$('#total_warning').removeClass('alert alert-danger');
-		//$('#fs_t_pc').removeClass('alert');
-		$('#total_warning').html('');
-	}
+
     
 $('.sum_boxes').change(function(){
 			
@@ -1016,15 +1006,18 @@ $('.sum_boxes').change(function(){
 			if( total > 100) {
 				$('#fs_total_warning').addClass('alert alert-danger');
 		        $('#fs_total_warning').html('Total cannot be more than 100');
+                vm.wastestreams.fs_t_pc = total;
 			} else {
                 $('#fs_total_warning').removeClass('alert alert-danger');
 		        $('#fs_total_warning').html('');
+                vm.wastestreams.fs_t_pc = total;
 			}
 		});
     
     $('[data-toggle="tooltip"]').tooltip({
         placement : 'top'
     });
+    
     
     $('.ss_sum_boxes').change(function(){
 			
@@ -1040,9 +1033,11 @@ $('.sum_boxes').change(function(){
 			if( total > 100) {
 				$('#ss_total_warning').addClass('alert alert-danger');
 		        $('#ss_total_warning').html('Total cannot be more than 100');
+                vm.wastestreams.ss_t_pc = total;
 			} else {
                 $('#ss_total_warning').removeClass('alert alert-danger');
 		        $('#ss_total_warning').html('');
+                vm.wastestreams.ss_t_pc = total;
 			}
 		});
     
@@ -1062,11 +1057,52 @@ $('.sum_boxes').change(function(){
 			if( total > 100) {
 				$('#sw_total_warning').addClass('alert alert-danger');
 		        $('#sw_total_warning').html('Total cannot be more than 100');
+                vm.wastestreams.sw_t_pc = total;
 			} else {
                 $('#sw_total_warning').removeClass('alert alert-danger');
 		        $('#sw_total_warning').html('');
+                vm.wastestreams.sw_t_pc = total;
 			}
 		});
+    
+
+    $(':input[type="number"]').change(function() {
+            subtotals = false;
+            totals = false;
+        
+            if(vm.wastestreams.fs_ad_pc < 0  || vm.wastestreams.fs_ad_pc > 100
+              || vm.wastestreams.ss_ad_pc < 0  || vm.wastestreams.ss_ad_pc > 100
+              || vm.wastestreams.sw_ad_pc < 0  || vm.wastestreams.sw_ad_pc > 100
+              || vm.wastestreams.fs_sf_pc < 0  || vm.wastestreams.fs_sf_pc > 100
+              || vm.wastestreams.ss_sf_pc < 0  || vm.wastestreams.ss_sf_pc > 100
+              || vm.wastestreams.sw_sf_pc < 0  || vm.wastestreams.sw_sf_pc > 100
+              || vm.wastestreams.fs_bsfp_pc < 0  || vm.wastestreams.fs_bsfp_pc > 100
+              || vm.wastestreams.ss_bsfp_pc < 0  || vm.wastestreams.ss_bsfp_pc > 100
+              || vm.wastestreams.sw_bsfp_pc < 0  || vm.wastestreams.sw_bsfp_pc > 100
+              || vm.wastestreams.fs_c_pc < 0  || vm.wastestreams.fs_c_pc > 100
+              || vm.wastestreams.ss_c_pc < 0  || vm.wastestreams.ss_c_pc > 100
+              || vm.wastestreams.sw_c_pc < 0  || vm.wastestreams.sw_c_pc > 100) {
+                alert("values must be between 0 and 100");
+                subtotals = true;
+                
+            } 
+            $("#calculate").attr("disabled", false);
+            if(vm.wastestreams.fs_t_pc < 0  || vm.wastestreams.fs_t_pc > 100
+              || vm.wastestreams.ss_t_pc < 0  || vm.wastestreams.ss_t_pc > 100
+              || vm.wastestreams.sw_t_pc < 0  || vm.wastestreams.sw_t_pc > 100){
+              totals = true;
+            }
+                
+        if (subtotals || totals) {
+          $("#calculate").attr("disabled", true);
+        } else {
+          $("#calculate").attr("disabled", false);
+        }
+        console.log(subtotals, totals);
+        console.log(vm.wastestreams.ss_ad_pc);
+        
+        
+    });
     
     
 $(function() {    
