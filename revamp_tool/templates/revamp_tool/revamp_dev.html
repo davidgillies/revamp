@@ -297,23 +297,23 @@
                                             <p class="form-control-static">Select what % of waste to what option</p>
                                             <div class="form-group">
                                                 <label>Anaerobic Digestion </label>
-                                                <input id="fs_ad_pc" class="form-control" type="number" step="any" v-model:value="wastestreams.fs_ad_pc" />
+                                                <input id="fs_ad_pc" name="faecal_sum" class="form-control sum_boxes" type="number" step="any" v-model:value="wastestreams.fs_ad_pc" />
                                             </div>
                                             <div class="form-group">
                                                 <label>Solid Fuel </label>
-                                                <input id="fs_sf_pc" class="form-control" type="number" step="any" v-model:value="wastestreams.fs_sf_pc" />
+                                                <input id="fs_sf_pc" name="faecal_sum" class="form-control  sum_boxes" type="number" step="any" v-model:value="wastestreams.fs_sf_pc" />
                                             </div>
                                             <div class="form-group">
                                                 <label>Black Soldier Fly Process</label>
-                                                <input id="fs_bsfp_pc" class="form-control" type="number" step="any" v-model:value="wastestreams.fs_bsfp_pc" />
+                                                <input id="fs_bsfp_pc" name="faecal_sum" class="form-control  sum_boxes" type="number" step="any" v-model:value="wastestreams.fs_bsfp_pc" />
                                             </div>
                                             <div class="form-group">
                                                 <label>Compost </label>
-                                                <input id="fs_c_pc" class="form-control" type="number" step="any" v-model:value="wastestreams.fs_c_pc" />
+                                                <input id="fs_c_pc" name="faecal_sum" class="form-control sum_boxes" type="number" step="any" v-model:value="wastestreams.fs_c_pc" />
                                             </div>
                                             <div class="form-group">
                                                 <label>Total </label>
-                                                <input id="fs_t_pc" readonly class="form-control" type="number" step="any" v-model:value="wastestreams.fs_t_pc" />
+                                                <input id="fs_t_pc" readonly class="form-control sum_boxes" type="number" step="any" v-model:value="wastestreams.fs_t_pc" />
                                                 <div id="fs_total_warning"></div>
                                             </div>
 
@@ -339,19 +339,19 @@
                                             <p class="form-control-static">Select what % of waste to what option</p>
                                             <div class="form-group">
                                                 <label>Anaerobic Digestion </label>
-                                                <input id="ss_ad_pc" class="form-control" type="number" step="any" v-model:value="wastestreams.ss_ad_pc" />
+                                                <input id="ss_ad_pc" class="form-control ss_sum_boxes" type="number" step="any" v-model:value="wastestreams.ss_ad_pc" />
                                             </div>
                                             <div class="form-group">
                                                 <label>Solid Fuel </label>
-                                                <input id="ss_sf_pc" class="form-control" type="number" step="any" v-model:value="wastestreams.ss_sf_pc" />
+                                                <input id="ss_sf_pc" class="form-control ss_sum_boxes" type="number" step="any" v-model:value="wastestreams.ss_sf_pc" />
                                             </div>
                                             <div class="form-group">
                                                 <label>Black Soldier Fly Process</label>
-                                                <input id="ss_bsfp_pc" class="form-control" type="number" step="any" v-model:value="wastestreams.ss_bsfp_pc" />
+                                                <input id="ss_bsfp_pc" class="form-control ss_sum_boxes" type="number" step="any" v-model:value="wastestreams.ss_bsfp_pc" />
                                             </div>
                                             <div class="form-group">
                                                 <label>Compost </label>
-                                                <input id="ss_c_pc" class="form-control" type="number" step="any" v-model:value="wastestreams.ss_c_pc" />
+                                                <input id="ss_c_pc" class="form-control ss_sum_boxes" type="number" step="any" v-model:value="wastestreams.ss_c_pc" />
                                             </div>
                                             <div class="form-group">
                                                 <label>Total </label>
@@ -384,23 +384,23 @@
                                             <p class="form-control-static">Select what % of waste to what option</p>
                                             <div class="form-group">
                                                 <label>Anaerobic Digestion </label>
-                                                <input id="sw_ad_pc" class="form-control" type="number" step="any" v-model:value="wastestreams.sw_ad_pc" />
+                                                <input id="sw_ad_pc" class="form-control sw_sum_boxes" type="number" step="any" v-model:value="wastestreams.sw_ad_pc" />
                                             </div>
                                             <div class="form-group">
                                                 <label>Solid Fuel </label>
-                                                <input id="sw_sf_pc" class="form-control" type="number" step="any" v-model:value="wastestreams.sw_sf_pc" />
+                                                <input id="sw_sf_pc" class="form-control sw_sum_boxes" type="number" step="any" v-model:value="wastestreams.sw_sf_pc" />
                                             </div>
                                             <div class="form-group">
                                                 <label>Black Soldier Fly Process</label>
-                                                <input id="sw_bsfp_pc" class="form-control" type="number" step="any" v-model:value="wastestreams.sw_bsfp_pc" />
+                                                <input id="sw_bsfp_pc" class="form-control sw_sum_boxes" type="number" step="any" v-model:value="wastestreams.sw_bsfp_pc" />
                                             </div>
                                             <div class="form-group">
                                                 <label>Compost </label>
-                                                <input id="sw_c_pc" class="form-control" type="number" step="any" v-model:value="wastestreams.sw_c_pc" />
+                                                <input id="sw_c_pc" class="form-control sw_sum_boxes" type="number" step="any" v-model:value="wastestreams.sw_c_pc" />
                                             </div>
                                             <div class="form-group">
                                                 <label>Total </label>
-                                                <input id="sw_t_pc" readonly class="form-control" type="number" step="any" v-model:value="wastestreams.sw_t_pc" />
+                                                <input id="sw_t_pc" readonly class="form-control sw_sum_boxes" type="number" step="any" v-model:value="wastestreams.sw_t_pc" />
                                                 <div id="sw_total_warning"></div>
                                             </div>
                                            

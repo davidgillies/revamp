@@ -990,9 +990,84 @@ $(document).ready(function () {
 //      $(this).off('mousewheel.disableScroll')
 //    });
     
+    
+	if ((fs_ad_pc+fs_sf_pc+fs_bsfp_pc+fs_c_pc)> 100 ) {
+		console.log('too much');
+		$('#fs_total_warning').addClass('alert alert-danger');
+		$('#fs_total_warning').html('Total cannot be more than 100');
+	} else {
+		console.log('too little');
+		$('#total_warning').removeClass('alert alert-danger');
+		//$('#fs_t_pc').removeClass('alert');
+		$('#total_warning').html('');
+	}
+    
+$('.sum_boxes').change(function(){
+			
+			var	boxes = $('.sum_boxes'),
+				total = 0;
+			
+			$(boxes).each(function(){
+				total += !isNaN(parseInt(this.value)) ? parseInt(this.value) : 0;
+			});
+			
+			console.log(total);
+			
+			if( total > 100) {
+				$('#fs_total_warning').addClass('alert alert-danger');
+		        $('#fs_total_warning').html('Total cannot be more than 100');
+			} else {
+                $('#fs_total_warning').removeClass('alert alert-danger');
+		        $('#fs_total_warning').html('');
+			}
+		});
+    
     $('[data-toggle="tooltip"]').tooltip({
         placement : 'top'
     });
+    
+    $('.ss_sum_boxes').change(function(){
+			
+			var	boxes = $('.ss_sum_boxes'),
+				total = 0;
+			
+			$(boxes).each(function(){
+				total += !isNaN(parseInt(this.value)) ? parseInt(this.value) : 0;
+			});
+			
+			console.log(total);
+			
+			if( total > 100) {
+				$('#ss_total_warning').addClass('alert alert-danger');
+		        $('#ss_total_warning').html('Total cannot be more than 100');
+			} else {
+                $('#ss_total_warning').removeClass('alert alert-danger');
+		        $('#ss_total_warning').html('');
+			}
+		});
+    
+
+    
+    $('.sw_sum_boxes').change(function(){
+			
+			var	boxes = $('.sw_sum_boxes'),
+				total = 0;
+			
+			$(boxes).each(function(){
+				total += !isNaN(parseInt(this.value)) ? parseInt(this.value) : 0;
+			});
+			
+			console.log(total);
+			
+			if( total > 100) {
+				$('#sw_total_warning').addClass('alert alert-danger');
+		        $('#sw_total_warning').html('Total cannot be more than 100');
+			} else {
+                $('#sw_total_warning').removeClass('alert alert-danger');
+		        $('#sw_total_warning').html('');
+			}
+		});
+    
     
 $(function() {    
 $("#salvapng").click(function() { 
@@ -1087,21 +1162,21 @@ var img = canvas.toDataURL("image/png");
         save_project();
     });
 
-	$('#fs_ad_pc').change(function() {
-		check_total();
-	});
-
-	$('#fs_sf_pc').change(function() {
-		check_total();
-	});
-
-	$('#fs_bsfp_pc').change(function() {
-		check_total();
-	});
-
-	$('#fs_c_pc').change(function() {
-		check_total();
-	});
+//	$('#fs_ad_pc').change(function() {
+//		check_total();
+//	});
+//
+//	$('#fs_sf_pc').change(function() {
+//		check_total();
+//	});
+//
+//	$('#fs_bsfp_pc').change(function() {
+//		check_total();
+//	});
+//
+//	$('#fs_c_pc').change(function() {
+//		check_total();
+//	});
 
 });
 
