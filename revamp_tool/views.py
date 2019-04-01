@@ -57,7 +57,7 @@ class RevampTool(TemplateView):
                 proj = {}
                 proj['id'] = p.id
                 proj['created_at'] = p.created_at
-                proj['updated_at'] = p.updated_at
+                proj['updated_at'] = p.updated_at.strftime("%m/%d/%Y %H:%M:%S UTC")
                 proj['prices'] = p.prices
                 proj['name'] = p.name
                 proj['fs_treatment_processes'] = p.fs_treatment_processes
@@ -68,7 +68,6 @@ class RevampTool(TemplateView):
                 proj['sw_waste_quality'] = p.sw_waste_quality
                 proj['wastestreams'] = p.waste_streams
                 proj['location'] = p.location
-                print("LOC: %s" % p.location.city)
                 proj['link_url'] = '/revamp_tool/download_excel/'+str(p.id)
                 
                 projects.append(proj)
@@ -76,12 +75,10 @@ class RevampTool(TemplateView):
             context = super(RevampTool, self).get_context_data(*args, **kwargs)
             if projects_db:
                 project = projects_db.latest('updated_at')
-                print("PROJECT %s" % project.id)
             else:
                 project = RevampProject.objects.get(id=2)
             context['project_id'] = project.id
             context['name'] = project.name
-            print("NAME %s" % project.name)
             context['wastestreams'] = project.waste_streams
             context['wastequalityoptions_fs'] = project.fs_waste_quality
             context['treatmentprocesses_fs'] = project.fs_treatment_processes
@@ -90,7 +87,6 @@ class RevampTool(TemplateView):
             context['wastequalityoptions_sw'] = project.sw_waste_quality
             context['treatmentprocesses_sw'] = project.sw_treatment_processes
             context['location'] = project.location
-            print("LOC2: %s" % project.location.city)
             context['prices'] = project.prices
             context['projects'] = projects
             context['approved_projects'] = approved_projects
@@ -99,7 +95,6 @@ class RevampTool(TemplateView):
             project = RevampProject.objects.get(id=2)
             context['project_id'] = project.id
             context['name'] = project.name
-            print("NAME2 %s" % project.name)
             context['wastestreams'] = project.waste_streams
             context['wastequalityoptions_fs'] = project.fs_waste_quality
             context['treatmentprocesses_fs'] = project.fs_treatment_processes
@@ -108,7 +103,6 @@ class RevampTool(TemplateView):
             context['wastequalityoptions_sw'] = project.sw_waste_quality
             context['treatmentprocesses_sw'] = project.sw_treatment_processes
             context['location'] = project.location
-            print("LOC3: %s" % project.location.city)
             context['prices'] = Prices.objects.get(id=2)
         return context
     
@@ -116,7 +110,6 @@ class RevampTool(TemplateView):
 class ProjectSaveView(View):
     def post(self,request):
         if request.is_ajax():
-            print(request.POST)
             random_name = get_random_string()[0:7]
             
             wq_fs_dict = json.loads(request.POST.get('wastequality_fs'))
@@ -132,12 +125,9 @@ class ProjectSaveView(View):
             project_name = json.loads(request.POST.get('project_name'))
             save_new = json.loads(request.POST.get('save_new'))
                    
-            print("LOC-DICT: %s" % location_dict)
             wq_fs_dict = convert_results(wq_fs_dict.items())
-            print("LOC-DICT: %s" % location_dict)
             wq_fs_dict['name'] = 'wq_fs_'+request.user.username+random_name
             wq_fs_dict.pop('created_at', None)
-            print("WQ-FS : %s" % wq_fs_dict)
             wq_ss_dict = convert_results(wq_ss_dict.items())
             wq_ss_dict['name'] = 'wq_ss_'+request.user.username+random_name
             wq_ss_dict.pop('created_at', None)
@@ -177,8 +167,6 @@ class ProjectSaveView(View):
             wastestreams['sw_black_soldier_fly_process'] = wastestreams_dict['sw_bsfp_pc']
             wastestreams['sw_compost'] = wastestreams_dict['sw_c_pc']
             wastestreams['name'] = 'ws_'+request.user.username+random_name
-            print("WQ-FS: %s" % wq_fs_dict)
-
 
             if save_new:
                 wq_fs = WasteQuality.objects.create(**wq_fs_dict)
@@ -226,7 +214,6 @@ class ProjectSaveView(View):
                     project.name = project_name
                     project.save()
                     data = {"project_id":project.id, "updated": project.updated_at}
-                    print(project.updated_at)
                 else:
                     data = {"error": "You cannot save this project.  Please use Save as New."}
             
@@ -320,9 +307,7 @@ def download_excel(request, project_id):
     wb['Results']['C6'] = project.waste_streams.fs_solid_fuel
     wb['Results']['C7'] = project.waste_streams.fs_black_soldier_fly_process
     wb['Results']['C8'] = project.waste_streams.fs_compost 
-    print(project.waste_streams.fs_compost)
-    print(project.waste_streams.ss_compost)
-    print(project.waste_streams.sw_compost)
+    
     wb['Results']['E2'] = project.waste_streams.sewage_sludge
     wb['Results']['E5'] = project.waste_streams.ss_anaeribic_digestion
     wb['Results']['E6'] = project.waste_streams.ss_solid_fuel
@@ -358,12 +343,10 @@ def load_approved_project(request):
         proj['id'] = project.id
         proj['created_at'] = project.created_at
         proj['updated_at'] = project.updated_at
-        print(project.updated_at)
+
         proj['prices'] = model_to_dict(project.prices)
         proj['name'] = project.name
         proj['fs_treatment_processes'] = model_to_dict(project.fs_treatment_processes)
-        print(proj['fs_treatment_processes'])
-        print(project.fs_treatment_processes)
         proj['ss_treatment_processes'] = model_to_dict(project.ss_treatment_processes)
         proj['sw_treatment_processes'] = model_to_dict(project.sw_treatment_processes)
         proj['fs_waste_quality'] = model_to_dict(project.fs_waste_quality)

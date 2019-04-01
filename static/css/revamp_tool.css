@@ -236,3 +236,8 @@ input[type=number]::-webkit-outer-spin-button {
     color: #bbb;
     float: right;
 }
+
+.collapsing{ 
+    -webkit-transition:height .01s ease;
+    transition:height .01s ease
+}

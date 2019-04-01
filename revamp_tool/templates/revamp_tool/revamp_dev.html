@@ -78,7 +78,7 @@
                             <div  v-cloak v-for="(project, index) in projects" class="row row-buffer">
                                 <div class="col-md-3 row-text">${ project.name }</div>
                                 <div class="col-md-3 row-text">${ project.location.city }</div>
-                                <div class="col-md-2 row-text"> ${ project.updated_at }</div>
+                                <div class="col-md-2 row-text last_update"> ${ project.updated_at }</div>
                                 <div class="col-md-4">
                                     <button type="button" class="btn btn-warning " v-on:click.prevent="load(project.id)"  >Load</button>
                                     <button id="delete_button" type="button" class="btn btn-danger load-notify" data-toggle="modal" data-target="#delete-modal" v-on:click.prevent="set_active_project(project.id, index)">Delete</button>
