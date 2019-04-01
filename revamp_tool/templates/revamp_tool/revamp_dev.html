@@ -5,31 +5,6 @@
 
 {% block title %} {% trans "Revamp Tool" %}{% endblock %}
 {% block head_content %}
-    {% leaflet_js %}
-    {% leaflet_css %}
-
-<script type="text/javascript">
-    function map_init_basic (map, options) {
-      
-        var glasgow = L.marker([55.864239, -4.251806]).addTo(map);
-        var edinburgh = L.marker([55.953251, -3.188267]).addTo(map);  
-        glasgow.bindPopup("Glasgow <a href='http://www.york.ac.uk'>York</a>").openPopup();
-        edinburgh.bindPopup("Edinburgh").openPopup();
-        function bla() {
-            console.log('worked');
-        }
-        glasgow.on('click', bla);
-   
-    
-        var popup = L.popup();
-        function onMapClick(e) {
-            popup.setLatLng(e.latlng).setContent("Click a city to load...").openOn(map);
-        }
-        map.on('click', onMapClick);
-    }
-</script>
-
-
 
 {% endblock %}
 {% block content %}
@@ -39,39 +14,27 @@
 <div id="app">
    {% if request.user.is_authenticated %}
     <div class="well ">
-        <!--div id="map" class="panel panel-success ">
-        <div class="panel-heading"><h3 class="panel-title"><a data-toggle="collapse" href="#map_panel_body" aria-expanded="true">Map</a></h3></div>
-        <div id="map_panel_body" class="panel-collapse collapse in">
-            <div  class="panel-body">
-                    <div class="row">
-                        <div class="col-md-12">
-    {% leaflet_map "yourmap" callback="window.map_init_basic" %}
-                        </div>
-                    </div>
-            </div>
-        </div>
-    </div-->
         <div id="wastestreams" class="panel panel-success ">
             <div class="panel-heading"><h3 class="panel-title"><a data-toggle="collapse" href="#panel_body" aria-expanded="true">Manage Projects</a></h3></div>
                 <div id="panel_body" class="panel-collapse collapse in">
                 <div  class="panel-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <p>To start a new project just fill in the inputs and hit the Save Project Button below.</p>
+                            <p>{% trans "To start a new project just fill in the inputs and hit the Save Project Button below." %}</p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="row row-head">
                                 <div class="col-md-3">
-                                    <h4>Project Name</h4>
+                                    <h4>{% trans "Project Name" %}</h4>
                                 </div>
-                                <div class="col-md-3 row-text">City</div>
+                                <div class="col-md-3 row-text">{% trans "City" %}</div>
                                 <div class="col-md-2">
-                                    <h4>Last updated</h4>
+                                    <h4>{% trans "Last updated" %}</h4>
                                 </div>
                                 <div clas="col-md-4">
-                                    <h4 class="action-header">Actions</h4>
+                                    <h4 class="action-header">{% trans "Actions" %}</h4>
                                 </div>
                             </div>
                             <div v-if="projects.length">
@@ -80,15 +43,15 @@
                                 <div class="col-md-3 row-text">${ project.location.city }</div>
                                 <div class="col-md-2 row-text last_update"> ${ project.updated_at }</div>
                                 <div class="col-md-4">
-                                    <button type="button" class="btn btn-warning " v-on:click.prevent="load(project.id)"  >Load</button>
-                                    <button id="delete_button" type="button" class="btn btn-danger load-notify" data-toggle="modal" data-target="#delete-modal" v-on:click.prevent="set_active_project(project.id, index)">Delete</button>
-                                    <a type="button" class="btn btn-success load-notify" :href="project.link_url" >Download as Excel</a>
+                                    <button type="button" class="btn btn-warning " v-on:click.prevent="load(project.id)"  >{% trans "Load" %}</button>
+                                    <button id="delete_button" type="button" class="btn btn-danger load-notify" data-toggle="modal" data-target="#delete-modal" v-on:click.prevent="set_active_project(project.id, index)">{% trans "Delete" %}</button>
+                                    <a type="button" class="btn btn-success load-notify" :href="project.link_url" >{% trans "Download as Excel" %}</a>
                                     
                                 </div>
                                 
 
                                 </div>
-                            <div v-else v-cloak><div class="col-md-12 row-text">You have no projects.</div></div>
+                            <div v-else v-cloak><div class="col-md-12 row-text">{% trans "You have no projects." %}</div></div>
                                 
                             </div>
 
@@ -100,16 +63,16 @@
                     <div class="project-panel-footer">
                         <div class="row">
                     <div class="col-md-8">
-                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#new-modal">Load Defaults</button>
+                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#new-modal">{% trans "Load Defaults" %}</button>
                     </div>
                     <div class="col-md-4">
                              <select class="location-selector" id="approved_library" name="approved_library">
-                        <option selected disabled>Select from approved locations</option>
+                        <option selected disabled>{% trans "Select from approved locations" %}</option>
                         {% for proj in approved_projects %}
                         <option value="{{proj.id}}">{{ proj.name }}</option>
                         {% endfor %}
                     </select>
-                            <button id="load_approved_library" type="button" class="btn btn-warning">Load Project</button>
+                            <button id="load_approved_library" type="button" class="btn btn-warning">{% trans "Load Project" %}</button>
                             
                         </div>
                             </div>
@@ -122,12 +85,12 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                    <h4 class="modal-title">Default Options</h4>
+                                    <h4 class="modal-title">{% trans "Default Options" %}</h4>
                                 </div>
                                 <div class="modal-body">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <strong>Use default for</strong>
+                                            <strong>{% trans "Use default for" %}</strong>
                                         </div>
                                         <div class="col-md-6">
                                             
@@ -135,7 +98,7 @@
                                     </div>
                                     <div class="row row-buffer">
                                         <div class="col-md-6 row-text">
-                                            Feacal Sludge Treatment Process
+                                            {% trans "Feacal Sludge Treatment Process" %}
                                         </div>
                                         <div class="col-md-6">
                                             <input type='checkbox' ref="checkbox_fs_tp" :checked.prop="use_defaults.fs_tp"  data-on="Yes" data-off="No" />
@@ -143,7 +106,7 @@
                                     </div>
                                     <div class="row row-buffer">
                                         <div class="col-md-6 row-text">
-                                            Sewage Sludge Treatment Process
+                                            {% trans "Sewage Sludge Treatment Process" %}
                                         </div>
                                         <div class="col-md-6">
                                             <input type='checkbox' ref="checkbox_ss_tp" :checked.prop="use_defaults.ss_tp"  data-on="Yes" data-off="No" />
@@ -151,7 +114,7 @@
                                     </div>
                                     <div class="row row-buffer">
                                         <div class="col-md-6 row-text">
-                                            Solid Waste Treatment Process
+                                            {% trans "Solid Waste Treatment Process" %}
                                         </div>
                                         <div class="col-md-6">
                                             <input type='checkbox' ref="checkbox_sw_tp" :checked.prop="use_defaults.sw_tp"  data-on="Yes" data-off="No" />
@@ -159,7 +122,7 @@
                                     </div>
                                     <div class="row row-buffer">
                                         <div class="col-md-6 row-text">
-                                            Feacal Sludge Waste Quality
+                                            {% trans "Feacal Sludge Waste Quality" %}
                                         </div>
                                         <div class="col-md-6">
                                             <input type='checkbox' ref="checkbox_fs_wq" :checked.prop="use_defaults.fs_wq"  data-on="Yes" data-off="No" />
@@ -167,7 +130,7 @@
                                     </div>
                                     <div class="row row-buffer">
                                         <div class="col-md-6 row-text">
-                                            Sewage Sludge Waste Quality
+                                            {% trans "Sewage Sludge Waste Quality" %}
                                         </div>
                                         <div class="col-md-6">
                                             <input type='checkbox' ref="checkbox_ss_wq" :checked.prop="use_defaults.ss_wq"  data-on="Yes" data-off="No" />
@@ -175,7 +138,7 @@
                                     </div>
                                     <div class="row row-buffer">
                                         <div class="col-md-6 row-text">
-                                            Solid Waste Waste Quality
+                                            {% trans "Solid Waste Waste Quality" %}
                                         </div>
                                         <div class="col-md-6">
                                             <input type='checkbox' ref="checkbox_sw_wq" :checked.prop="use_defaults.sw_wq"  data-on="Yes" data-off="No" />
@@ -183,7 +146,7 @@
                                     </div>
                                     <div class="row row-buffer">
                                         <div class="col-md-6 row-text">
-                                            Prices
+                                            {% trans "Prices" %}
                                         </div>
                                         <div class="col-md-6">
                                             <input type='checkbox' ref="checkbox_p" :checked.prop="use_defaults.p" data-on="Yes" data-off="No"  />
@@ -192,8 +155,8 @@
                                     
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click.prevent="load_defaults()">Load Defaults</button>
+                                    <button type="button" class="btn" data-dismiss="modal">{% trans "Close" %}</button>
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click.prevent="load_defaults()">{% trans "Load Defaults" %}</button>
                                 </div>
                             </div>
                         </div>
@@ -203,14 +166,14 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                    <h4 class="modal-title">Project Options</h4>
+                                    <h4 class="modal-title">{% trans "Project Options" %}</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <p>Are you sure you want to delete this project?</p>    
+                                    <p>{% trans "Are you sure you want to delete this project?" %}</p>    
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal" v-on:click.prevent="delete_project()">Delete Project</button>
+                                    <button type="button" class="btn" data-dismiss="modal">{% trans "Close" %}</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal" v-on:click.prevent="delete_project()">{% trans "Delete Project" %}</button>
                                 </div>
                             </div>
                         </div>
@@ -224,13 +187,13 @@
     
 {% endif %}
     <div class="well">
-        {% if request.user.is_authenticated %}<h4>Project Name: <span id="current_project_name">{{name}}</span> City: <span id="current_project_city">{{ location.city }}</span></h4>
+        {% if request.user.is_authenticated %}<h4>{% trans "Project Name:" %} <span id="current_project_name">{{name}}</span> {% trans "City:" %} <span id="current_project_city">{{ location.city }}</span></h4>
         {% else%}
             <h4> REVAMP TOOL Inputs </h4>
         {% endif %}
         <div class="row">
             <div class="col-md-12">
-                <p>The tool requires input for three waste streams and four resource recovery options.  You can use the defaults loaded immediately or add your own data.</p>
+                <p>{% trans "The tool requires input for three waste streams and four resource recovery options.  You can use the defaults loaded immediately or add your own data." %}</p>
             </div>
         </div>
         <div class="row">
@@ -238,10 +201,10 @@
                 <div class="row">
                 <div class="col-xs-3">
                 <ul class="nav nav-tabs tabs-left">
-                    <li class="active"><a data-toggle="tab" data-target="#waste-streams">Waste Streams</a></li>
-                    <li><a data-toggle="tab" data-target="#wastequality">Waste Quality</a></li>
-                    <li><a data-toggle="tab"  data-target="#treatmentprocesses">Treatment Processes</a></li>
-                    <li><a data-toggle="tab"  data-target="#prices">Prices</a></li>
+                    <li class="active"><a data-toggle="tab" data-target="#waste-streams">{% trans "Waste Streams" %}</a></li>
+                    <li><a data-toggle="tab" data-target="#wastequality">{% trans "Waste Quality" %}</a></li>
+                    <li><a data-toggle="tab"  data-target="#treatmentprocesses">{% trans "Treatment Processes" %}</a></li>
+                    <li><a data-toggle="tab"  data-target="#prices">{% trans "Prices" %}</a></li>
 </ul>    <!--h4>REVAMP TOOL Inputs</h4></div>
                 <!--div class="col-md-4">
                 <div class="pull-right">
@@ -270,49 +233,49 @@
                 <div class="tab-content col-xs-9">
                     <div id="waste-streams" class="tab-pane fade in active">
                 <div  class="panel panel-default">
-                    <div class="panel-heading"><h4>Waste Streams<span class="info_link">
+                    <div class="panel-heading"><h4>{% trans "Waste Streams" %}<span class="info_link">
           <span class="glyphicon glyphicon-info-sign"></span>
         </span></h4></div>
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <p>Enter your waste streams here and determine the percentage of each waste stream to be used for each resource option.</p>
+                                <p>{% trans "Enter your waste streams here and determine the percentage of each waste stream to be used for each resource option." %}</p>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="panel panel-green">
-                                    <div class="panel-heading">Faecal Sludge </div>
+                                    <div class="panel-heading">{% trans "Faecal Sludge" %} </div>
                                     <div class="panel-body">
                                         <form role="form" >
                                             <div class="form-group">
                                                 <input id="fs_amount" class="form-control" type="number" step="any" v-model:value="wastestreams.fs_amount" />
-                                                <p class="help-block">Amount available per day</p>
+                                                <p class="help-block">{% trans "Amount available per day" %}</p>
                                             </div>
                                         </form>
                                     </div>
                                   
                                     <div class="panel-footer">
                                         <form role="form">
-                                            <p class="form-control-static">Select what % of waste to what option</p>
+                                            <p class="form-control-static">{% trans "Select what % of waste to what option" %}</p>
                                             <div class="form-group">
-                                                <label>Anaerobic Digestion </label>
+                                                <label>{% trans "Anaerobic Digestion" %} </label>
                                                 <input id="fs_ad_pc" name="faecal_sum" class="form-control sum_boxes" type="number" step="any" v-model:value="wastestreams.fs_ad_pc" min="0" max="100" />
                                             </div>
                                             <div class="form-group">
-                                                <label>Solid Fuel </label>
+                                                <label>{% trans "Solid Fuel" %} </label>
                                                 <input id="fs_sf_pc" name="faecal_sum" class="form-control  sum_boxes" type="number" step="any" v-model:value="wastestreams.fs_sf_pc" />
                                             </div>
                                             <div class="form-group">
-                                                <label>Black Soldier Fly Process</label>
+                                                <label>{% trans "Black Soldier Fly Process" %}</label>
                                                 <input id="fs_bsfp_pc" name="faecal_sum" class="form-control  sum_boxes" type="number" step="any" v-model:value="wastestreams.fs_bsfp_pc" />
                                             </div>
                                             <div class="form-group">
-                                                <label>Compost </label>
+                                                <label>{% trans "Compost" %} </label>
                                                 <input id="fs_c_pc" name="faecal_sum" class="form-control sum_boxes" type="number" step="any" v-model:value="wastestreams.fs_c_pc" />
                                             </div>
                                             <div class="form-group">
-                                                <label>Total </label>
+                                                <label>{% trans "Total" %} </label>
                                                 <input id="fs_t_pc" readonly class="form-control" type="number" step="any" v-model:value="wastestreams.fs_t_pc" />
                                                 <div id="fs_total_warning"></div>
                                             </div>
@@ -323,12 +286,12 @@
                             </div>                    
                             <div class="col-md-4">
                                 <div class="panel panel-green">
-                                    <div class="panel-heading">Sewage Sludge</div>
+                                    <div class="panel-heading">{% trans "Sewage Sludge" %}</div>
                                     <div class="panel-body">
                                     <form role="form" >
                                             <div class="form-group">
                                                 <input id="ss_amount" class="form-control" type="number" step="any" v-model:value="wastestreams.ss_amount" />
-                                                <p class="help-block">Amount available per day</p>
+                                                <p class="help-block">{% trans "Amount available per day" %}</p>
                                             </div>
                                         </form>
                                     </div>
@@ -336,25 +299,25 @@
                                  
                                     <div class="panel-footer">
                                         <form role="form">
-                                            <p class="form-control-static">Select what % of waste to what option</p>
+                                            <p class="form-control-static">{% trans "Select what % of waste to what option" %}</p>
                                             <div class="form-group">
-                                                <label>Anaerobic Digestion </label>
+                                                <label>{% trans "Anaerobic Digestion" %} </label>
                                                 <input id="ss_ad_pc" class="form-control ss_sum_boxes" type="number" step="any" v-model:value="wastestreams.ss_ad_pc" />
                                             </div>
                                             <div class="form-group">
-                                                <label>Solid Fuel </label>
+                                                <label>{% trans "Solid Fuel" %} </label>
                                                 <input id="ss_sf_pc" class="form-control ss_sum_boxes" type="number" step="any" v-model:value="wastestreams.ss_sf_pc" />
                                             </div>
                                             <div class="form-group">
-                                                <label>Black Soldier Fly Process</label>
+                                                <label>{% trans "Black Soldier Fly Process" %}</label>
                                                 <input id="ss_bsfp_pc" class="form-control ss_sum_boxes" type="number" step="any" v-model:value="wastestreams.ss_bsfp_pc" />
                                             </div>
                                             <div class="form-group">
-                                                <label>Compost </label>
+                                                <label>{% trans "Compost" %} </label>
                                                 <input id="ss_c_pc" class="form-control ss_sum_boxes" type="number" step="any" v-model:value="wastestreams.ss_c_pc" />
                                             </div>
                                             <div class="form-group">
-                                                <label>Total </label>
+                                                <label>{% trans "Total" %} </label>
                                                 <input id="ss_t_pc" readonly class="form-control" type="number" step="any" v-model:value="wastestreams.ss_t_pc" />
                                                 <div id="ss_total_warning"></div>
                                             </div>
@@ -366,13 +329,13 @@
                             <div class="col-md-4">
                                 <div class="panel panel-green">
                                     <div class="panel-heading">
-                                    Organic Municipal Solid Waste
+                                    {% trans "Organic Municipal Solid Waste" %}
                                     </div>
                                     <div class="panel-body">
                                         <form role="form" >
                                             <div class="form-group">
                                                 <input id="sw_amount" class="form-control" type="number" step="any" v-model:value="wastestreams.sw_amount" />
-                                                <p class="help-block">Amount available per day</p>
+                                                <p class="help-block">{% trans "Amount available per day"%}</p>
                                             </div>
                                         </form>
                                     </div>
@@ -381,25 +344,25 @@
                                     <div class="panel-footer">
                                     
                                         <form role="form">
-                                            <p class="form-control-static">Select what % of waste to what option</p>
+                                            <p class="form-control-static">{% trans "Select what % of waste to what option" %}</p>
                                             <div class="form-group">
-                                                <label>Anaerobic Digestion </label>
+                                                <label>{% trans "Anaerobic Digestion" %} </label>
                                                 <input id="sw_ad_pc" class="form-control sw_sum_boxes" type="number" step="any" v-model:value="wastestreams.sw_ad_pc" />
                                             </div>
                                             <div class="form-group">
-                                                <label>Solid Fuel </label>
+                                                <label>{% trans "Solid Fuel" %} </label>
                                                 <input id="sw_sf_pc" class="form-control sw_sum_boxes" type="number" step="any" v-model:value="wastestreams.sw_sf_pc" />
                                             </div>
                                             <div class="form-group">
-                                                <label>Black Soldier Fly Process</label>
+                                                <label>{% trans "Black Soldier Fly Process" %}</label>
                                                 <input id="sw_bsfp_pc" class="form-control sw_sum_boxes" type="number" step="any" v-model:value="wastestreams.sw_bsfp_pc" />
                                             </div>
                                             <div class="form-group">
-                                                <label>Compost </label>
+                                                <label>{% trans "Compost" %} </label>
                                                 <input id="sw_c_pc" class="form-control sw_sum_boxes" type="number" step="any" v-model:value="wastestreams.sw_c_pc" />
                                             </div>
                                             <div class="form-group">
-                                                <label>Total </label>
+                                                <label>{% trans "Total" %} </label>
                                                 <input id="sw_t_pc" readonly class="form-control" type="number" step="any" v-model:value="wastestreams.sw_t_pc" />
                                                 <div id="sw_total_warning"></div>
                                             </div>
@@ -416,11 +379,11 @@
             </div>
                     <div id="wastequality" class="tab-pane fade">
                         <div class="panel panel-default">
-                            <div class="panel-heading"><h4>Waste Quality</h4></div> 
+                            <div class="panel-heading"><h4>{% trans "Waste Quality" %}</h4></div> 
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <p>Waste quality has default data on the physical and chemical characteristic of waste streams.  You are free to change these.</p>
+                                            <p>{% trans "Waste quality has default data on the physical and chemical characteristic of waste streams.  You are free to change these." %}</p>
                                         </div>
                                     </div>
                         <div class="row">
@@ -431,10 +394,10 @@
                                             <thead>
                                                 <tr class="row">
                                                     <th  class="col-md-4"></th>
-                                                    <th  class="col-md-2">Units</th>
-                                                    <th  class="col-md-2">Faecal Sludge</th>
-                                                    <th  class="col-md-2">Sewage Sludge</th>
-                                                    <th  class="col-md-2">Solid Waste</th>
+                                                    <th  class="col-md-2">{% trans "Units" %}</th>
+                                                    <th  class="col-md-2">{% trans "Faecal Sludge" %}</th>
+                                                    <th  class="col-md-2">{% trans "Sewage Sludge" %}</th>
+                                                    <th  class="col-md-2">{% trans "Solid Waste" %}</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -850,7 +813,7 @@
                     </div>
                                                  <div class="form-group pull-right" >
                                                      {% if request.user.is_authenticated %}
-                                                     <button id="save" class="btn btn-primary" data-toggle="modal" data-target="#save-modal" type="button">Save Project</button>
+                                                     <button id="save" class="btn btn-primary" data-toggle="modal" data-target="#save-modal" type="button">{% trans "Save Project" %}</button>
                                                      <div id="save-modal" class="modal fade" role="dialog">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -902,7 +865,7 @@
                                     </div-->
                                     <div class="row row-buffer">
                                         <div class="col-md-6">
-                                            Save as New
+                                            {% trans "Save as New" %}
                                         </div>
                                         <div class="col-md-6">
                                             <input type='checkbox' ref="checkbox_save_new" :checked.prop="use_defaults.save_new" data-on="Yes" data-off="No"  />
@@ -912,14 +875,14 @@
                                     
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn" data-dismiss="modal">Close</button>
-                                    <button id="save_project" type="button" class="btn btn-primary" data-dismiss="modal" >Save Project</button>
+                                    <button type="button" class="btn" data-dismiss="modal">{% trans "Close" %}</button>
+                                    <button id="save_project" type="button" class="btn btn-primary" data-dismiss="modal" >{% trans "Save Project" %}</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                                                      {% endif %} 
-                                                <button id="calculate" class="btn btn-primary " type="button" >Calculate Results</button>
+                                                <button id="calculate" class="btn btn-primary " type="button" >{% trans "Calculate Results" %}</button>
                                                 <div id="save_warning"></div>
                                             </div>
                     

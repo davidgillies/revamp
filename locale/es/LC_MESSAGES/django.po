@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-17 07:39+0000\n"
+"POT-Creation-Date: 2019-04-01 12:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,12 +18,24 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: revamp/settings.py:151
+#: revamp/settings.py:190
 msgid "English"
 msgstr ""
 
-#: revamp/settings.py:152
+#: revamp/settings.py:191
 msgid "Spanish"
+msgstr ""
+
+#: revamp/templates/registration/login.html:3
+msgid "Log in"
+msgstr ""
+
+#: revamp/templates/registration/login.html:31
+msgid "Forgot your password?"
+msgstr ""
+
+#: revamp/templates/registration/login.html:31
+msgid "Reset it"
 msgstr ""
 
 #: revamp_tool/templates/revamp_tool/home.html:5
@@ -32,7 +44,7 @@ msgstr ""
 
 #: revamp_tool/templates/revamp_tool/home.html:10
 msgid "Welcome to Revamp"
-msgstr ""
+msgstr "Bienvenido a Revamp"
 
 #: revamp_tool/templates/revamp_tool/home.html:14
 msgid "Introduction"
@@ -56,12 +68,15 @@ msgid ""
 "wastewater treatment plants,  or climate mitigation measures. It can also be "
 "useful for engineers, developers, researchers and anyone interested in the "
 "circular economy."
-msgstr "Las estimaciones rápidas proporcionadas por REVAMP están especialmente destinadas a ayudar"
-"Los planificadores de la ciudad y los responsables políticos en los puntos de decisión cruciales con respecto a los residuos"
-"Gestión; por ejemplo, planificación de nueva infraestructura de saneamiento"
-"Plantas de tratamiento de aguas residuales, o medidas de mitigación del clima. También puede ser"
-"Útil para ingenieros, desarrolladores, investigadores y cualquier persona interesada en el"
-"economía circular."
+msgstr ""
+"Las estimaciones rápidas proporcionadas por REVAMP están especialmente "
+"destinadas a ayudarLos planificadores de la ciudad y los responsables "
+"políticos en los puntos de decisión cruciales con respecto a los "
+"residuosGestión; por ejemplo, planificación de nueva infraestructura de "
+"saneamientoPlantas de tratamiento de aguas residuales, o medidas de "
+"mitigación del clima. También puede serÚtil para ingenieros, "
+"desarrolladores, investigadores y cualquier persona interesada en eleconomía "
+"circular."
 
 #: revamp_tool/templates/revamp_tool/home.html:17
 msgid ""
@@ -74,14 +89,15 @@ msgid ""
 "a business case for different waste management/reuse options as well as "
 "informing scenario-based planning exercises."
 msgstr ""
-"Basado en la entrada de datos sobre el volumen de los diferentes flujos de residuos, REVAMP"
-"calcula los beneficios de diferentes escenarios de reutilización, por ejemplo"
-"Compostación de lodos fecales para fertilizantes agrícolas; producción de"
-"Briquetas de biogás o residuos sólidos: en términos de contenido de energía y nutrientes"
-"¿Cuántos productos de la competencia podrían sustituir, y cuáles?"
-"Los productos costarían. De esta manera, REVAMP puede ser útil para el paso de la construcción"
-"Un caso de negocios para diferentes opciones de gestión / reutilización de residuos, así como"
-"Informando ejercicios de planificación basados ​​en el escenario."
+"Basado en la entrada de datos sobre el volumen de los diferentes flujos de "
+"residuos, REVAMPcalcula los beneficios de diferentes escenarios de "
+"reutilización, por ejemploCompostación de lodos fecales para fertilizantes "
+"agrícolas; producción deBriquetas de biogás o residuos sólidos: en términos "
+"de contenido de energía y nutrientes¿Cuántos productos de la competencia "
+"podrían sustituir, y cuáles?Los productos costarían. De esta manera, REVAMP "
+"puede ser útil para el paso de la construcciónUn caso de negocios para "
+"diferentes opciones de gestión / reutilización de residuos, así "
+"comoInformando ejercicios de planificación basados en el escenario."
 
 #: revamp_tool/templates/revamp_tool/home.html:18
 msgid ""
@@ -92,19 +108,252 @@ msgid ""
 "streams), and taking into account the costs and efficiencies of different "
 "technologies."
 msgstr ""
-"REVAMP se está desarrollando bajo la Iniciativa SEI sobre Sostenibilidad"
-"Saneamiento. Actualmente está disponible en forma beta. La fase actual de"
-"El desarrollo espera mejorar la interfaz de usuario, así como agregar más"
-"Opciones y recursos de reutilización (incluido el componente de agua de los residuos"
-"streams), y teniendo en cuenta los costos y eficiencias de diferentes"
-"tecnologías."
+"REVAMP se está desarrollando bajo la Iniciativa SEI sobre "
+"SostenibilidadSaneamiento. Actualmente está disponible en forma beta. La "
+"fase actual deEl desarrollo espera mejorar la interfaz de usuario, así como "
+"agregar másOpciones y recursos de reutilización (incluido el componente de "
+"agua de los residuosstreams), y teniendo en cuenta los costos y eficiencias "
+"de diferentestecnologías."
 
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:6
 #: revamp_tool/templates/revamp_tool/revamp_tool.html:5
 msgid "Revamp Tool"
 msgstr ""
 
-#~ msgid "Hello"
-#~ msgstr "Ola"
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:23
+msgid ""
+"To start a new project just fill in the inputs and hit the Save Project "
+"Button below."
+msgstr ""
+"Para iniciar un nuevo proyecto, simplemente complete las entradas y presione "
+"el botón Guardar proyecto a continuación."
 
-#~ msgid " a string "
-#~ msgstr "a stringio"
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:30
+msgid "Project Name"
+msgstr "Nombre del proyecto"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:32
+msgid "City"
+msgstr "Ciudad"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:34
+msgid "Last updated"
+msgstr "Última actualización"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:37
+msgid "Actions"
+msgstr "Comportamiento"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:46
+msgid "Load"
+msgstr "Carga"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:47
+msgid "Delete"
+msgstr "Borrar"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:48
+msgid "Download as Excel"
+msgstr "Descargar como Excel"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:54
+msgid "You have no projects."
+msgstr "No tienes proyectos."
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:66
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:159
+msgid "Load Defaults"
+msgstr "Cargar opciones por defecto"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:70
+msgid "Select from approved locations"
+msgstr "Seleccione de lugares aprobados"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:75
+msgid "Load Project"
+msgstr "Proyecto de carga"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:88
+msgid "Default Options"
+msgstr "Opciones predeterminadas"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:93
+msgid "Use default for"
+msgstr "Usar predeterminado para"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:101
+msgid "Feacal Sludge Treatment Process"
+msgstr "Proceso de Tratamiento de Lodos Feacal"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:109
+msgid "Sewage Sludge Treatment Process"
+msgstr "Proceso de tratamiento de lodos de aguas residuales"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:117
+msgid "Solid Waste Treatment Process"
+msgstr "Proceso de tratamiento de residuos sólidos"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:125
+msgid "Feacal Sludge Waste Quality"
+msgstr ""
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:133
+msgid "Sewage Sludge Waste Quality"
+msgstr "Calidad de residuos de lodos de aguas residuales"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:141
+msgid "Solid Waste Waste Quality"
+msgstr "Residuos Sólidos de Calidad"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:149
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:207
+msgid "Prices"
+msgstr "Precios"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:158
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:175
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:878
+msgid "Close"
+msgstr "Cerrar"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:169
+msgid "Project Options"
+msgstr "Opciones de proyecto"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:172
+msgid "Are you sure you want to delete this project?"
+msgstr "¿Estás seguro de que quieres eliminar este proyecto?"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:176
+msgid "Delete Project"
+msgstr "Eliminar proyecto"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:190
+msgid "Project Name:"
+msgstr "Nombre del proyecto:"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:190
+msgid "City:"
+msgstr "Ciudad:"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:196
+msgid ""
+"The tool requires input for three waste streams and four resource recovery "
+"options.  You can use the defaults loaded immediately or add your own data."
+msgstr ""
+"La herramienta requiere entrada para tres flujos de residuos y cuatro "
+"opciones de recuperación de recursos. Puede utilizar los valores "
+"predeterminados cargados inmediatamente o agregar sus propios datos."
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:204
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:236
+msgid "Waste Streams"
+msgstr "Corrientes de residuos"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:205
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:382
+msgid "Waste Quality"
+msgstr "Calidad de residuos"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:206
+msgid "Treatment Processes"
+msgstr "Procesos de tratamiento"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:242
+msgid ""
+"Enter your waste streams here and determine the percentage of each waste "
+"stream to be used for each resource option."
+msgstr ""
+"Ingrese sus flujos de residuos aquí y determine el porcentaje de cada "
+"residuo transmisión que se utilizará para cada opción de recurso."
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:248
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:398
+msgid "Faecal Sludge"
+msgstr "Lodos fecales"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:253
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:294
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:338
+msgid "Amount available per day"
+msgstr "Cantidad disponible por día"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:260
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:302
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:347
+#, python-format
+msgid "Select what %% of waste to what option"
+msgstr "Seleccione qué %% de desperdicio a qué opción"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:262
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:304
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:349
+msgid "Anaerobic Digestion"
+msgstr "Digestión anaeróbica"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:266
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:308
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:353
+msgid "Solid Fuel"
+msgstr "Combustible sólido"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:270
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:312
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:357
+msgid "Black Soldier Fly Process"
+msgstr "Proceso de la mosca del soldado negro"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:274
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:316
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:361
+msgid "Compost"
+msgstr "Compost"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:278
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:320
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:365
+msgid "Total"
+msgstr "Total"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:289
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:399
+msgid "Sewage Sludge"
+msgstr "Lodos de aguas residuales"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:332
+msgid "Organic Municipal Solid Waste"
+msgstr "Residuos Sólidos Municipales Orgánicos"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:386
+msgid ""
+"Waste quality has default data on the physical and chemical characteristic "
+"of waste streams.  You are free to change these."
+msgstr ""
+"La calidad de los residuos tiene datos predeterminados sobre las "
+"características físicas y químicas de los flujos de residuos. Usted es libre "
+"de cambiar estos."
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:397
+msgid "Units"
+msgstr "Unidades"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:400
+#, fuzzy
+#| msgid "Solid Fuel"
+msgid "Solid Waste"
+msgstr "Combustible sólido"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:816
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:879
+#, fuzzy
+#| msgid "Load Project"
+msgid "Save Project"
+msgstr "Proyecto de carga"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:868
+msgid "Save as New"
+msgstr "Guardar como nuevo"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:885
+msgid "Calculate Results"
+msgstr "Calcular resultados"

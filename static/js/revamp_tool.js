@@ -989,7 +989,44 @@ $(document).ready(function () {
 //    $('form').on('blur', 'input[type=number]', function (e) {
 //      $(this).off('mousewheel.disableScroll')
 //    });
-    
+    $(function() {
+        $('.last_update').each(function(){
+            var d = new Date($(this).text().trim());
+
+            
+            var n = new Date();
+            var o = n.getTimezoneOffset();
+
+
+            Date.prototype.stdTimezoneOffset = function () {
+                var jan = new Date(this.getFullYear(), 0, 1);
+                var jul = new Date(this.getFullYear(), 6, 1);
+                console.log(jan.getTimezoneOffset(), jul.getTimezoneOffset());
+                return Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
+            }
+
+            Date.prototype.isDstObserved = function () {
+                return this.getTimezoneOffset() < this.stdTimezoneOffset();
+            }
+            
+            var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+            
+            if (d.isDstObserved()) { 
+                output = new Date((d.getTime() - n.getTimezoneOffset()* 60 * 1000)+3600000);
+                year = parseInt(output.getYear())+1900;
+                month = months[parseInt(output.getMonth())];
+                $(this).html(output.getDay()+' '+month+', '+year+' '+('0'+output.getHours()).slice(-2)+'.'+('0'+output.getMinutes()).slice(-2));
+                
+            } else {
+                output = new Date((d.getTime() - n.getTimezoneOffset()* 60 * 1000));
+                year = parseInt(output.getYear())+1900;
+                month = months[parseInt(output.getMonth())];
+                $(this).html(output.getDay()+' '+month+', '+year+' '+('0'+output.getHours()).slice(-2)+'.'+('0'+output.getMinutes()).slice(-2));
+            }
+            
+        });
+    });
 
     
 $('.sum_boxes').change(function(){
