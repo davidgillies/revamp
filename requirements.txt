@@ -1,6 +1,9 @@
+beautifulsoup4==4.6.0
 dj-database-url==0.5.0
 Django==2.1.7
 django-admin-tools==0.8.1
+django-ckeditor==5.6.1
+django-cogwheels==0.2
 django-filter==2.0.0
 django-fluent-dashboard==1.0
 django-leaflet==0.24.0
@@ -20,4 +23,6 @@ pytz==2018.5
 selenium==3.14.0
 urllib3==1.23
 wagtail==2.3
+wagtail-condensedinlinepanel==0.5.2
+wagtailmenus==2.13
 whitenoise==4.1
