@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-01 12:54+0000\n"
+"POT-Creation-Date: 2019-04-02 14:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -47,6 +47,7 @@ msgid "Welcome to Revamp"
 msgstr "Bienvenido a Revamp"
 
 #: revamp_tool/templates/revamp_tool/home.html:14
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:172
 msgid "Introduction"
 msgstr "Introducción"
 
@@ -116,6 +117,7 @@ msgstr ""
 "de diferentestecnologías."
 
 #: revamp_tool/templates/revamp_tool/revamp_dev.html:6
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:169
 #: revamp_tool/templates/revamp_tool/revamp_tool.html:5
 msgid "Revamp Tool"
 msgstr ""
@@ -206,37 +208,281 @@ msgid "Solid Waste Waste Quality"
 msgstr "Residuos Sólidos de Calidad"
 
 #: revamp_tool/templates/revamp_tool/revamp_dev.html:149
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:207
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:294
 msgid "Prices"
 msgstr "Precios"
 
 #: revamp_tool/templates/revamp_tool/revamp_dev.html:158
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:175
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:878
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:196
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:218
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:241
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:258
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:963
 msgid "Close"
 msgstr "Cerrar"
 
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:169
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:173
+msgid ""
+"This tool enables the estimation of the resource recovery potential of "
+"organic waste streams in a city/town. The current version of the tool "
+"includes three waste streams and four resource recovery options. To use the "
+"tool, follow the step-wise instructions described below."
+msgstr ""
+"Esta herramienta permite la estimación del potencial de recuperación de "
+"recursos de flujos de desechos orgánicos en una ciudad / pueblo. La versión "
+"actual de la herramienta incluye tres flujos de residuos y cuatro opciones "
+"de recuperación de recursos. Para utilizar el herramienta, siga las "
+"instrucciones paso a paso que se describen a continuación."
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:175
+msgid "Step One"
+msgstr "Paso uno"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:176
+msgid ""
+"The WasteQuality tab has default data on the physical and chemical "
+"characteristic of the waste streams. If you have data available for some or "
+"all of the various parameters in your city/town, please fill that data in "
+"and replace the default values. Otherwise, you can maintain the default "
+"values."
+msgstr ""
+"La pestaña Calidad de residuos tiene datos por defecto en el físico y químico "
+"característica de las corrientes de residuos. Si tiene datos disponibles "
+"para algunos o todos los diversos parámetros en su ciudad / pueblo, por "
+"favor complete los datos en y reemplazar los valores por defecto. De lo "
+"contrario, puede mantener los valores por defecto."
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:178
+msgid "Step Two"
+msgstr "Segundo Paso"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:180
+msgid ""
+"The TreatmentProcesses tab has default data on the physical and chemical "
+"transformation of waste streams as they go through the treatment processes. "
+"If you have data available for some or all of the various parameters in your "
+"city/town, based on previous experience with the resource recovery "
+"technologies, please fill that data in and replace the default values. "
+"Otherwise, you can maintain the default values."
+msgstr ""
+"La pestaña Procesos de tratamiento tiene datos por defecto en el físico y "
+"químico transformación de flujos de residuos a medida que pasan por los "
+"procesos de tratamiento. Si tiene datos disponibles para algunos o todos los "
+"diversos parámetros en su ciudad / pueblo, basado en la experiencia previa "
+"con la recuperación de recursos tecnologías, complete los datos y reemplace "
+"los valores predeterminados. De lo contrario, puede mantener los valores "
+"predeterminados."
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:182
+msgid "Step Three"
+msgstr "Paso tres"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:184
+msgid ""
+" The Prices tab has default data on the potential prices that resource "
+"recovery products can be sold at on the local market. If some or all of "
+"these products are already being sold in your city/town, please use the "
+"applicable price values. Otherwise, you can estimate potential prices in "
+"dialogue with stakeolders, basing on the prices of similar or equivalent "
+"products that could be substituted or complimented by the resource recovery "
+"products."
+msgstr ""
+"La pestaña Precios tiene datos predeterminados sobre los precios potenciales de ese recurso "
+"Los productos de recuperación se pueden vender en el mercado local. Si algunos o todos "
+"estos productos ya se están vendiendo en su ciudad / pueblo, por favor use el "
+"valores de precios aplicables. De lo contrario, puede estimar precios potenciales en "
+"diálogo con las partes interesadas, basándose en los precios de similares o equivalentes "
+"productos que podrían ser sustituidos o complementados por la recuperación de recursos "
+"productos."
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:187
+msgid "Step Four"
+msgstr "Paso cuatro"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:189
+msgid ""
+"Enter the amounts of waste streams that you have available in your city/town "
+"and determine what percentage of each waste stream should be used for each "
+"resource recovery option."
+msgstr ""
+"Ingrese sus flujos de residuos aquí y determine el porcentaje de cada "
+"residuo transmisión que se utilizará para cada "
+"opción de recurso."
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:190
+msgid "Step Five"
+msgstr "Paso cinco"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:192
+msgid ""
+"When ready press the Calculate Results button below.  This will generate the "
+"results which will appear below the Inputs box.  The Results Tab will then "
+"be populated with results indicating the resource recovery potential for "
+"each option and data charts will appear on the Charts tab. The Graphs tab "
+"contains bar graphs that you can use to compare the various resource "
+"recovery options on the basis of their revenue potential, the amounts of "
+"nutrients that can be recovered and the energy amount that can be recovered."
+msgstr ""
+"Cuando esté listo, presione el botón Calcular resultados a continuación. Esto generará la "
+"resultados que aparecerán debajo del cuadro de Entradas. La pestaña de resultados entonces "
+"ser poblada con resultados que indiquen el potencial de recuperación de recursos para "
+"cada opción y gráficos de datos aparecerán en la pestaña Gráficos. La pestaña Gráficos "
+"contiene gráficos de barras que puedes usar para comparar los diversos recursos "
+"opciones de recuperación sobre la base de su potencial de ingresos, los montos de "
+"los nutrientes que se pueden recuperar y la cantidad de energía que se puede recuperar."
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:206
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:291
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:323
+msgid "Waste Streams"
+msgstr "Corrientes de residuos"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:209
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:333
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:483
+msgid "Faecal Sludge"
+msgstr "Lodos fecales"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:210
+msgid ""
+"Faecal sludge comes from onsite sanitation technologies, i.e., it has not "
+"been transported through a sewer. It results from the collection and storage/"
+"treatment of excreta or blackwater, with or without greywater. Faecal sludge "
+"includes both sludge from pit latrines and that from septic tanks."
+msgstr ""
+"Los lodos fecales provienen de las tecnologías de saneamiento in situ, es decir, no tienen "
+"Ha sido transportado a través de una alcantarilla. Resulta de la recogida y almacenamiento /"
+"Tratamiento de excretas o aguas negras, con o sin aguas grises. Lodos fecales "
+"Incluye tanto lodo de letrinas de pozo como el de fosas sépticas."
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:211
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:374
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:484
+msgid "Sewage Sludge"
+msgstr "Lodos de aguas residuales"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:212
+msgid ""
+"Sewage sludge (also referred to as wastewater sludge) is sludge that "
+"originates from sewer-based wastewater collection and (semi-) centralized "
+"treatment processes."
+msgstr ""
+"Los lodos de aguas residuales (también denominados lodos de aguas residuales) son lodos que "
+"se origina a partir de la recolección de aguas residuales a base de alcantarillado y (semi) centralizada "
+"Procesos de tratamiento."
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:213
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:417
+msgid "Organic Municipal Solid Waste"
+msgstr "Residuos Sólidos Municipales Orgánicos"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:214
+msgid ""
+"This is the organic part of the urban solid waste and it includes items like "
+"food waste, market waste and crop residues"
+msgstr ""
+"Esta es la parte orgánica de los residuos sólidos urbanos e incluye elementos como "
+"residuos de alimentos, residuos de mercado y residuos de cultivos."
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:228
+msgid "Resource Recovery Options"
+msgstr "Opciones de recuperación de recursos"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:231
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:347
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:389
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:434
+msgid "Anaerobic Digestion"
+msgstr "Digestión anaeróbica"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:232
+msgid ""
+"This is a process which generates biogas, which has about 60%% methane "
+"content. Biogas can be used for lighting, cooking and also for generating "
+"electricity and heat. The process of anaerobic digestion also generates a "
+"residue which can be used as soil conditioner or fertilizer in a farm to "
+"recover nutrients like nitrogen, phosphorus and potassium."
+msgstr ""
+"Este es un proceso que genera biogás, que tiene aproximadamente un 60%% de metano "
+"contenido. El biogás se puede utilizar para iluminación, cocina y también para generar "
+"Electricidad y calor. El proceso de digestión anaeróbica también genera un "
+"residuos que pueden usarse como acondicionador de suelo o fertilizante en una granja para "
+"recupera nutrientes como el nitrógeno, el fósforo y el potasio."
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:233
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:351
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:393
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:438
+msgid "Solid Fuel"
+msgstr "Combustible sólido"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:234
+msgid ""
+"Excreta and organic waste streams have a high calorific value and can be "
+"turned into a solid dry fuel for combustion in briquette or powder form. "
+"This can be used either for cooking in households and institutional kitchens "
+"as well as for industrial applications like kilns and boilers."
+msgstr ""
+"Las corrientes de excretas y residuos orgánicos tienen un alto poder calorífico y pueden ser "
+"convertido en un combustible sólido y seco para combustión en forma de briquetas o polvo. "
+"Esto puede ser usado tanto para cocinar en hogares como para cocinas institucionales. "
+"así como para aplicaciones industriales como hornos y calderas."
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:235
+msgid "Black soldier fly larvae"
+msgstr "Soldado negro larvas de mosca"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:236
+msgid ""
+"Organic waste streams can can be treated using fly larvae composting, for "
+"example with the Black Soldier Fly, to produce valuable larvae and a "
+"residue. The larvae of the black soldier fly is 40%% protein and 30%% fat "
+"and can therefore make a protein-rich animal feed. The residue from the fly "
+"larvae composting contains nutrients and can be applied to a garden as soil "
+"conditioner or fertilizer."
+msgstr ""
+"Las corrientes de desechos orgánicos pueden tratarse utilizando compostaje de larvas de mosca, por "
+"ejemplo con el Black Soldier Fly, para producir larvas valiosas y un "
+"residuo. Las larvas de la mosca soldado negra son 40%% de proteína y 30%% de grasa "
+"y por lo tanto puede hacer una alimentación animal rica en proteínas. El residuo de la mosca "
+"El compostaje de larvas contiene nutrientes y se puede aplicar a un jardín como suelo "
+"Acondicionador o abono."
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:237
+msgid "Composting"
+msgstr "El compostaje"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:238
+msgid ""
+"This is a process whereby a waste stream is composted to make soil "
+"conditioner or fertilizer for applying on farms. The compost generated is "
+"often rich in nutrients and also rich in organic matter content."
+msgstr ""
+"Este es un proceso mediante el cual se compostan las corrientes de desechos para hacer suelo "
+"acondicionador o abono para aplicación en fincas. El compost generado es "
+"a menudo rico en nutrientes y también rico en contenido de materia orgánica."
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:252
 msgid "Project Options"
 msgstr "Opciones de proyecto"
 
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:172
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:255
 msgid "Are you sure you want to delete this project?"
 msgstr "¿Estás seguro de que quieres eliminar este proyecto?"
 
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:176
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:259
 msgid "Delete Project"
 msgstr "Eliminar proyecto"
 
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:190
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:275
 msgid "Project Name:"
 msgstr "Nombre del proyecto:"
 
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:190
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:275
 msgid "City:"
 msgstr "Ciudad:"
 
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:196
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:283
 msgid ""
 "The tool requires input for three waste streams and four resource recovery "
 "options.  You can use the defaults loaded immediately or add your own data."
@@ -245,21 +491,16 @@ msgstr ""
 "opciones de recuperación de recursos. Puede utilizar los valores "
 "predeterminados cargados inmediatamente o agregar sus propios datos."
 
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:204
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:236
-msgid "Waste Streams"
-msgstr "Corrientes de residuos"
-
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:205
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:382
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:292
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:467
 msgid "Waste Quality"
 msgstr "Calidad de residuos"
 
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:206
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:293
 msgid "Treatment Processes"
 msgstr "Procesos de tratamiento"
 
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:242
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:327
 msgid ""
 "Enter your waste streams here and determine the percentage of each waste "
 "stream to be used for each resource option."
@@ -267,64 +508,37 @@ msgstr ""
 "Ingrese sus flujos de residuos aquí y determine el porcentaje de cada "
 "residuo transmisión que se utilizará para cada opción de recurso."
 
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:248
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:398
-msgid "Faecal Sludge"
-msgstr "Lodos fecales"
-
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:253
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:294
 #: revamp_tool/templates/revamp_tool/revamp_dev.html:338
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:379
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:423
 msgid "Amount available per day"
 msgstr "Cantidad disponible por día"
 
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:260
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:302
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:347
-#, python-format
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:345
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:387
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:432
 msgid "Select what %% of waste to what option"
 msgstr "Seleccione qué %% de desperdicio a qué opción"
 
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:262
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:304
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:349
-msgid "Anaerobic Digestion"
-msgstr "Digestión anaeróbica"
-
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:266
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:308
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:353
-msgid "Solid Fuel"
-msgstr "Combustible sólido"
-
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:270
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:312
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:357
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:355
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:397
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:442
 msgid "Black Soldier Fly Process"
 msgstr "Proceso de la mosca del soldado negro"
 
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:274
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:316
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:361
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:359
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:401
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:446
 msgid "Compost"
 msgstr "Compost"
 
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:278
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:320
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:365
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:363
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:405
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:450
 msgid "Total"
 msgstr "Total"
 
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:289
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:399
-msgid "Sewage Sludge"
-msgstr "Lodos de aguas residuales"
-
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:332
-msgid "Organic Municipal Solid Waste"
-msgstr "Residuos Sólidos Municipales Orgánicos"
-
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:386
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:471
 msgid ""
 "Waste quality has default data on the physical and chemical characteristic "
 "of waste streams.  You are free to change these."
@@ -333,27 +547,23 @@ msgstr ""
 "características físicas y químicas de los flujos de residuos. Usted es libre "
 "de cambiar estos."
 
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:397
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:482
 msgid "Units"
 msgstr "Unidades"
 
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:400
-#, fuzzy
-#| msgid "Solid Fuel"
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:485
 msgid "Solid Waste"
 msgstr "Combustible sólido"
 
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:816
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:879
-#, fuzzy
-#| msgid "Load Project"
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:901
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:964
 msgid "Save Project"
 msgstr "Proyecto de carga"
 
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:868
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:953
 msgid "Save as New"
 msgstr "Guardar como nuevo"
 
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:885
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:970
 msgid "Calculate Results"
 msgstr "Calcular resultados"

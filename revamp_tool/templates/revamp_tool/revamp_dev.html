@@ -161,6 +161,89 @@
                             </div>
                         </div>
                     </div>
+                        <div id="help_text" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">{% trans "Revamp Tool" %}</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h4>{% trans "Introduction" %}</h4>
+                                        <p>{% trans "This tool enables the estimation of the resource recovery potential of organic waste streams in a city/town. The current version of the tool includes three waste streams and four resource recovery options. To use the tool, follow the step-wise instructions described below." %} 
+</p>
+                                        <h4>{% trans "Step One" %}</h4>
+                                        <p>{% trans "The WasteQuality tab has default data on the physical and chemical characteristic of the waste streams. If you have data available for some or all of the various parameters in your city/town, please fill that data in and replace the default values. Otherwise, you can maintain the default values." %}
+                                        </p>
+                                        <h4>{% trans "Step Two" %}</h4>
+                                        <p>
+                                            {% trans "The TreatmentProcesses tab has default data on the physical and chemical transformation of waste streams as they go through the treatment processes. If you have data available for some or all of the various parameters in your city/town, based on previous experience with the resource recovery technologies, please fill that data in and replace the default values. Otherwise, you can maintain the default values." %}
+                                        </p>
+                                        <h4>{% trans "Step Three" %}</h4>
+                                        <p>
+                                        {% blocktrans %} The Prices tab has default data on the potential prices that resource recovery products can be sold at on the local market. If some or all of these products are already being sold in your city/town, please use the applicable price values. Otherwise, you can estimate potential prices in dialogue with stakeolders, basing on the prices of similar or equivalent products that could be substituted or complimented by the resource recovery products.{% endblocktrans %}
+
+                                        </p>
+                                        <h4>{% trans "Step Four" %}</h4>
+                                        <p>
+                                           {% trans "Enter the amounts of waste streams that you have available in your city/town and determine what percentage of each waste stream should be used for each resource recovery option." %} </p>
+                                        <h4>{% trans "Step Five" %}</h4>
+                                            <p>
+                                            {% trans "When ready press the Calculate Results button below.  This will generate the results which will appear below the Inputs box.  The Results Tab will then be populated with results indicating the resource recovery potential for each option and data charts will appear on the Charts tab. The Graphs tab contains bar graphs that you can use to compare the various resource recovery options on the basis of their revenue potential, the amounts of nutrients that can be recovered and the energy amount that can be recovered." %}
+                                        </p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">{% trans "Close" %}</button>
+                                    </div>
+                                </div>
+                            </div>    
+                        </div>
+                    <div id="help_text_waste_streams" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">{% trans "Waste Streams" %}</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h4>{% trans "Faecal Sludge" %}</h4>
+                                        <p>{% trans "Faecal sludge comes from onsite sanitation technologies, i.e., it has not been transported through a sewer. It results from the collection and storage/treatment of excreta or blackwater, with or without greywater. Faecal sludge includes both sludge from pit latrines and that from septic tanks." %} </p>
+                                        <h4>{% trans "Sewage Sludge" %}</h4>
+                                        <p>{% trans "Sewage sludge (also referred to as wastewater sludge) is sludge that originates from sewer-based wastewater collection and (semi-) centralized treatment processes." %} </p>
+                                        <h4>{% trans "Organic Municipal Solid Waste" %}</h4>
+                                        <p>{% trans "This is the organic part of the urban solid waste and it includes items like food waste, market waste and crop residues" %}</p>
+                                        
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">{% trans "Close" %}</button>
+                                    </div>
+                                </div>
+                            </div>    
+                        </div>
+                    <div id="help_text_waste_quality" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">{% trans "Resource Recovery Options" %}</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h4>{% trans "Anaerobic Digestion" %}</h4>
+                                        <p>{% trans "This is a process which generates biogas, which has about 60% methane content. Biogas can be used for lighting, cooking and also for generating electricity and heat. The process of anaerobic digestion also generates a residue which can be used as soil conditioner or fertilizer in a farm to recover nutrients like nitrogen, phosphorus and potassium." %} </p>
+                                        <h4>{% trans "Solid Fuel" %}</h4>
+                                        <p>{% trans "Excreta and organic waste streams have a high calorific value and can be turned into a solid dry fuel for combustion in briquette or powder form. This can be used either for cooking in households and institutional kitchens as well as for industrial applications like kilns and boilers." %} </p>
+                                        <h4>{% trans "Black soldier fly larvae" %}</h4>
+                                        <p>{% trans "Organic waste streams can can be treated using fly larvae composting, for example with the Black Soldier Fly, to produce valuable larvae and a residue. The larvae of the black soldier fly is 40% protein and 30% fat and can therefore make a protein-rich animal feed. The residue from the fly larvae composting contains nutrients and can be applied to a garden as soil conditioner or fertilizer." %}</p>
+                                        <h4>{% trans "Composting" %}</h4>
+                                        <p>{% trans "This is a process whereby a waste stream is composted to make soil conditioner or fertilizer for applying on farms. The compost generated is often rich in nutrients and also rich in organic matter content." %}</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">{% trans "Close" %}</button>
+                                    </div>
+                                </div>
+                            </div>    
+                        </div>
+                    
                      <div id="delete-modal" class="modal fade" role="dialog">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -186,10 +269,14 @@
         </div>
     
 {% endif %}
+        
+
     <div class="well">
-        {% if request.user.is_authenticated %}<h4>{% trans "Project Name:" %} <span id="current_project_name">{{name}}</span> {% trans "City:" %} <span id="current_project_city">{{ location.city }}</span></h4>
+        {% if request.user.is_authenticated %}<h4>{% trans "Project Name:" %} <span id="current_project_name">{{name}}</span> {% trans "City:" %} <span id="current_project_city">{{ location.city }}</span> <span data-toggle="modal" data-target="#help_text" class="glyphicon glyphicon-info-sign"></span></h4>
         {% else%}
-            <h4> REVAMP TOOL Inputs </h4>
+            <h4> REVAMP TOOL Inputs 
+          <span data-toggle="modal" data-target="#help_text" class="glyphicon glyphicon-info-sign"></span>
+        </h4>
         {% endif %}
         <div class="row">
             <div class="col-md-12">
@@ -233,9 +320,7 @@
                 <div class="tab-content col-xs-9">
                     <div id="waste-streams" class="tab-pane fade in active">
                 <div  class="panel panel-default">
-                    <div class="panel-heading"><h4>{% trans "Waste Streams" %}<span class="info_link">
-          <span class="glyphicon glyphicon-info-sign"></span>
-        </span></h4></div>
+                    <div class="panel-heading"><h4>{% trans "Waste Streams" %} <span data-toggle="modal" data-target="#help_text_waste_streams" class="glyphicon glyphicon-info-sign"></span></h4></div>
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-12">
@@ -379,7 +464,7 @@
             </div>
                     <div id="wastequality" class="tab-pane fade">
                         <div class="panel panel-default">
-                            <div class="panel-heading"><h4>{% trans "Waste Quality" %}</h4></div> 
+                            <div class="panel-heading"><h4>{% trans "Waste Quality" %} <span data-toggle="modal" data-target="#help_text_waste_quality" class="glyphicon glyphicon-info-sign"></span></h4></div> 
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-md-12">
