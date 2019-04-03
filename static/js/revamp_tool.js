@@ -991,6 +991,15 @@ $(document).ready(function () {
 //    $('form').on('blur', 'input[type=number]', function (e) {
 //      $(this).off('mousewheel.disableScroll')
 //    });
+    
+    $(function(){
+       vm.wastestreams.fs_t_pc = vm.wastestreams.fs_c_pc + vm.wastestreams.fs_bsfp_pc + vm.wastestreams.fs_sf_pc + vm.wastestreams.fs_ad_pc;
+       vm.wastestreams.ss_t_pc = vm.wastestreams.ss_c_pc + vm.wastestreams.ss_bsfp_pc + vm.wastestreams.ss_sf_pc + vm.wastestreams.ss_ad_pc;
+       vm.wastestreams.sw_t_pc = vm.wastestreams.sw_c_pc + vm.wastestreams.sw_bsfp_pc + vm.wastestreams.sw_sf_pc + vm.wastestreams.sw_ad_pc;
+        
+    });
+    
+    
     $(function() {
         $('.last_update').each(function(){
             var d = new Date($(this).text().trim());
