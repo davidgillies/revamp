@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-02 14:13+0000\n"
+"POT-Creation-Date: 2019-04-03 09:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -217,7 +217,7 @@ msgstr "Precios"
 #: revamp_tool/templates/revamp_tool/revamp_dev.html:218
 #: revamp_tool/templates/revamp_tool/revamp_dev.html:241
 #: revamp_tool/templates/revamp_tool/revamp_dev.html:258
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:963
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:980
 msgid "Close"
 msgstr "Cerrar"
 
@@ -246,11 +246,11 @@ msgid ""
 "and replace the default values. Otherwise, you can maintain the default "
 "values."
 msgstr ""
-"La pestaña Calidad de residuos tiene datos por defecto en el físico y químico "
-"característica de las corrientes de residuos. Si tiene datos disponibles "
-"para algunos o todos los diversos parámetros en su ciudad / pueblo, por "
-"favor complete los datos en y reemplazar los valores por defecto. De lo "
-"contrario, puede mantener los valores por defecto."
+"La pestaña Calidad de residuos tiene datos por defecto en el físico y "
+"químico característica de las corrientes de residuos. Si tiene datos "
+"disponibles para algunos o todos los diversos parámetros en su ciudad / "
+"pueblo, por favor complete los datos en y reemplazar los valores por "
+"defecto. De lo contrario, puede mantener los valores por defecto."
 
 #: revamp_tool/templates/revamp_tool/revamp_dev.html:178
 msgid "Step Two"
@@ -287,12 +287,13 @@ msgid ""
 "products that could be substituted or complimented by the resource recovery "
 "products."
 msgstr ""
-"La pestaña Precios tiene datos predeterminados sobre los precios potenciales de ese recurso "
-"Los productos de recuperación se pueden vender en el mercado local. Si algunos o todos "
-"estos productos ya se están vendiendo en su ciudad / pueblo, por favor use el "
-"valores de precios aplicables. De lo contrario, puede estimar precios potenciales en "
-"diálogo con las partes interesadas, basándose en los precios de similares o equivalentes "
-"productos que podrían ser sustituidos o complementados por la recuperación de recursos "
+"La pestaña Precios tiene datos predeterminados sobre los precios potenciales "
+"de ese recurso Los productos de recuperación se pueden vender en el mercado "
+"local. Si algunos o todos estos productos ya se están vendiendo en su "
+"ciudad / pueblo, por favor use el valores de precios aplicables. De lo "
+"contrario, puede estimar precios potenciales en diálogo con las partes "
+"interesadas, basándose en los precios de similares o equivalentes productos "
+"que podrían ser sustituidos o complementados por la recuperación de recursos "
 "productos."
 
 #: revamp_tool/templates/revamp_tool/revamp_dev.html:187
@@ -306,8 +307,7 @@ msgid ""
 "resource recovery option."
 msgstr ""
 "Ingrese sus flujos de residuos aquí y determine el porcentaje de cada "
-"residuo transmisión que se utilizará para cada "
-"opción de recurso."
+"residuo transmisión que se utilizará para cada opción de recurso."
 
 #: revamp_tool/templates/revamp_tool/revamp_dev.html:190
 msgid "Step Five"
@@ -323,13 +323,15 @@ msgid ""
 "recovery options on the basis of their revenue potential, the amounts of "
 "nutrients that can be recovered and the energy amount that can be recovered."
 msgstr ""
-"Cuando esté listo, presione el botón Calcular resultados a continuación. Esto generará la "
-"resultados que aparecerán debajo del cuadro de Entradas. La pestaña de resultados entonces "
-"ser poblada con resultados que indiquen el potencial de recuperación de recursos para "
-"cada opción y gráficos de datos aparecerán en la pestaña Gráficos. La pestaña Gráficos "
-"contiene gráficos de barras que puedes usar para comparar los diversos recursos "
-"opciones de recuperación sobre la base de su potencial de ingresos, los montos de "
-"los nutrientes que se pueden recuperar y la cantidad de energía que se puede recuperar."
+"Cuando esté listo, presione el botón Calcular resultados a continuación. "
+"Esto generará la resultados que aparecerán debajo del cuadro de Entradas. La "
+"pestaña de resultados entonces ser poblada con resultados que indiquen el "
+"potencial de recuperación de recursos para cada opción y gráficos de datos "
+"aparecerán en la pestaña Gráficos. La pestaña Gráficos contiene gráficos de "
+"barras que puedes usar para comparar los diversos recursos opciones de "
+"recuperación sobre la base de su potencial de ingresos, los montos de los "
+"nutrientes que se pueden recuperar y la cantidad de energía que se puede "
+"recuperar."
 
 #: revamp_tool/templates/revamp_tool/revamp_dev.html:206
 #: revamp_tool/templates/revamp_tool/revamp_dev.html:291
@@ -339,7 +341,7 @@ msgstr "Corrientes de residuos"
 
 #: revamp_tool/templates/revamp_tool/revamp_dev.html:209
 #: revamp_tool/templates/revamp_tool/revamp_dev.html:333
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:483
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:492
 msgid "Faecal Sludge"
 msgstr "Lodos fecales"
 
@@ -350,14 +352,15 @@ msgid ""
 "treatment of excreta or blackwater, with or without greywater. Faecal sludge "
 "includes both sludge from pit latrines and that from septic tanks."
 msgstr ""
-"Los lodos fecales provienen de las tecnologías de saneamiento in situ, es decir, no tienen "
-"Ha sido transportado a través de una alcantarilla. Resulta de la recogida y almacenamiento /"
-"Tratamiento de excretas o aguas negras, con o sin aguas grises. Lodos fecales "
-"Incluye tanto lodo de letrinas de pozo como el de fosas sépticas."
+"Los lodos fecales provienen de las tecnologías de saneamiento in situ, es "
+"decir, no tienen Ha sido transportado a través de una alcantarilla. Resulta "
+"de la recogida y almacenamiento /Tratamiento de excretas o aguas negras, con "
+"o sin aguas grises. Lodos fecales Incluye tanto lodo de letrinas de pozo "
+"como el de fosas sépticas."
 
 #: revamp_tool/templates/revamp_tool/revamp_dev.html:211
 #: revamp_tool/templates/revamp_tool/revamp_dev.html:374
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:484
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:493
 msgid "Sewage Sludge"
 msgstr "Lodos de aguas residuales"
 
@@ -367,9 +370,10 @@ msgid ""
 "originates from sewer-based wastewater collection and (semi-) centralized "
 "treatment processes."
 msgstr ""
-"Los lodos de aguas residuales (también denominados lodos de aguas residuales) son lodos que "
-"se origina a partir de la recolección de aguas residuales a base de alcantarillado y (semi) centralizada "
-"Procesos de tratamiento."
+"Los lodos de aguas residuales (también denominados lodos de aguas "
+"residuales) son lodos que se origina a partir de la recolección de aguas "
+"residuales a base de alcantarillado y (semi) centralizada Procesos de "
+"tratamiento."
 
 #: revamp_tool/templates/revamp_tool/revamp_dev.html:213
 #: revamp_tool/templates/revamp_tool/revamp_dev.html:417
@@ -381,8 +385,9 @@ msgid ""
 "This is the organic part of the urban solid waste and it includes items like "
 "food waste, market waste and crop residues"
 msgstr ""
-"Esta es la parte orgánica de los residuos sólidos urbanos e incluye elementos como "
-"residuos de alimentos, residuos de mercado y residuos de cultivos."
+"Esta es la parte orgánica de los residuos sólidos urbanos e incluye "
+"elementos como residuos de alimentos, residuos de mercado y residuos de "
+"cultivos."
 
 #: revamp_tool/templates/revamp_tool/revamp_dev.html:228
 msgid "Resource Recovery Options"
@@ -396,6 +401,7 @@ msgid "Anaerobic Digestion"
 msgstr "Digestión anaeróbica"
 
 #: revamp_tool/templates/revamp_tool/revamp_dev.html:232
+#, python-format
 msgid ""
 "This is a process which generates biogas, which has about 60%% methane "
 "content. Biogas can be used for lighting, cooking and also for generating "
@@ -403,11 +409,12 @@ msgid ""
 "residue which can be used as soil conditioner or fertilizer in a farm to "
 "recover nutrients like nitrogen, phosphorus and potassium."
 msgstr ""
-"Este es un proceso que genera biogás, que tiene aproximadamente un 60%% de metano "
-"contenido. El biogás se puede utilizar para iluminación, cocina y también para generar "
-"Electricidad y calor. El proceso de digestión anaeróbica también genera un "
-"residuos que pueden usarse como acondicionador de suelo o fertilizante en una granja para "
-"recupera nutrientes como el nitrógeno, el fósforo y el potasio."
+"Este es un proceso que genera biogás, que tiene aproximadamente un 60%% de "
+"metano contenido. El biogás se puede utilizar para iluminación, cocina y "
+"también para generar Electricidad y calor. El proceso de digestión "
+"anaeróbica también genera un residuos que pueden usarse como acondicionador "
+"de suelo o fertilizante en una granja para recupera nutrientes como el "
+"nitrógeno, el fósforo y el potasio."
 
 #: revamp_tool/templates/revamp_tool/revamp_dev.html:233
 #: revamp_tool/templates/revamp_tool/revamp_dev.html:351
@@ -423,16 +430,18 @@ msgid ""
 "This can be used either for cooking in households and institutional kitchens "
 "as well as for industrial applications like kilns and boilers."
 msgstr ""
-"Las corrientes de excretas y residuos orgánicos tienen un alto poder calorífico y pueden ser "
-"convertido en un combustible sólido y seco para combustión en forma de briquetas o polvo. "
-"Esto puede ser usado tanto para cocinar en hogares como para cocinas institucionales. "
-"así como para aplicaciones industriales como hornos y calderas."
+"Las corrientes de excretas y residuos orgánicos tienen un alto poder "
+"calorífico y pueden ser convertido en un combustible sólido y seco para "
+"combustión en forma de briquetas o polvo. Esto puede ser usado tanto para "
+"cocinar en hogares como para cocinas institucionales. así como para "
+"aplicaciones industriales como hornos y calderas."
 
 #: revamp_tool/templates/revamp_tool/revamp_dev.html:235
 msgid "Black soldier fly larvae"
 msgstr "Soldado negro larvas de mosca"
 
 #: revamp_tool/templates/revamp_tool/revamp_dev.html:236
+#, python-format
 msgid ""
 "Organic waste streams can can be treated using fly larvae composting, for "
 "example with the Black Soldier Fly, to produce valuable larvae and a "
@@ -441,12 +450,13 @@ msgid ""
 "larvae composting contains nutrients and can be applied to a garden as soil "
 "conditioner or fertilizer."
 msgstr ""
-"Las corrientes de desechos orgánicos pueden tratarse utilizando compostaje de larvas de mosca, por "
-"ejemplo con el Black Soldier Fly, para producir larvas valiosas y un "
-"residuo. Las larvas de la mosca soldado negra son 40%% de proteína y 30%% de grasa "
-"y por lo tanto puede hacer una alimentación animal rica en proteínas. El residuo de la mosca "
-"El compostaje de larvas contiene nutrientes y se puede aplicar a un jardín como suelo "
-"Acondicionador o abono."
+"Las corrientes de desechos orgánicos pueden tratarse utilizando compostaje "
+"de larvas de mosca, por ejemplo con el Black Soldier Fly, para producir "
+"larvas valiosas y un residuo. Las larvas de la mosca soldado negra son 40%% "
+"de proteína y 30%% de grasa y por lo tanto puede hacer una alimentación "
+"animal rica en proteínas. El residuo de la mosca El compostaje de larvas "
+"contiene nutrientes y se puede aplicar a un jardín como suelo Acondicionador "
+"o abono."
 
 #: revamp_tool/templates/revamp_tool/revamp_dev.html:237
 msgid "Composting"
@@ -458,9 +468,10 @@ msgid ""
 "conditioner or fertilizer for applying on farms. The compost generated is "
 "often rich in nutrients and also rich in organic matter content."
 msgstr ""
-"Este es un proceso mediante el cual se compostan las corrientes de desechos para hacer suelo "
-"acondicionador o abono para aplicación en fincas. El compost generado es "
-"a menudo rico en nutrientes y también rico en contenido de materia orgánica."
+"Este es un proceso mediante el cual se compostan las corrientes de desechos "
+"para hacer suelo acondicionador o abono para aplicación en fincas. El "
+"compost generado es a menudo rico en nutrientes y también rico en contenido "
+"de materia orgánica."
 
 #: revamp_tool/templates/revamp_tool/revamp_dev.html:252
 msgid "Project Options"
@@ -517,6 +528,7 @@ msgstr "Cantidad disponible por día"
 #: revamp_tool/templates/revamp_tool/revamp_dev.html:345
 #: revamp_tool/templates/revamp_tool/revamp_dev.html:387
 #: revamp_tool/templates/revamp_tool/revamp_dev.html:432
+#, python-format
 msgid "Select what %% of waste to what option"
 msgstr "Seleccione qué %% de desperdicio a qué opción"
 
@@ -547,23 +559,28 @@ msgstr ""
 "características físicas y químicas de los flujos de residuos. Usted es libre "
 "de cambiar estos."
 
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:482
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:478
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:676
+msgid "Show References"
+msgstr "Mostrar referencias"
+
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:491
 msgid "Units"
 msgstr "Unidades"
 
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:485
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:494
 msgid "Solid Waste"
 msgstr "Combustible sólido"
 
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:901
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:964
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:918
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:981
 msgid "Save Project"
 msgstr "Proyecto de carga"
 
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:953
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:970
 msgid "Save as New"
 msgstr "Guardar como nuevo"
 
-#: revamp_tool/templates/revamp_tool/revamp_dev.html:970
+#: revamp_tool/templates/revamp_tool/revamp_dev.html:987
 msgid "Calculate Results"
 msgstr "Calcular resultados"
