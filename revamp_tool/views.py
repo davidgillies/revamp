@@ -343,7 +343,7 @@ def load_approved_project(request):
         proj['id'] = project.id
         proj['created_at'] = project.created_at
         proj['updated_at'] = project.updated_at
-
+        proj['location'] = model_to_dict(project.location)
         proj['prices'] = model_to_dict(project.prices)
         proj['name'] = project.name
         proj['fs_treatment_processes'] = model_to_dict(project.fs_treatment_processes)

@@ -870,6 +870,7 @@ function load_approved_library() {
                console.log(proj_data['wastestreams']['faecal_sludge']);
                vm.project_id = proj_data['id'];
                vm.name = proj_data['name'];
+               vm.location = proj_data['location'];
                vm.wastequality_fs = proj_data['fs_waste_quality'] ;
                vm.wastequality_ss = proj_data['ss_waste_quality'] ;
                vm.wastequality_sw = proj_data['sw_waste_quality'] ;
@@ -893,6 +894,7 @@ function load_approved_library() {
                vm.wastestreams.sw_bsfp_pc = proj_data['wastestreams']['sw_black_soldier_fly_process'];
                vm.wastestreams.sw_c_pc = proj_data['wastestreams']['sw_compost'];
                $('#current_project_name').text(vm.name);
+               console.log(proj_data['location']);
                $('#current_project_city').text(vm.location.city);
                 $('.navbar-top-links').notify(
                   "Project loaded.", 
