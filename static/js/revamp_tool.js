@@ -532,13 +532,13 @@ function calculate_bsf() {
     vm.results.fat_content_sw = vm.results.amount_of_bsf_larvae_sw * 0.3;
 
 	vm.results.potential_larvae_revenue_fs = vm.results.amount_of_bsf_larvae_fs * vm.prices.prepupae_price;
-	results2[3][1] = vm.results.potential_larvae_revenue_fs;
+	results2[3][1] = vm.results.total_potential_bsf_revenue_fs;
     
 	vm.results.potential_larvae_revenue_ss = vm.results.amount_of_bsf_larvae_ss * vm.prices.prepupae_price;
-	results6[3][1] = vm.results.potential_larvae_revenue_ss;
+	results6[3][1] = vm.results.total_potential_bsf_revenue_ss;
 
 	vm.results.potential_larvae_revenue_sw = vm.results.amount_of_bsf_larvae_sw * vm.prices.prepupae_price;
-	results10[3][1] = vm.results.potential_larvae_revenue_sw;
+	results10[3][1] = vm.results.total_potential_bsf_revenue_sw;
     
 	vm.results.amount_of_bsf_residue_fs = (vm.wastestreams.fs_amount*(vm.wastestreams.fs_bsfp_pc/100)*1000)*(vm.wastequality_fs.total_solids/(10**9))*(1-(vm.treatmentprocesses_fs.dmr_rate_bsf_residue/100))*(1-(vm.treatmentprocesses_fs.dmr_compost/100));
     
@@ -601,6 +601,12 @@ function calculate_bsf() {
     vm.results.total_potential_bsf_revenue_ss = vm.results.potential_larvae_revenue_ss + vm.results.potential_bsf_residue_revenue_ss;
     
     vm.results.total_potential_bsf_revenue_sw = vm.results.potential_larvae_revenue_sw + vm.results.potential_bsf_residue_revenue_sw;
+    
+	results2[3][1] = vm.results.total_potential_bsf_revenue_fs;
+    
+	results6[3][1] = vm.results.total_potential_bsf_revenue_ss;
+
+	results10[3][1] = vm.results.total_potential_bsf_revenue_sw;
 }
 
 function calculate_compost() {
@@ -894,6 +900,9 @@ function load_approved_library() {
                vm.wastestreams.sw_bsfp_pc = proj_data['wastestreams']['sw_black_soldier_fly_process'];
                vm.wastestreams.sw_c_pc = proj_data['wastestreams']['sw_compost'];
                $('#current_project_name').text(vm.name);
+               vm.wastestreams.fs_t_pc = vm.wastestreams.fs_c_pc + vm.wastestreams.fs_bsfp_pc + vm.wastestreams.fs_sf_pc + vm.wastestreams.fs_ad_pc;
+               vm.wastestreams.ss_t_pc = vm.wastestreams.ss_c_pc + vm.wastestreams.ss_bsfp_pc + vm.wastestreams.ss_sf_pc + vm.wastestreams.ss_ad_pc;
+               vm.wastestreams.sw_t_pc = vm.wastestreams.sw_c_pc + vm.wastestreams.sw_bsfp_pc + vm.wastestreams.sw_sf_pc + vm.wastestreams.sw_ad_pc;
                console.log(proj_data['location']);
                $('#current_project_city').text(vm.location.city);
                 $('.navbar-top-links').notify(
