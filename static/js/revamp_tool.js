@@ -1031,19 +1031,23 @@ $(document).ready(function () {
             
             var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
+            output = new Date((d.getTime() - n.getTimezoneOffset()* 60 * 1000));
+            year = parseInt(output.getYear())+1900;
+            month = months[parseInt(output.getMonth())];
+            $(this).html(output.getDay()+' '+month+', '+year+' '+('0'+output.getHours()).slice(-2)+'.'+('0'+output.getMinutes()).slice(-2));
             
-            if (d.isDstObserved()) { 
-                output = new Date((d.getTime() - n.getTimezoneOffset()* 60 * 1000)+3600000);
-                year = parseInt(output.getYear())+1900;
-                month = months[parseInt(output.getMonth())];
-                $(this).html(output.getDay()+' '+month+', '+year+' '+('0'+output.getHours()).slice(-2)+'.'+('0'+output.getMinutes()).slice(-2));
-                
-            } else {
-                output = new Date((d.getTime() - n.getTimezoneOffset()* 60 * 1000));
-                year = parseInt(output.getYear())+1900;
-                month = months[parseInt(output.getMonth())];
-                $(this).html(output.getDay()+' '+month+', '+year+' '+('0'+output.getHours()).slice(-2)+'.'+('0'+output.getMinutes()).slice(-2));
-            }
+//            if (d.isDstObserved()) { 
+//                output = new Date((d.getTime() - n.getTimezoneOffset()* 60 * 1000)+3600000);
+//                year = parseInt(output.getYear())+1900;
+//                month = months[parseInt(output.getMonth())];
+//                $(this).html(output.getDay()+' '+month+', '+year+' '+('0'+output.getHours()).slice(-2)+'.'+('0'+output.getMinutes()).slice(-2));
+//                
+//            } else {
+//                output = new Date((d.getTime() - n.getTimezoneOffset()* 60 * 1000));
+//                year = parseInt(output.getYear())+1900;
+//                month = months[parseInt(output.getMonth())];
+//                $(this).html(output.getDay()+' '+month+', '+year+' '+('0'+output.getHours()).slice(-2)+'.'+('0'+output.getMinutes()).slice(-2));
+//            }
             
         });
     });
