@@ -879,8 +879,9 @@
                                                         <thead>
                                                             <tr class="row">
                                                                 <th class="col-md-6">Product</th>
-                                                                <th class="col-md-3">Potential Price</th>
-                                                                <th class="col-md-3">Units</th>
+                                                                <th class="col-md-2">Potential Price</th>
+                                                                <th class="col-md-1">Units</th>
+                                                                <th class="col-md-3">References</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -888,21 +889,25 @@
                                                                 <td>Biogas</td>
                                                                 <td><input type="number" step="any" class="form-control" v-model:value="prices.biogas_price" /></td>
                                                                 <td>US$/Nm<sup>3</sup></td>
+                                                                <td><textarea class="form-control" v-model:value="prices.biogas_reference" ></textarea></td>
                                                             </tr>
                                                             <tr class="row">
                                                                 <td>Solid fuel</td>
                                                                 <td><input type="number" step="any" class="form-control" v-model:value="prices.solid_combustion_price" /></td>
                                                                 <td>US$/ton</td>
+                                                                <td><textarea class="form-control" v-model:value="prices.solid_combustion_reference" ></textarea></td>
                                                             </tr>
                                                             <tr class="row">
                                                                 <td>Black soldier fly larvae</td>
                                                                 <td><input type="number" step="any" class="form-control" v-model:value="prices.prepupae_price" /></td>
                                                                 <td>US$/ton</td>
+                                                                <td><textarea class="form-control" v-model:value="prices.prepupae_reference" ></textarea></td>
                                                             </tr>
                                                             <tr class="row">
                                                                 <td>Compost</td>
                                                                 <td><input type="number" step="any" class="form-control" v-model:value="prices.soil_conditioner_price" /></td>
                                                                 <td>US$/ton</td>
+                                                                <td><textarea class="form-control" v-model:value="prices.soil_conditioner_reference" ></textarea></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -1816,9 +1821,13 @@
             prices: {
                 name: "{{ prices.name }}",
                 biogas_price: "{{ prices.biogas_price }}",
+                biogas_reference: "{{ prices.biogas_reference|default_if_none:'' }}",
                 solid_combustion_price: "{{ prices.solid_combustion_price }}",
+                solid_combustion_reference: "{{ prices.solid_combustion_reference|default_if_none:'' }}",
                 prepupae_price: "{{ prices.prepupae_price }}",
-                soil_conditioner_price: "{{ prices.soil_conditioner_price }}"
+                prepupae_reference: "{{ prices.prepupae_reference|default_if_none:'' }}",
+                soil_conditioner_price: "{{ prices.soil_conditioner_price }}",
+                soil_conditioner_reference: "{{ prices.soil_conditioner_reference|default_if_none:'' }}"
             },
             location: {
                 city: "{{ location.city }}",
@@ -1984,9 +1993,13 @@
                 prices: {
                     name: "{{ prices.name }}",
                     biogas_price: "{{ prices.biogas_price }}",
+                    biogas_reference: "{{ prices.biogas_reference|default_if_none:'' }}",
                     solid_combustion_price: "{{ prices.solid_combustion_price }}",
+                    solid_combustion_reference: "{{ prices.solid_combustion_reference|default_if_none:'' }}",
                     prepupae_price: "{{ prices.prepupae_price }}",
-                    soil_conditioner_price: "{{ prices.soil_conditioner_price }}"
+                    prepupae_reference: "{{ prices.prepupae_reference|default_if_none:'' }}",
+                    soil_conditioner_price: "{{ prices.soil_conditioner_price }}",
+                    soil_conditioner_reference: "{{ prices.soil_conditioner_reference|default_if_none:'' }}"
                 },
                 wastestreams: {
                     fs_amount: "{{ wastestreams.faecal_sludge}}",
@@ -2036,10 +2049,15 @@
                         created_at: "{{ proj.created_at }}",
                         updated_at: "{{ proj.updated_at }}",
                         prices: {
+                            name: "{{ proj.prices.name }}",
                             biogas_price: "{{ proj.prices.biogas_price }}",
-                            solid_combustion_price: "{{ proj.prices.solid_combustion_price}}",
+                            biogas_reference: "{{ proj.prices.biogas_reference|default_if_none:'' }}",
+                            solid_combustion_price: "{{ proj.prices.solid_combustion_price }}",
+                            solid_combustion_reference: "{{ proj.prices.solid_combustion_reference|default_if_none:'' }}",
                             prepupae_price: "{{ proj.prices.prepupae_price }}",
-                            soil_conditioner_price: "{{ proj.prices.soil_conditioner_price }}"
+                            prepupae_reference: "{{ proj.prices.prepupae_reference|default_if_none:'' }}",
+                            soil_conditioner_price: "{{ proj.prices.soil_conditioner_price }}",
+                            soil_conditioner_reference: "{{ proj.prices.soil_conditioner_reference|default_if_none:'' }}"
                         },
                         treatmentprocesses_fs: {
                             name: "{{ proj.fs_treatment_processes.name }}",
