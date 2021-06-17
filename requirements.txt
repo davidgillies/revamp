@@ -22,7 +22,7 @@ python-decouple==3.1
 pytz==2018.5
 selenium==3.14.0
 urllib3==1.23
-wagtail==2.3
+wagtail==2.11.8
 wagtail-condensedinlinepanel==0.5.2
 wagtailmenus==2.13
 whitenoise==4.1
